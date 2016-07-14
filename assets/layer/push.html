@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>pushhere</title>
+    <style media="screen">
+    body{height:100%;}
+      .container{background:#ddd;width:100%;height:750px;opacity:0.8;
+  transition: opacity 1s ease;
+  overflow: hidden;
+perspective: 1000px;}
+      .bg-effects {width:100%;height:100%;overflow:hidden;position:absolute;top:0;left:0;z-index:-1;}
+      .grain:after {content:'';width:110%;height:110%;background:url(./grain.png) repeat center center;
+  -webkit-animation: grain .5s 0s steps(1) infinite;animation: grain .5s 0s steps(1) infinite;
+  position:absolute;top:-5%;left:-5%;display:block;
+  -webkit-animation-delay: 0s;
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-fill-mode: none;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: grain;
+    -webkit-animation-play-state: running;
+    -webkit-animation-timing-function: step-end;
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(./grain.png) repeat center center;
+    background-origin: padding-box;
+    background-size: auto;
+    display: block;
+    left: -40.5px;
+    position: absolute;
+    top: -34.75px;
+  /*  width: 891px;*/
+  /*  height: 764.5px;*/
+}
+  .slide-bg {
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -webkit-transform-origin: 80% 20%;
+  transform-origin: 80% 20%;
+  position: relative;
+  z-index: -2;
+  -webkit-animation: kenburns 120s infinite linear;
+  animation: kenburns 120s infinite linear;
+}
+@-webkit-keyframes grain{0%,100%{-webkit-transform:translate(0,0,0)}10%{-webkit-transform:translate(-1%,-1%)}20%{-webkit-transform:translate(1%,1%)}30%{-webkit-transform:translate(-2%,-2%)}40%{-webkit-transform:translate(3%,3%)}50%{-webkit-transform:translate(-3%,-3%)}60%{-webkit-transform:translate(4%,4%)}70%{-webkit-transform:translate(-4%,-4%)}80%{-webkit-transform:translate(2%,2%)}90%{-webkit-transform:translate(-2%,-2%)}}
+@-webkit-keyframes kenburns{0%{-webkit-transform:scale(1) rotate(0deg)}50%{-webkit-transform:scale(1.4) rotate(0.3deg)}100%{-webkit-transform:scale(1) rotate(0deg)}}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="bg-effects">
+              <div class="grain"></div>
+          </div>
+      <div class="slide-bg" style="background:url(./hero.jpg)"></div>
+    </div>
+    <script type="text/javascript">
+    //http://blog.jobbole.com/60046/
+      window.onload=function(){
+
+        var queue = function(funcs, scope) {
+          (function next() {
+            if(funcs.length > 0) {
+              funcs.shift().apply(scope || {}, [next].concat(Array.prototype.slice.call(arguments, 0)));
+            }
+          })();
+        };
+
+        var obj = {
+          value: null
+        };
+
+        queue([
+          function(callback) {
+            var self = this;
+            setTimeout(function() {
+              self.value = 10;
+              callback(20);
+            }, 200);
+          },
+          function(callback, add) {
+            console.log(this.value + add);
+            callback();
+          },
+          function() {
+            console.log(obj.value);
+          }
+        ], obj);
+
+
+      }
+    </script>
+  </body>
+</html>
