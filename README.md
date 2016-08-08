@@ -1,26 +1,25 @@
 ##testlab
-##记录踩过的坑 一些遇到过的痛点
+##Record on the pit,Some pain points encountered.
 
-### 路由使用的esay-router(lib下,非npm引入，有改动),同样的方式构建目录  
- * [路由原作者](http://www.cnblogs.com/axes/p/4491983.html)
+ * [author](http://www.cnblogs.com/axes/p/4491983.html)
  * [esay-router](https://github.com/whxaxes/easy-router)  
 
- * 输出静态资源
- * 执行请求处理方法
+ * Output static resource
+ * Execution request processing method
 
-###安装依赖
+###Install dependence
 ```
 npm install
 ```
 
-###运行服务
+###Run the service
 ```
 npm run server
 
 open http://localhost/:4000
 ```
 
-###构建目录
+###Build directory
 ```
 npm run build
 ```
