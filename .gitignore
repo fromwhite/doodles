@@ -4,3 +4,5 @@ node_modules/crypto/.md5.js.un~
 *.un~
 
 node_modules/*
+
+assets/.DS_Store
