@@ -1,5 +1,12 @@
 'use strict';
 var main = (function () {
+/**
+ * 八月
+ *
+ * @param props 参数
+ * @returns {XML} 返回 HTML 模板
+ * @constructor 
+ */
 
   var id=Math.floor((Math.random()*1000000)+1);
 
@@ -50,30 +57,30 @@ var main = (function () {
               };
 
       queue([  
-              // function(callback) {  
-              //     var self = this;  
-              //     setTimeout(function() {  
-              //         self.value = 10;  
-              //         callback(20);  
-              //     }, 200);  
-              // },  
-              // function(callback, add) {  
-              //     console.log(this.value + add);  
-              //     callback();  
-              // },  
-              // function(callback) {  
-              //     console.log(config.value);
-              //     callback('ss');
+              function(callback) {  
+                  var self = this;  
+                  setTimeout(function() {  
+                      self.value = 10;  
+                      callback(20);  
+                  }, 200);  
+              },  
+              function(callback, add) {  
+                  console.log(this.value + add);  
+                  callback();  
+              },  
+              function(callback) {  
+                  console.log(config.value);
+                  callback('ss');
            
-              // },
-              // function(callback,ss){
-              //     console.log(ss);
-              //     callback();
-              // },
-              // function(){
-              //     console.log(101010);
-              // } 
-              s1,s2,s3
+              },
+              function(callback,ss){
+                  console.log(ss);
+                  callback();
+              },
+              function(){
+                  console.log(101010);
+              } 
+              
           ], config);
 
   }
