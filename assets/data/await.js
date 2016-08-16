@@ -1,12 +1,5 @@
 'use strict';
 var main = (function () {
-/**
- * 八月
- *
- * @param props 参数
- * @returns {XML} 返回 HTML 模板
- * @constructor 
- */
 
   var id=Math.floor((Math.random()*1000000)+1);
 
