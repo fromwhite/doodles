@@ -1,5 +1,5 @@
-##testlab
-##Record on the pit,Some pain points encountered.
+
+##case and reserved.
 
  * [author](http://www.cnblogs.com/axes/p/4491983.html)
  * [esay-router](https://github.com/whxaxes/easy-router)  
