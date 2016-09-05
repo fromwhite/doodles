@@ -1,53 +1,21 @@
 'use strict';
 var main = (function () {
+    var EPSILON = 1.0 / 1048576.0;
+    var id = ~~(Math.random()*(1<<24)));
 
-  var id=Math.floor((Math.random()*1000000)+1);
-
-  var queue = function(funcs, scope) {  
-    (function next() {  
+    var queue = function(funcs, scope) {  
+        (function next() {  
           if(funcs.length > 0) {  
               funcs.shift().apply(scope || {}, [next].concat(Array.prototype.slice.call(arguments, null)));  
           }  
-    })();  
-  };  
+        })();  
+    };  
 
-  Function.prototype.after=function(func){
-    var __self=this;
-    return function(){
-      var ret=__self.apply(this,arguments);
-      if(ret==false){
-        return false;
-      }
-      func.apply(this,arguments);
-      return ret;
-    }
-  };
-
-
-
-  function start() {
+    function start() {
 
       var config = {  
             value: null
           }; 
-
-          function s1(callback){
-                console.log(1);
-                setTimeout(function(){
-                  console.log('await:');
-                  s2();
-                },5000);
-              }; 
-          function s2(callback){
-                console.log(2);
-                setTimeout(function(){
-                  console.log('then:');
-                  s3();
-                },5000)
-              };
-          function s3(){
-                console.log(3);
-              };
 
       queue([  
               function(callback) {  
@@ -76,9 +44,9 @@ var main = (function () {
               
           ], config);
 
-  }
+    }
 
-  window.addEventListener("load", start); 
-  return {};
+    window.addEventListener("load", start); 
+    return {};
   
 }());
