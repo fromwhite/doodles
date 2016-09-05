@@ -6,3 +6,5 @@ node_modules/crypto/.md5.js.un~
 node_modules/*
 
 assets/.DS_Store
+
+.DS_Store
