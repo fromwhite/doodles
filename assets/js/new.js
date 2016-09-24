@@ -152,4 +152,39 @@ window.evt={
 　　　　Child.uber = Parent.prototype;
 
 　　}
+    var sendAjax = (function() {
+    var getXHR = (function() {
+        var xhr;
+        if(window.XHRHttpRequest){
+            xhr = new XMLHttpRequest();
+        }else{
+            xhr = new ActiveObject("Microsoft.XMLHTTP");
+        }
+        return xhr;
+    })();
+    return function(url,opts){ //url为目标地址
+        var xhr = getXHR(),
+        data;
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState===4||xhr.status===200){
+                data = JSON.parse(xhr.responseText);  //将data解析为json对象
+                opts.callback(data);
+            }
+        }
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.open(opts.method,url);  //写入参数
+        xhr.send(JSON.stringify(opts.data));  //将参数json字符化
+    }
+})();
+//调用执行
+sendAjax('www.example.com',{
+    callback:function(data){
+        //...
+    },
+    data:{
+        name:'JIMMY',
+        age:18
+    }
+})
+
 })()
