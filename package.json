@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.js",
-    "server": "node app.js"
+    "server": "node main.js"
   },
   "author": "vinc",
   "license": "MIT",

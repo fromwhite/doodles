@@ -186,5 +186,11 @@ sendAjax('www.example.com',{
         age:18
     }
 })
+document.addEventListener('DOMContentLoaded', function () {
+
+    console.log('ready');
+
+});
+
 
 })()
