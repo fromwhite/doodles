@@ -12,6 +12,39 @@ var path = require("path");
 var mime = require("./mime").types;
 var config = require("./config");
 var zlib = require("zlib");
+
+var mime = {
+    "css": "text/css",
+    "gif": "image/gif",
+    "html": "text/html",
+    "ico": "image/x-icon",
+    "jpeg": "image/jpeg",
+    "jpg": "image/jpeg",
+    "js": "text/javascript",
+    "json": "application/json",
+    "pdf": "application/pdf",
+    "png": "image/png",
+    "svg": "image/svg+xml",
+    "swf": "application/x-shockwave-flash",
+    "tiff": "image/tiff",
+    "txt": "text/plain",
+    "wav": "audio/x-wav",
+    "wma": "audio/x-ms-wma",
+    "wmv": "video/x-ms-wmv",
+    "xml": "text/xml"
+};
+var config = {
+    Expires:{
+        fileMatch: /^(gif|png|jpg|js|css)$/ig,
+        maxAge: 60 * 60 * 24 * 365
+    },
+    Compress:{
+        match: /css|js|html/ig
+    },
+    Welcome:{
+        file: "index.html"
+    }
+}
 //创建http服务端
 var server=http.createServer(function(request,response){
     var obj= url.parse(request.url);
