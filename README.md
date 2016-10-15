@@ -1,8 +1,5 @@
 
-##case and reserved.
-
- * [author](http://www.cnblogs.com/axes/p/4491983.html)
- * [esay-router](https://github.com/whxaxes/easy-router)  
+##case and reserved. 
 
  * Output static resource
  * Execution request processing method

@@ -4,13 +4,11 @@
  * Time: 18:12
  * To change this template use File | Settings | File Templates.
  */
-var port=3000;
+var port=4000;
 var http = require("http");
 var url = require("url");
 var fs = require("fs");
 var path = require("path");
-var mime = require("./mime").types;
-var config = require("./config");
 var zlib = require("zlib");
 
 var mime = {
