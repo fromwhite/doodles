@@ -49,4 +49,4 @@ var main = (function () {
     window.addEventListener("load", start); 
     return {};
   
-}());
+})();
