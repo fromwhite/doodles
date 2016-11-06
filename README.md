@@ -11,7 +11,7 @@ cd case
 npm install
 
 //build directory
-npm run main
+node main
 ```
 
 ###Future
