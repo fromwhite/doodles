@@ -1,22 +1,22 @@
 
-##case and reserved. 
+##notes and reserved. 
 
  * Output static resource
  * Execution request processing method
 
-###Install dependence
+###Install dependence & Quick Start
 ```
+git clone git@github.com:shui14/case.git
+cd case
 npm install
+
+//build directory
+npm run main
 ```
 
-###Run the service
-```
-npm run server
+###Future
+* add JsCV
+* fixed Matrix
 
-open http://localhost/:4000
-```
-
-###Build directory
-```
-npm run build
-```
+###Discussing
+*email <1536642700@qq.com>

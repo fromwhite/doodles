@@ -4,14 +4,17 @@
  * Time: 18:12
  * To change this template use File | Settings | File Templates.
  */
-var port=4000;
-var http = require("http");
-var url  = require("url");
-var fs   = require("fs");
-var path = require("path");
-var zlib = require("zlib");
+const port=4000;
+const http = require("http");
+const url  = require("url");
+const fs   = require("fs");
+const path = require("path");
+const zlib = require("zlib");
 
-var mime = {
+const c = require('child_process');
+const base = 'assets/';
+
+const mime = {
     "css": "text/css",
     "gif": "image/gif",
     "html": "text/html",
@@ -31,7 +34,7 @@ var mime = {
     "wmv": "video/x-ms-wmv",
     "xml": "text/xml"
 };
-var config = {
+const config = {
     Expires:{
         fileMatch: /^(gif|png|jpg|js|css)$/ig,
         maxAge: 60 * 60 * 24 * 365
@@ -39,7 +42,7 @@ var config = {
     Compress:{
         match: /css|js|html/ig
     },
-    Welcome:{
+    filename:{
         file: "index.html"
     }
 }
@@ -47,13 +50,13 @@ var config = {
 var server=http.createServer(function(request,response){
     var obj= url.parse(request.url);
     response.setHeader("Server","Node/V8");
-    console.log(obj);
+    //console.log(obj);
     var pathname=obj.pathname;
     if(pathname.slice(-1)==="/"){
-        pathname=pathname+config.Welcome.file;   //默认取当前默认下的index.html
+        pathname=pathname+config.filename.file;   //默认取当前默认下的index.html
     }
-    var realPath = path.join("assets", path.normalize(pathname.replace(/\.\./g, "")));
-    console.log(realPath) ;
+    var realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
+    //console.log(realPath) ;
     var pathHandle=function(realPath){
     //用fs.stat方法获取文件
         fs.stat(realPath,function(err,stats){
@@ -102,5 +105,116 @@ var server=http.createServer(function(request,response){
     }
     pathHandle(realPath);
 });
+
+//server.listen(port);
+//console.log("http server run in port:"+port);
+
+
+
+// build menu
+const files = fs.readdirSync(base);
+// 对文件夹更改进行排序
+files.sort(function(a, b) {
+  let astat = fs.lstatSync(base + a);
+  let bstat = fs.lstatSync(base + b);
+
+  return bstat.mtime - astat.mtime;
+});
+
+
+const pagePreFix = 'http://whxaxes.github.io/canvas-test/';
+const sourcePrefix = 'https://github.com/whxaxes/canvas-test/tree/master/';
+
+let html = fs.readFileSync('./index.html').toString();
+//let readme = fs.readFileSync('./README.md').toString();
+
+let ul_html = '<div class="view">';
+let md_value = '| 标题 |  |\n| :-------- | :--------:|\n';
+
+const mlList = [
+    'layout',
+    'JsCV'
+];
+
+// 添加列表内容
+mlList.forEach(function(f) {
+  var npath = path.join(base, f);
+  var array = findHtml(npath);
+
+  array.sort(function(a, b) {
+    return b[2].mtime - a[2].mtime
+  });
+
+  if (array.length > 0) {
+    ul_html += `<p>${f}</p><ul class='main'>`;
+
+    array.forEach(function(p) {
+      const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
+
+      const address = pagePreFix + p[0];
+      const filedir = path.dirname(sourcePrefix + p[0]);
+
+      ul_html += `
+          <li>
+            <a href='${p[0]}' target='_blank' class='demo-name' title='效果预览'>${title}</a><a href='${filedir}' class='demo-source' target='_blank' title='点击查看源码'>源码</a>
+          </li>
+      `;
+
+      //md_value += `| [${title}](${address}) | [查看代码](${filedir}) |\r`
+    });
+
+    ul_html += '</ul>';
+  }
+});
+
+ul_html += '</div>';
+html = html.replace(/(<body>)[\s\S]*?(<\/body>)/, '$1' + ul_html + '$2');
+//readme = readme.replace(/(\[placeholder]:p)[\s\S]*?(\[\/placeholder]:p)/, '$1\n' + md_value + '\n$2');
+
+fs.writeFileSync('./index.html', html);
+//fs.writeFileSync('./README.md', readme);
 server.listen(port);
 console.log("http server run in port:"+port);
+
+
+//打开浏览器
+let cmd;
+if (process.platform == 'win32') {
+    cmd = 'start';
+} else if (process.platform == 'linux') {
+    cmd = 'xdg-open';
+} else if (process.platform == 'darwin') {
+    cmd = 'open';
+}
+
+function copen (url) {
+  c.exec( cmd + ' ' + url );
+};
+copen('http://localhost:4000/');
+
+
+
+//收集文件
+function findHtml(folder_path, collector) {
+  collector = collector || [];
+
+  let files = fs.readdirSync(folder_path += '/');
+  let npath, stat;
+
+  files.forEach(function(f) {
+    npath = folder_path + f;
+    stat = fs.lstatSync(npath);
+
+    if (stat.isDirectory()) {
+      findHtml(npath, collector);
+      return;
+    }
+
+    if (/^[^_].+\.html/.test(f)) {
+      collector.push([npath, f, stat]);
+    }
+  });
+
+  return collector;
+}
+
