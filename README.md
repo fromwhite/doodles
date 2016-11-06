@@ -19,4 +19,4 @@ npm run main
 * fixed Matrix
 
 ###Discussing
-*email <1536642700@qq.com>
+* email <1536642700@qq.com>
