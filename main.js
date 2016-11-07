@@ -193,8 +193,6 @@ function copen (url) {
 copen('http://localhost:4000/');
 
 
-
-//收集文件
 function findHtml(folder_path, collector) {
   collector = collector || [];
 
