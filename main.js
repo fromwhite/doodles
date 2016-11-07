@@ -34,6 +34,7 @@ const mime = {
     "wmv": "video/x-ms-wmv",
     "xml": "text/xml"
 };
+
 const config = {
     Expires:{
         fileMatch: /^(gif|png|jpg|js|css)$/ig,
@@ -46,18 +47,20 @@ const config = {
         file: "index.html"
     }
 }
+
+
 //创建http服务端
-var server=http.createServer(function(request,response){
-    var obj= url.parse(request.url);
+let server=http.createServer(function(request,response){
+    let obj= url.parse(request.url);
     response.setHeader("Server","Node/V8");
     //console.log(obj);
-    var pathname=obj.pathname;
+    let pathname=obj.pathname;
     if(pathname.slice(-1)==="/"){
         pathname=pathname+config.filename.file;   //默认取当前默认下的index.html
     }
-    var realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
+    let realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
     //console.log(realPath) ;
-    var pathHandle=function(realPath){
+    let pathHandle=function(realPath){
     //用fs.stat方法获取文件
         fs.stat(realPath,function(err,stats){
             if(err){
@@ -67,15 +70,15 @@ var server=http.createServer(function(request,response){
             }else{
                 if(stats.isDirectory()){
                 }else{
-                    var ext = path.extname(realPath);
+                    let ext = path.extname(realPath);
                     ext = ext ? ext.slice(1) : 'unknown';
-                    var contentType = mime[ext] || "text/plain";
+                    let contentType = mime[ext] || "text/plain";
                     response.setHeader("Content-Type", contentType);
-                    var lastModified = stats.mtime.toUTCString();
-                    var ifModifiedSince = "If-Modified-Since".toLowerCase();
+                    let lastModified = stats.mtime.toUTCString();
+                    let ifModifiedSince = "If-Modified-Since".toLowerCase();
                     response.setHeader("Last-Modified", lastModified);
                     if (ext.match(config.Expires.fileMatch)) {
-                        var expires = new Date();
+                        let expires = new Date();
                         expires.setTime(expires.getTime() + config.Expires.maxAge * 1000);
                         response.setHeader("Expires", expires.toUTCString());
                         response.setHeader("Cache-Control", "max-age=" + config.Expires.maxAge);
@@ -85,9 +88,9 @@ var server=http.createServer(function(request,response){
                         response.writeHead(304, "Not Modified");
                         response.end();
                     } else {
-                        var raw = fs.createReadStream(realPath);
-                        var acceptEncoding = request.headers['accept-encoding'] || "";
-                        var matched = ext.match(config.Compress.match);
+                        let raw = fs.createReadStream(realPath);
+                        let acceptEncoding = request.headers['accept-encoding'] || "";
+                        let matched = ext.match(config.Compress.match);
                         if (matched && acceptEncoding.match(/\bgzip\b/)) {
                             response.writeHead(200, "Ok", {'Content-Encoding': 'gzip'});
                             raw.pipe(zlib.createGzip()).pipe(response);
@@ -138,8 +141,8 @@ const mlList = [
 
 // 添加列表内容
 mlList.forEach(function(f) {
-  var npath = path.join(base, f);
-  var array = findHtml(npath);
+  let npath = path.join(base, f);
+  let array = findHtml(npath);
 
   array.sort(function(a, b) {
     return b[2].mtime - a[2].mtime
