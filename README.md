@@ -1,12 +1,11 @@
-
-##notes and reserved. 
+###notes and reserved. 
 
  * Output static resource
  * Execution request processing method
 
 ###Installation dependency & Quick Start
 ```
-git clone git@github.com:shui14/case.git
+git clone git@github.com:shui14/notes.git
 cd case
 npm install
 
