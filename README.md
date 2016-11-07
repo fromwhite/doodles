@@ -6,7 +6,7 @@
 ###Installation dependency & Quick Start
 ```
 git clone git@github.com:shui14/notes.git
-cd case
+cd notes
 npm install
 
 //build directory
