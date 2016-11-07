@@ -4,7 +4,7 @@
  * Output static resource
  * Execution request processing method
 
-###Install dependence & Quick Start
+###Installation dependency & Quick Start
 ```
 git clone git@github.com:shui14/case.git
 cd case
