@@ -122,8 +122,8 @@ files.sort(function(a, b) {
 });
 
 
-const pagePreFix = 'http://whxaxes.github.io/canvas-test/';
-const sourcePrefix = 'https://github.com/whxaxes/canvas-test/tree/master/';
+const pagePreFix = '';
+const sourcePrefix = 'https://github.com/shui14/notes/tree/master/';
 
 let html = fs.readFileSync('./index.html').toString();
 //let readme = fs.readFileSync('./README.md').toString();
