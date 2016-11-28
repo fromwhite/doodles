@@ -5,6 +5,29 @@
     <title>css3matrix</title>
   </head>
   <body>
+      <div id="view">
+            <ul class='list'>
+                <li class="it">1</li>
+                <li class="it">2</li>
+                <li class="it">3</li>
+                <li class="it">4</li>
+                <li class="it">5</li>
+                <li class="it">6</li>
+                <li class="it">7</li>
+            </ul>
+      </div>
+
+      <script src="../lib/tiny.js"></script>
+      <script>
+        window.onload=function () {
+
+            console.log('load');
+            _.addEvent(document.querySelector('#view'),'click',function(){
+                alert('click'+this);
+            });
+
+        };
+      </script>
 
   </body>
 </html>
