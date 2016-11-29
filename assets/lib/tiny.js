@@ -39,7 +39,9 @@
 //    NodeList.prototype.indexOf = Array.prototype.indexOf;
 
     
-var find = document.querySelectorAll;
+var find = function(els){
+        return document.querySelectorAll(els);
+    };
     /** 串操作 **/
     element.html = function(html) {
         if(!html) return this.innerHTML;
@@ -63,13 +65,78 @@ var addEvent = function(elem, type, handler) {
         find : find,
         addEvent : addEvent
     }
-
-var ss = function(){
-    console.log(this == window);
-    return this._=bracket;
-}();
+//
+//    var ss = function(){
+//        console.log(this == window);
+//        return this._=bracket;
+//    }();
+//    
+//    return ss;
+//    var bracket ={};
+    bracket.prototype = { 
+        on:function(event,fn){
+               if(window.addEventListener){
+                   this.el.addEventListener(event,fn,false);
+               }else if(window.attachEvent){
+                   this.el.attachEvent(on+event,fn);
+               }
+               return this;
+            },
+        attr:function(event,val){
+               if(!val){
+                   return this.el.getAttribute(event);
+               }else{
+                   this.el.setAttribute(event,val);
+                   return this;
+               }
+            },
+        forEach:function(array, fn) {
+                array.forEach(function(v, i, array) {
+                    fn.apply(v, [v, i, array]);
+                })
+            },
+        map:function(array, fn) {
+                return array.map(function(v, i, array) {
+                    return fn.apply(v, [v, i, array]);
+                })
+            },
+        each:function(fn) {        //fn 回调函数
+                for(var i=0; i<this.elements.length; i++) {
+                    //执行len次，每次把一个元素elements[i]作为参数传递过去
+                    fn.call(this, this.elements[i]);
+            }
+            return this;
+        },
+        setStyle:function(prop, value) {
+                this.each(function(el) {
+                    el.style[prop] = value;
+                });
+            return this;
+        },
+        show:function() {
+                var that = this;
+                this.each(function(el) {
+                    that.setStyle('display', 'block');
+                });
+            return this;
+        }
+//        on:function(type, fn) {
+//                var addHandle = function(el) {
+//                if(document.addEventListener) {
+//                    el.addEventListener(type, fn, false);
+//                }else if(document.attachEvent) {
+//                    el.attachEvent('on'+type, fn);
+//                }
+//            };
+//            this.each(function(el) {
+//                addHandle(el);
+//            });
+//            return this;  
+//        }
+//        
+    }
     
-return ss;   
+    return window._= bracket;
 
 })
 

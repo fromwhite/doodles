@@ -7,8 +7,8 @@
   <body>
       <div id="view">
             <ul class='list'>
-                <li class="it">1</li>
-                <li class="it">2</li>
+                <li class="it" id='test-1'>1</li>
+                <li class="it" id='test-2'>2</li>
                 <li class="it">3</li>
                 <li class="it">4</li>
                 <li class="it">5</li>
@@ -18,15 +18,84 @@
       </div>
 
       <script src="../lib/tiny.js"></script>
+      
+      <script>
+        (function() {
+            /*
+             * 创建一个私有class
+             * @param {Object} els  arguments 所有参数组成的类数组
+             */
+            function _$(els) {
+                this.elements = [];             //存放HTML元素
+                for(var i=0, len=els.length; i<len; i++) {
+                    var element = els[i];
+                    if(typeof element === 'string') {
+                        element = document.getElementById(element);
+                    }
+                    this.elements.push(element);
+                }
+            }
+            //对HTML元素可执行的操作
+            _$.prototype = {
+                each: function(fn) {        //fn 回调函数
+            for(var i=0; i<this.elements.length; i++) {
+                //执行len次，每次把一个元素elements[i]作为参数传递过去
+                fn.call(this, this.elements[i]);
+            }
+            return this;
+        },
+        setStyle: function(prop, value) {
+            this.each(function(el) {
+                el.style[prop] = value;
+            });
+            return this;
+        },
+        show: function() {
+            var that = this;
+            this.each(function(el) {
+                that.setStyle('display', 'block');
+            });
+            return this;
+        },
+        addEvent: function(type, fn) {
+            var addHandle = function(el) {
+                if(document.addEventListener) {
+                    el.addEventListener(type, fn, false);
+                }else if(document.attachEvent) {
+                    el.attachEvent('on'+type, fn);
+                }
+            };
+            this.each(function(el) {
+                addHandle(el);
+            });
+            return this;  
+        }
+            };    
+            //对外开放的接口
+            window.$ = function() {
+                return new _$(arguments);
+            };   
+        })();
+
+      </script>
       <script>
         window.onload=function () {
 
-            console.log('load');
-            _.addEvent(document.querySelector('#view'),'click',function(){
+            console.log('load',_,_.on);
+            //document.querySelector('#view')
+            _.addEvent(_.find("#view")[0],'click',function(){
                 alert('click'+this);
             });
 
         };
+          $(window).addEvent('load', function() {
+    $('test-1', 'test-2').show()
+    .setStyle('color', 'red')
+    .addEvent('click', function() {
+        $(this).setStyle('color', 'green');
+    });
+});
+          //console.log(typeof $)
       </script>
 
   </body>
