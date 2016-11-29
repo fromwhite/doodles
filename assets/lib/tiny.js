@@ -61,7 +61,7 @@ var addEvent = function(elem, type, handler) {
         addEvent(elem, type, handler);
     };
     
-     var bracket = {
+     var _ = {
         find : find,
         addEvent : addEvent
     }
@@ -73,7 +73,7 @@ var addEvent = function(elem, type, handler) {
 //    
 //    return ss;
 //    var bracket ={};
-    bracket.prototype = { 
+    var bracket = { 
         on:function(event,fn){
                if(window.addEventListener){
                    this.el.addEventListener(event,fn,false);
@@ -136,7 +136,16 @@ var addEvent = function(elem, type, handler) {
 //        
     }
     
-    return window._= bracket;
+//    return function(){
+//        var a=[];
+//        for(a[a.length] in bracket);
+//        //return a;
+//        console.log(a);
+//        for(var key in bracket){
+//            _.prototype[key] = bracket[key];
+//        }
+//        window._=_;
+//    }();
 
 })
 
