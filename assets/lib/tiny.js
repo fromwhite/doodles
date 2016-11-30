@@ -1,4 +1,3 @@
-//var _=
 (new function() {
     var element = Element.prototype;
     var array = Array.prototype;
@@ -61,19 +60,15 @@ var addEvent = function(elem, type, handler) {
         addEvent(elem, type, handler);
     };
     
-     var _ = {
-        find : find,
-        addEvent : addEvent
+    var _ = function(els){
+        return _.prototype.find(els);
     }
-//
-//    var ss = function(){
-//        console.log(this == window);
-//        return this._=bracket;
-//    }();
-//    
-//    return ss;
-//    var bracket ={};
-    var bracket = { 
+    _.prototype = { 
+        find : function(els){
+                this.el = document.querySelector(els);
+                return this;
+        },
+        addEvent : addEvent,
         on:function(event,fn){
                if(window.addEventListener){
                    this.el.addEventListener(event,fn,false);
@@ -100,13 +95,13 @@ var addEvent = function(elem, type, handler) {
                     return fn.apply(v, [v, i, array]);
                 })
             },
-        each:function(fn) {        //fn 回调函数
-                for(var i=0; i<this.elements.length; i++) {
-                    //执行len次，每次把一个元素elements[i]作为参数传递过去
-                    fn.call(this, this.elements[i]);
-            }
-            return this;
-        },
+//        each:function(fn) {        //fn 回调函数
+//                for(var i=0; i<this.elements.length; i++) {
+//                    //执行len次，每次把一个元素elements[i]作为参数传递过去
+//                    fn.call(this, this.elements[i]);
+//            }
+//            return this;
+//        },
         setStyle:function(prop, value) {
                 this.each(function(el) {
                     el.style[prop] = value;
@@ -136,16 +131,11 @@ var addEvent = function(elem, type, handler) {
 //        
     }
     
-//    return function(){
-//        var a=[];
-//        for(a[a.length] in bracket);
-//        //return a;
-//        console.log(a);
-//        for(var key in bracket){
-//            _.prototype[key] = bracket[key];
-//        }
-//        window._=_;
-//    }();
+    //_ = _.prototype ;
+        _.prototype.find.prototype = _.prototype;
+    window._=_;
+    
+    return _;
 
 })
 

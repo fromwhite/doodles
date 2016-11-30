@@ -17,86 +17,87 @@
             </ul>
       </div>
 
-      <script src="../lib/tiny.js"></script>
-      
+      <script src="../lib/tiny1.js"></script>
       <script>
-        (function() {
-            /*
-             * 创建一个私有class
-             * @param {Object} els  arguments 所有参数组成的类数组
-             */
-            function _$(els) {
-                this.elements = [];             //存放HTML元素
-                for(var i=0, len=els.length; i<len; i++) {
-                    var element = els[i];
-                    if(typeof element === 'string') {
-                        element = document.getElementById(element);
-                    }
-                    this.elements.push(element);
-                }
-            }
-            //对HTML元素可执行的操作
-            _$.prototype = {
-                each: function(fn) {        //fn 回调函数
-            for(var i=0; i<this.elements.length; i++) {
-                //执行len次，每次把一个元素elements[i]作为参数传递过去
-                fn.call(this, this.elements[i]);
-            }
-            return this;
-        },
-        setStyle: function(prop, value) {
-            this.each(function(el) {
-                el.style[prop] = value;
-            });
-            return this;
-        },
-        show: function() {
-            var that = this;
-            this.each(function(el) {
-                that.setStyle('display', 'block');
-            });
-            return this;
-        },
-        addEvent: function(type, fn) {
-            var addHandle = function(el) {
-                if(document.addEventListener) {
-                    el.addEventListener(type, fn, false);
-                }else if(document.attachEvent) {
-                    el.attachEvent('on'+type, fn);
-                }
-            };
-            this.each(function(el) {
-                addHandle(el);
-            });
-            return this;  
+        (new function() {
+    var element = Element.prototype;
+    var array = Array.prototype;
+    var node = Node.prototype;
+    var nodelist = NodeList.prototype;
+    var set_to = function(obj1, obj2, key, alias) {
+        obj2[key] = obj1[key];
+        if (alias) {
+            obj2[alias] = obj1[alias] = obj1[key];
         }
-            };    
-            //对外开放的接口
-            window.$ = function() {
-                return new _$(arguments);
-            };   
-        })();
+    }
+    var set_alias = function(obj, key, alias) {
+        obj[alias] = obj[key];
+    }
+    /** 方法别名 ***/
+    set_alias(element, 'querySelectorAll', 'fin');
+    set_alias(document, 'querySelectorAll', 'fin');
+    set_to(array, nodelist, 'forEach', 'each');
+    set_to(array, nodelist, 'map');
+    set_to(array, nodelist, 'fliter');
+    set_to(array, nodelist, 'connect');
+    set_to(array, nodelist, 'join');
+    set_to(array, nodelist, 'every');
+    set_to(array, nodelist, 'reduce');
+    set_to(array, nodelist, 'reduceRight');
+    set_to(array, nodelist, 'slice');
+    set_to(array, nodelist, 'some');
+    set_to(array, nodelist, 'splice');
+    
+//    NodeList.prototype.forEach = Array.prototype.forEach;
+//    NodeList.prototype.map = Array.prototype.map;
+//    NodeList.prototype.filter = Array.prototype.filter;
+//    NodeList.prototype.connect = Array.prototype.connect;
+//    NodeList.prototype.join = Array.prototype.join;
+//    NodeList.prototype.every = Array.prototype.every;
+//    NodeList.prototype.reduce = Array.prototype.reduce;
+//    NodeList.prototype.slice = Array.prototype.slice;
+//    NodeList.prototype.indexOf = Array.prototype.indexOf;
 
+    
+var find = function(els){
+        return document.querySelectorAll(els);
+    };
+    /** 串操作 **/
+    element.html = function(html) {
+        if(!html) return this.innerHTML;
+        this.innerHTML = html;
+        return this;
+    };
+var addEvent = function(elem, type, handler) {
+        if (window.addEventListener) {
+           addEvent = function(elem, type, handler) {
+               elem.addEventListener(type, handler, false);
+           }
+        } else if (window.attachEvent) {
+            addEvent = function(elem, type, handler) {
+                elem.attachEvent('on' + type, handler);
+            }
+        }
+        addEvent(elem, type, handler);
+    };
+        })
+          console.log(this.addEvent)
       </script>
       <script>
         window.onload=function () {
+            
+            //console.log(_);
+            //console.log( _.prototype);
 
-            console.log('load',_,_.prototype,_.attr);
             //document.querySelector('#view')
-            _.addEvent(_.find("#view")[0],'click',function(){
-                alert('click'+this);
-            });
+//            _("#view").on('click',function(){
+//                alert('click'+this);
+//            }).attr("title","我的图片")
+//                //.setStyle('background','red');
 
         };
-          $(window).addEvent('load', function() {
-    $('test-1', 'test-2').show()
-    .setStyle('color', 'red')
-    .addEvent('click', function() {
-        $(this).setStyle('color', 'green');
-    });
-});
-          //console.log(typeof $)
       </script>
+      
 
   </body>
 </html>
