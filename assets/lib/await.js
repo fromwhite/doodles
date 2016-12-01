@@ -1,7 +1,7 @@
 'use strict';
 var main = (function () {
     var EPSILON = 1.0 / 1048576.0;
-    var id = ~~(Math.random()*(1<<24)));
+    var id = ~~(Math.random()*(1<<24));
 
     var queue = function(funcs, scope) {  
         (function next() {  
@@ -34,8 +34,8 @@ var main = (function () {
                   callback('ss');
            
               },
-              function(callback,ss){
-                  console.log(ss);
+              function(callback,ss1){
+                  console.log(ss1);
                   callback();
               },
               function(){
