@@ -18,4 +18,4 @@ node main
 * fixed Matrix
 
 ###Discussing
-* email <1536642700@qq.com>
+* email <shui.14@qq.com>
