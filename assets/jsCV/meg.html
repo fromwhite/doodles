@@ -1,0 +1,135 @@
+<canvas id="canvas" width="600" height="400">  
+    <p>Your browser does not support the canvas element!</p>  
+</canvas>  
+<script>
+    Array.prototype.remove = function(obj) {  
+    for (i in this) {  
+        if (this[i] === obj) {  
+            this.splice(i, 1);  
+        }  
+    }  
+}  
+  
+function BasicObject(x, y, order) {  
+    this.x = x;  
+    this.y = y;  
+    this.order = isNaN(order) ? 0 : order;  
+      
+    this.addTo = function(list) {  
+        list.push(this);  
+        list.sort(function(a, b) {return a.order - b.order;});  
+    }  
+      
+    this.removeFrom = function(list) {  
+        list.remove(this);  
+    }  
+}  
+    
+    function FrameAnimationObject(x, y, order, image, frame) {  
+    BasicObject.call(this, x, y, order);  
+    this.image = image;  
+    this.frame = frame;  
+    this.currentFrame = 0;  
+      
+    this.draw = function(context) {  
+        var sw = this.image.width / this.frame;  
+        var sx = this.currentFrame * sw;  
+        context.drawImage(this.image, sx, 0, sw, this.image.height, this.x, this.y, sw, this.image.height);  
+        this.currentFrame++;  
+        this.currentFrame = (this.currentFrame >= this.frame) ? 0 : this.currentFrame;  
+    }  
+}  
+FrameAnimationObject.prototype = new BasicObject();
+    
+    function Person(x, y, order) {  
+    FrameAnimationObject.call(this, x, y, order);  
+    this.image = new Image();  
+    this.image.src = "stop_right.png"  
+    this.frame = 6;  
+      
+    this.onkeydown = function(event) {    
+        if (event.keyCode == 37) {    
+            this.image.src = "run_left.png";    
+            this.frame = 12;    
+        }    
+        else if (event.keyCode == 39) {    
+            this.image.src = "run_right.png";  
+            this.frame = 12;      
+        }    
+          
+        this.currentFrame = (this.currentFrame >= this.frame) ? 0 : this.currentFrame;    
+    }    
+        
+    this.onkeyup = function(event) {    
+        if (event.keyCode == 37) {    
+            this.image.src = "stop_left.png";    
+        }    
+        else if (event.keyCode == 39) {    
+            this.image.src = "";    
+        }    
+        this.frame = 6;    
+        this.currentFrame = (this.currentFrame >= this.frame) ? 0 : this.currentFrame;    
+    }    
+}  
+Person.prototype = new FrameAnimationObject(); 
+    
+    function Engin() {  
+    var canvas = document.getElementById("canvas");  
+    var context = canvas.getContext("2d");  
+      
+    var buffer = document.createElement("canvas");  
+    buffer.width = canvas.width;  
+    buffer.height = canvas.height;  
+    var bufferCtx = buffer.getContext("2d");  
+      
+    var objs = new Array();  
+      
+    const FPS = 20;  
+      
+    this.manage = function() {  
+        bufferCtx.clearRect(0, 0, buffer.width, buffer.height);  
+        context.clearRect(0, 0, canvas.width, canvas.height);  
+          
+        for (x in objs) {  
+            if (objs[x].update) {  
+                objs[x].update(objs);  
+            }  
+        }  
+          
+        for (x in objs) {  
+            if (objs[x].draw) {  
+                objs[x].draw(bufferCtx);  
+            }  
+        }  
+          
+        context.drawImage(buffer, 0, 0);  
+    }  
+      
+    document.onkeydown = function(event) {  
+        for (x in objs) {  
+            if (objs[x].onkeydown) {  
+                objs[x].onkeydown(event);  
+            }  
+        }  
+    }  
+      
+    document.onkeyup = function(event) {  
+        for (x in objs) {  
+            if (objs[x].onkeyup) {  
+                objs[x].onkeyup(event);  
+            }  
+        }  
+    }  
+      
+    this.run = function() {  
+        var p = new Person(canvas.width / 2, canvas.height / 2);  
+        p.addTo(objs);  
+          
+        setInterval(this.manage, 1000 / FPS);  
+    }  
+}  
+  
+window.onload = function() {  
+    new Engin().run();  
+}  
+</script>
