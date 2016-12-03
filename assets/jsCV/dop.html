@@ -1,0 +1,343 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Color Matrix Filters!</title>
+    <style>
+    td{width:32px;text-align:center;}
+    td > input{width:64px;}
+    </style>    
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+      var canvas;
+      var context;
+      var imageURL;
+      var currentImage;
+      var currentColorMatrix;
+
+      function setColorMatrix(m) {
+        currentColorMatrix = m;
+        processImage();
+      }
+
+      var identityMatrix = 
+      [
+      1, 0, 0, 0, 0,
+      0, 1, 0, 0, 0,
+      0, 0, 1, 0, 0,
+      0, 0, 0, 1, 0,
+      ];
+
+      var grayscaleMatrix = 
+      [
+      0.33, 0.34, 0.33, 0, 0,
+      0.33, 0.34, 0.33, 0, 0,
+      0.33, 0.34, 0.33, 0, 0,
+         0,    0,    0, 1, 0,
+      ];
+
+      var sepiaMatrix = 
+      [
+      0.393, 0.769, 0.189, 0, 0,
+      0.349, 0.686, 0.168, 0, 0,
+      0.272, 0.534, 0.131, 0, 0,
+          0,     0,     0, 1, 0,
+      ];
+
+      var redMatrix = 
+      [
+       1.0,    0,    0, 0, 0,
+         0,    0,    0, 0, 0,
+         0,    0,    0, 0, 0,
+         0,    0,    0, 1, 0,
+      ];
+
+      var greenMatrix = 
+      [
+         0,    0,    0, 0, 0,
+       1.0,    0,    0, 0, 0,
+         0,    0,    0, 0, 0,
+         0,    0,    0, 1, 0,
+      ];
+
+      var blueMatrix = 
+      [
+         0,    0,    0, 0, 0,
+         0,    0,    0, 0, 0,
+       1.0,    0,    0, 0, 0,
+         0,    0,    0, 1, 0,
+      ];
+
+      var yellowMatrix = 
+      [
+       1.0,    0,    0, 0, 0,
+       1.0,    0,    0, 0, 0,
+         0,    0,    0, 0, 0,
+         0,    0,    0, 1, 0,
+      ];
+
+
+      var brighterMatrix = 
+      [
+      1, 0, 0, 0, 30,
+      0, 1, 0, 0, 30,
+      0, 0, 1, 0, 30,
+      0, 0, 0, 1, 0,
+      ];
+
+      var darkerMatrix = 
+      [
+      1, 0, 0, 0, -30,
+      0, 1, 0, 0, -30,
+      0, 0, 1, 0, -30,
+      0, 0, 0, 1, 0,
+      ];
+
+      function getColorMatrixFromTable() {
+        var m = [];
+        for(var r = 0; r < 4; r++) {
+          for(var c = 0; c < 5; c++) {
+            var id = "#m" + r + c;
+            var v = parseFloat(document.querySelector(id).value);
+            if (isNaN(v)) v = 0.0;
+            m.push(v); 
+          }
+        }
+        return m;
+      }
+
+      function loadColorMatrix(m) {
+        for(var r = 0; r < 4; r++) {
+          for(var c = 0; c < 5; c++) {
+            var id = "#m" + r + c;
+            var v = parseFloat(m[r*5+c]);
+            if (isNaN(v)) v = 0.0;
+            document.querySelector(id).value = v;
+          }
+        }
+        setColorMatrix(getColorMatrixFromTable());
+//        processImage();   
+      }
+      
+      // Color Matrix Filter function      
+      colorMatrixFilter = function (pixels, m) {
+        var d = pixels.data;
+        for (var i = 0; i < d.length; i += 4) {
+          var r = d[i];
+          var g = d[i + 1];
+          var b = d[i + 2]; 
+          var a = d[i + 3];
+    
+          d[i]   = r * m[0] + g * m[1] + b * m[2] + a * m[3] + m[4];
+          d[i+1] = r * m[5] + g * m[6] + b * m[7] + a * m[8] + m[9];
+          d[i+2] = r * m[10]+ g * m[11]+ b * m[12]+ a * m[13]+ m[14];
+          d[i+3] = r * m[15]+ g * m[16]+ b * m[17]+ a * m[18]+ m[19]; 
+        }
+        return pixels;
+      };
+
+      //Apply the current color matrix to the currently loaded image
+      function processImage() {
+        if (!currentImage) return;
+        if (currentImage.width != canvas.width)
+          canvas.width = currentImage.width;
+        if (currentImage.height != canvas.height)
+          canvas.height = currentImage.height;
+          
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+        if (canvas.width > 0 && canvas.height > 0) {
+            context.putImageData(colorMatrixFilter(context.getImageData(0, 0, 
+              canvas.width, canvas.height), currentColorMatrix), 0, 0);
+        }
+      }      
+
+      // load the image specified by the imageURL and apply
+      // the filter imageFilter
+      function update() {
+        document.querySelector("#before_image").src = imageURL;
+        var image = new Image();
+        image.onload = function () {
+          currentImage = image;
+          processImage();
+        }
+        image.src = imageURL;
+      }
+
+      // open a File object.
+      function handleFiles(files) {
+        var file = files[0];
+
+        // Only process image files. 
+        var imageType = /image.*/;
+        if (!file.type.match(imageType)) {
+          return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onerror = function (e) {
+          alert('Error code: ' + e.target.error);
+        };
+
+        // Create a closure to capture the file information. 
+        reader.onload = (function (file) {
+          return function (evt) {
+            document.querySelector("#filename").innerHTML = file.name;
+            loadImage(evt.target.result);
+          }
+        })(file);
+
+        // Read in the image file as a data url. 
+        reader.readAsDataURL(file);
+      }
+      
+      function loadImage(u) {
+        imageURL = u;
+        update();
+      }
+
+       // Reset to default image and filter
+      function reset() {
+        imageURL = "../layout/hero.jpg";
+        document.querySelector("#filename").innerHTML = "";
+        loadColorMatrix(grayscaleMatrix);
+        update();
+      }
+
+      function onLoad() {
+        canvas = document.querySelector("#after_image");
+        context = canvas.getContext("2d");
+
+        registerDragAndDrop(document, handleFiles);
+
+        // Reset to defaults loading a default image
+        reset();  
+
+        // If a field is modified in the color matrix table
+        // udpate our filtered image        
+        $("td >input").change(function() {
+          setColorMatrix(getColorMatrixFromTable());
+        });                      
+      }
+
+       // Define helper function to register an object for drag and drop
+      var registerDragAndDrop = (function () {
+
+        function stopDefault(e) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+
+        return function (obj, f) {
+          // Setup drag and drop handlers. 
+          obj.addEventListener('dragenter', stopDefault, false);
+          obj.addEventListener('dragover', stopDefault, false);
+          obj.addEventListener('dragleave', stopDefault, false);
+          obj.addEventListener('drop', function (e) {
+            stopDefault(e);
+            var files = e.dataTransfer.files;
+            if (files && files.length > 0)
+              f(files);
+          }, false);
+        }
+      })();
+
+       // Define helper function to prompt the user to choose a file from disk
+      var openFile = (function () {
+        return function (c) {
+          var fileinput = document.querySelector("#fileinput");        
+          function onfilechange(e) {
+              var files = e.target.files;
+              if (files && files.length > 0)
+                c(files);
+          }
+          fileinput.addEventListener('change', onfilechange, false);
+          //fileinput.change(onfilechange);
+          fileinput.click();
+        }
+      })();        
+
+    </script>
+  </head>
+<body onload="onLoad();">
+    
+    <h1>Color Matrix Filters!</h1>
+    <a href="http://www.storminthecastle.com/2013/10/06/color-matrix-filters-using-the-html5-canvas/">Article and Sample App by John Robinson.</a>
+
+    <br>
+    <br>To open your own image you can click the open button or drag and drop an image to this window.
+    <br>
+    <br>
+    <button onclick="reset();">Reset</button>
+    <button onclick="openFile(handleFiles);">Open</button>
+    <span id="filename"></span>
+    
+    <input id="fileinput" style="display:none;" type="file">
+
+    <br>
+
+    <br>
+    <div style="display:inline-block;vertical-align:top;">
+    <div style="display:inline-block;vertical-align:top;margin-right:32px;">
+    <b>Color Matrix</b><br>
+    <table border="0">
+    <tbody><tr>
+    <td>&nbsp;</td>
+    <td><i>cr</i></td><td><i>cb</i></td>
+    <td><i>cg</i></td><td><i>ca</i></td><td>i</td>
+    </tr>
+    <tr>
+    <td><b>R</b></td>
+    <td><input id="m00"></td><td><input id="m01"></td>
+    <td><input id="m02"></td><td><input id="m03"></td><td><input id="m04"></td>
+    </tr>
+    <tr>
+    <td><b>G</b></td>
+    <td><input id="m10"></td><td><input id="m11"></td>
+    <td><input id="m12"></td><td><input id="m13"></td><td><input id="m14"></td>
+    </tr>
+    <tr>
+    <td><b>B</b></td>
+    <td><input id="m20"></td><td><input id="m21"></td>
+    <td><input id="m22"></td><td><input id="m23"></td><td><input id="m24"></td>
+    </tr>
+    <tr>
+    <td><b>A</b></td>
+    <td><input id="m30"></td><td><input id="m31"></td>
+    <td><input id="m32"></td><td><input id="m33"></td><td><input id="m34"></td>
+    </tr>
+    </tbody></table>
+    <br>
+    </div>
+    <div style="display:inline-block;vertical-align:top;">
+    <b>Sample Color Matrices</b><br><br>
+    <a href="javascript:loadColorMatrix(identityMatrix);">Identity</a><br>
+    <a href="javascript:loadColorMatrix(grayscaleMatrix);">Grayscale</a><br>
+    <a href="javascript:loadColorMatrix(sepiaMatrix);">Sepia</a><br>
+    <a href="javascript:loadColorMatrix(redMatrix);">Red</a><br>
+    <a href="javascript:loadColorMatrix(greenMatrix);">Green</a><br>
+    <a href="javascript:loadColorMatrix(blueMatrix);">Blue</a><br>
+    <a href="javascript:loadColorMatrix(yellowMatrix);">Yellow</a><br>
+    <a href="javascript:loadColorMatrix(brighterMatrix);">Brighter</a><br>
+    <a href="javascript:loadColorMatrix(darkerMatrix);">Darker</a><br>
+    </div>
+    </div>
+    <br>
+
+    <br>
+    <div style="display:inline-block;">
+    <br>
+    <b>Before:</b>
+
+    <br>
+    <img id="before_image" style="border:1px solid black;" src="../layout/hero.jpg">
+    </div>
+    <div style="display:inline-block;">
+    <br>
+    <b>After:</b>
+
+    <br>
+    <canvas id="after_image" style="border:1px solid black;" width="512" height="512">Your browser does not support the canvas tag.</canvas>
+    </div>
+  
+
+</body>
