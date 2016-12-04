@@ -150,7 +150,7 @@ mlList.forEach(function(f) {
 
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
-            const tiAtl = /<meta name ="keywords" conent='／(.*)\／'>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
+            const tiAtl = /<metac>(.*)<\/metac>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
         //const address = pagePreFix + p[0];
 
