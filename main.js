@@ -126,11 +126,11 @@ const sourcePrefix = 'https://github.com/shui14/notes/tree/master/';
 let html = fs.readFileSync('./index.html').toString();
 
 let ul_html = '<div class="view">';
-let md_value = '| 标题 |  |\n| :-------- | :--------:|\n';
+//let md_value = '| 标题 |  |\n| :-------- | :--------:|\n';
 
 const mlList = [
     'layout',
-    'JsCV'
+    'jsCV'
 ];
 
 // 添加列表内容
@@ -143,19 +143,19 @@ mlList.forEach(function(f) {
   });
 
   if (array.length > 0) {
-        ul_html += `<p>${f}</p><ul class='main'>`;
+      
+        //const filedir = path.dirname(sourcePrefix + 'assets/' + f);
+        const filedir = sourcePrefix + 'assets/' + f;
+        ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='main'>`;
 
         array.forEach(function(p) {
-        const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
+            const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
+            const tiAtl = /<meta name ="keywords" conent='／(.*)\／'>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-        const address = pagePreFix + p[0];
-        const filedir = path.dirname(sourcePrefix + p[0]);
+        //const address = pagePreFix + p[0];
 
-        ul_html += `<li>
-                        <a href='${p[0]}' target='_blank' class='demo-name' title='效果预览'>${title}</a><a href='${filedir}' class='demo-source' target='_blank' title='点击查看源码'>源码</a>
-                    </li>
-        `;
-    });
+            ul_html += `<li><a href='${p[0]}' target='_blank' class='demo-name' title='${tiAtl}'>${title}</a></li>`;
+        });
 
     ul_html += '</ul>';
   }
@@ -166,6 +166,8 @@ html = html.replace(/(<body>)[\s\S]*?(<\/body>)/, '$1' + ul_html + '$2');
 
 fs.writeFileSync('./index.html', html);
 //fs.writeFileSync('./README.md', readme);
+
+
 server.listen(port);
 console.log("http server run in port:"+port);
 

@@ -138,12 +138,12 @@ i{-webkit-user-select: none;}
 #layout{height:100%;width:100%;background-color:#d3d3d3;overflow:hidden;transition:background 0.5s;top:0;left:0;position:absolute;color:#fff;font-size:10px;line-height:1.1rem;letter-spacing:0.03rem;text-transform:uppercase;-webkit-font-smoothing:antialiased}
 .border{-webkit-transition:0.25s cubic-bezier(0.62, 0.02, 0.34, 1);-moz-transition:0.25s cubic-bezier(0.62, 0.02, 0.34, 1);transition:0.25s cubic-bezier(0.62, 0.02, 0.34, 1);height:100%;width:100%;position:absolute}
 .border>div{height:100%;width:100%;position:absolute}
-.border .frames div{background:url(./border.svg) repeat-x 50% 50%;width:100%;height:20px;position:absolute;left:0;top:0}
-.border .frames div:nth-child(2),.border .frames div:nth-child(4){width:20px;height:100%;background:url(./border-vert.svg) repeat-y 50% 50%}
+.border .frames div{background:url(../img/border.svg) repeat-x 50% 50%;width:100%;height:20px;position:absolute;left:0;top:0}
+.border .frames div:nth-child(2),.border .frames div:nth-child(4){width:20px;height:100%;background:url(../img/border-vert.svg) repeat-y 50% 50%}
 .border .frames div:nth-child(3){bottom:0;top:auto;}
 .border .frames div:nth-child(4){right:0;left:auto;}
 .border .frames div:nth-child(3),.border .frames div:nth-child(4){-webkit-transform:rotate(179.99deg);-moz-transform:rotate(179.99deg);-ms-transform:rotate(179.99deg);transform:rotate(179.99deg)}
-.border .corners div::before,.border .corners div::after{content:'';background:url(./corner.svg) no-repeat center center;width:50px;height:50px;position:absolute;left:10px;top:11px}
+.border .corners div::before,.border .corners div::after{content:'';background:url(../img/corner.svg) no-repeat center center;width:50px;height:50px;position:absolute;left:10px;top:11px}
 .border .corners div:nth-child(1)::after{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg);left:auto;right:10px;top:11px}
 .border .corners div:nth-child(2)::before{left:auto;right:10px;top:auto;bottom:11px;-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);-o-transform:rotate(180deg);transform:rotate(180deg)}
 .border .corners div:nth-child(2)::after{top:auto;bottom:11px;-webkit-transform:rotate(270deg);-moz-transform:rotate(270deg);-ms-transform:rotate(270deg);-o-transform:rotate(270deg);transform:rotate(270deg)}
