@@ -125,7 +125,7 @@ const sourcePrefix = 'https://github.com/shui14/notes/tree/master/';
 
 let html = fs.readFileSync('./index.html').toString();
 
-let ul_html = '<div class="view">';
+let ul_html = '<div class="main">';
 //let md_value = '| 标题 |  |\n| :-------- | :--------:|\n';
 
 const mlList = [
@@ -146,7 +146,7 @@ mlList.forEach(function(f) {
       
         //const filedir = path.dirname(sourcePrefix + 'assets/' + f);
         const filedir = sourcePrefix + 'assets/' + f;
-        ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='main'>`;
+        ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='list'>`;
 
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
