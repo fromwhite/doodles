@@ -3,7 +3,7 @@
  * Output static resource
  * Execution request processing method
 
-###Installation dependency & Quick Start
+###Installation dependency & Start
 ```
 git clone git@github.com:shui14/notes.git
 cd notes
