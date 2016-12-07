@@ -18,18 +18,50 @@
             </ul>
       </div>
 
-      <script src="../reserved/lib/tiny.js"></script>
-      <script src="../reserved/lib/await.js"></script>
+      <script src="../reserved/lib/tiny1.js"></script>
+      <script>
+        window.$ = function(id){
+    return new _$(id);
+}
+function _$(id){
+    this.elements = document.getElementById(id);
+}
+_$.prototype = {
+    constructor:_$,
+    hide:function(){
+        console.log('hide');
+        return this;
+    },
+    show:function(){
+        console.log('shwo');
+        return this;
+    },
+    getName:function(callback){
+        if(callback){
+            callback.call(this,this.name);
+        }
+        return this;
+    },
+    setName:function(name){
+        this.name = name;
+        return this;
+    }
+}
+      </script>
+      
       <script>
         window.onload=function () {
+            $('view').setName('xesam').getName(function(name){
+    console.log(name);
+}).show().hide().show().hide().show();
             
-            console.log(_);
-            console.log( _.prototype);
+//            console.log(_);
+//            console.log( _.prototype);
 
             //document.querySelector('#view')
-            _("#view").on('click',function(){
-                alert('click'+this);
-            }).attr("title","我的图片")
+//            _("#view").on('click',function(){
+//                alert('click'+this);
+//            }).attr("title","我的图片")
 //                //.setStyle('background','red');
 
         };
