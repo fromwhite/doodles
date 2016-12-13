@@ -62,7 +62,7 @@ let server=http.createServer(function(request,response){
         fs.stat(realPath,function(err,stats){
             if(err){
                 response.writeHead(404,"not found",{'Content-Type':'text/plain'});
-                response.write("the request "+realPath+" is not found");
+                response.write("the request "+realPath+" is not found"+'.'+err);
                 response.end();
             }else{
                 if(stats.isDirectory()){
@@ -156,13 +156,14 @@ mlList.forEach(function(f) {
   if (array.length > 0) {
     
         const filedir = sourcePrefix + 'assets/' + f;
+        //const filedir = sourcePrefix + 'assets/' + encodeURI(f);
         ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='list'>`;
 
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
             const tiAtl = /<metac>(.*)<\/metac>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${p[0]}' target='_blank' class='demo-name' title='${tiAtl}'>${title}</a></li>`;
+            ul_html += `<li><a href='${encodeURI(p[0])}' target='_blank' class='' title='${tiAtl}'>${title}</a></li>`;
         });
 
         ul_html += '</ul>';
