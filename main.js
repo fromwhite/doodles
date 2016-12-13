@@ -52,6 +52,7 @@ const config = {
 //创建http服务端
 let server=http.createServer(function(request,response){
     let obj= url.parse(request.url);
+    console.log(encodeURI(request.url));
     response.setHeader("Server","Node/V8");
     //console.log(obj);
     let pathname=obj.pathname;
@@ -130,7 +131,8 @@ let ul_html = '<div class="main">';
 
 const mlList = [
     'layout',
-    'jsCV'
+    'jsCV',
+    '三脚猫'
 ];
 
 // 添加列表内容
