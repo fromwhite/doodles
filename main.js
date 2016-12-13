@@ -52,7 +52,6 @@ const config = {
 //创建http服务端
 let server=http.createServer(function(request,response){
     let obj= url.parse(request.url);
-    console.log(encodeURI(request.url));
     response.setHeader("Server","Node/V8");
     //console.log(obj);
     let pathname=obj.pathname;
@@ -132,8 +131,20 @@ let ul_html = '<div class="main">';
 const mlList = [
     'layout',
     'jsCV',
-    '三脚猫'
-];
+    '三脚猫' ];
+
+//1 gb2utf8 0 utf82gb
+let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+//if(reg.test(f))
+function UTFencode(str,flg){
+    if(flg==1){
+        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
+    }else if(flg==0){
+        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
+    }
+    return str;
+}
+
 
 // 添加列表内容
 mlList.forEach(function(f) {
@@ -145,8 +156,7 @@ mlList.forEach(function(f) {
   });
 
   if (array.length > 0) {
-      
-        //const filedir = path.dirname(sourcePrefix + 'assets/' + f);
+    
         const filedir = sourcePrefix + 'assets/' + f;
         ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='list'>`;
 
@@ -154,13 +164,11 @@ mlList.forEach(function(f) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
             const tiAtl = /<metac>(.*)<\/metac>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-        //const address = pagePreFix + p[0];
-
             ul_html += `<li><a href='${p[0]}' target='_blank' class='demo-name' title='${tiAtl}'>${title}</a></li>`;
         });
 
-    ul_html += '</ul>';
-  }
+        ul_html += '</ul>';
+    }
 });
 
 ul_html += '</div>';
