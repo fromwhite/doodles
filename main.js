@@ -5,34 +5,33 @@
  * To change this template use File | Settings | File Templates.
  */
 const port=4000;
+const base = 'assets/';
 const http = require("http");
 const url  = require("url");
 const fs   = require("fs");
 const path = require("path");
 const zlib = require("zlib");
-
 const c = require('child_process');
-const base = 'assets/';
-
 const mime = {
-    "css": "text/css",
-    "gif": "image/gif",
-    "html": "text/html",
-    "ico": "image/x-icon",
-    "jpeg": "image/jpeg",
-    "jpg": "image/jpeg",
-    "js": "text/javascript",
-    "json": "application/json",
-    "pdf": "application/pdf",
-    "png": "image/png",
-    "svg": "image/svg+xml",
-    "swf": "application/x-shockwave-flash",
-    "tiff": "image/tiff",
-    "txt": "text/plain",
-    "wav": "audio/x-wav",
-    "wma": "audio/x-ms-wma",
-    "wmv": "video/x-ms-wmv",
-    "xml": "text/xml"
+        "css": "text/css",
+        "gif": "image/gif",
+        "html": "text/html",
+        "ico": "image/x-icon",
+        "jpeg": "image/jpeg",
+        "jpg": "image/jpeg",
+        "js": "text/javascript",
+        "json": "application/json",
+        "pdf": "application/pdf",
+        "png": "image/png",
+        "svg": "image/svg+xml",
+        "swf": "application/x-shockwave-flash",
+        "tiff": "image/tiff",
+        "txt": "text/plain",
+        "wav": "audio/x-wav",
+        "wma": "audio/x-ms-wma",
+        "wmv": "video/x-ms-wmv",
+        "xml": "text/xml",
+        "text":"x-markdown"
 };
 
 const config = {
@@ -41,7 +40,7 @@ const config = {
         maxAge: 60 * 60 * 24 * 365
     },
     Compress:{
-        match: /css|js|html/ig
+        match: /css|js|html|md/ig
     },
     filename:{
         file: "index.html"
@@ -53,13 +52,11 @@ const config = {
 let server=http.createServer(function(request,response){
     let obj= url.parse(request.url);
     response.setHeader("Server","Node/V8");
-    //console.log(obj);
     let pathname=obj.pathname;
     if(pathname.slice(-1)==="/"){
         pathname=pathname+config.filename.file;   //默认取当前默认下的index.html
     }
     let realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
-    //console.log(realPath) ;
     let pathHandle=function(realPath){
     //用fs.stat方法获取文件
         fs.stat(realPath,function(err,stats){
@@ -72,7 +69,7 @@ let server=http.createServer(function(request,response){
                 }else{
                     let ext = path.extname(realPath);
                     ext = ext ? ext.slice(1) : 'unknown';
-                    let contentType = mime[ext] || "text/plain";
+                    let contentType = mime[ext] || "text/plain";                    
                     response.setHeader("Content-Type", contentType);
                     let lastModified = stats.mtime.toUTCString();
                     let ifModifiedSince = "If-Modified-Since".toLowerCase();
@@ -131,7 +128,8 @@ let ul_html = '<div class="main">';
 const mlList = [
     'layout',
     'jsCV',
-    '三脚猫' ];
+    'notes'
+    ];
 
 //1 gb2utf8 0 utf82gb
 let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
@@ -207,13 +205,13 @@ function findHtml(folder_path, collector) {
     files.forEach(function(f) {
     npath = folder_path + f;
     stat = fs.lstatSync(npath);
-
+    
     if (stat.isDirectory()) {
         findHtml(npath, collector);
         return;
     }
 
-    if (/^[^_].+\.html/.test(f)) {
+    if (/^[^_].+\.html|.md/.test(f)) {
         collector.push([npath, f, stat]);
     }
   });
