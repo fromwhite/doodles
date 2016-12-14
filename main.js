@@ -59,7 +59,6 @@ let server=http.createServer(function(request,response){
     let realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
     let pathHandle=function(realPath){
     //用fs.stat方法获取文件
-        console.log(realPath);
         fs.stat(realPath,function(err,stats){
             if(err){
                 response.writeHead(404,"not found",{'Content-Type':'text/plain'});
