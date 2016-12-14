@@ -8,7 +8,7 @@ const port=4000;
 const base = 'assets/';
 const http = require("http");
 const url  = require("url");
-const fs   = require("fs"); 
+const fs   = require("fs");
 const path = require("path");
 const zlib = require("zlib");
 const c = require('child_process');
@@ -40,24 +40,13 @@ const config = {
         maxAge: 60 * 60 * 24 * 365
     },
     Compress:{
-        match: /css|js|html|md/ig
+        match: /css|js|html/ig
     },
     filename:{
         file: "index.html"
     }
 }
 
-//1 gb2utf8         0 utf82gb
-let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
-//if(reg.test(f))
-function UTFencode(str,flg){
-    if(flg==1){
-        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
-    }else if(flg==0){
-        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
-    }
-    return str;
-}
 
 //创建http服务端
 let server=http.createServer(function(request,response){
@@ -68,13 +57,9 @@ let server=http.createServer(function(request,response){
         pathname=pathname+config.filename.file;   //默认取当前默认下的index.html
     }
     let realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
-    
-//    if(reg.test(realPath)){
-//        realPath = UTFencode(realPath,1);
-//    }
-        
     let pathHandle=function(realPath){
     //用fs.stat方法获取文件
+        console.log(realPath);
         fs.stat(realPath,function(err,stats){
             if(err){
                 response.writeHead(404,"not found",{'Content-Type':'text/plain'});
@@ -143,9 +128,20 @@ let ul_html = '<div class="main">';
 
 const mlList = [
     'layout',
-    'jsCV',
-    'notes'
+    'jsCV'
     ];
+
+//1 gb2utf8 0 utf82gb
+let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+//if(reg.test(f))
+function UTFencode(str,flg){
+    if(flg==1){
+        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
+    }else if(flg==0){
+        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
+    }
+    return str;
+}
 
 
 // 添加列表内容
@@ -216,7 +212,7 @@ function findHtml(folder_path, collector) {
         return;
     }
 
-    if (/^[^_].+\.html|.md/.test(f)) {
+    if (/^[^_].+\.html/.test(f)) {
         collector.push([npath, f, stat]);
     }
   });
