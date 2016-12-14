@@ -8,7 +8,7 @@ const port=4000;
 const base = 'assets/';
 const http = require("http");
 const url  = require("url");
-const fs   = require("fs");
+const fs   = require("fs"); 
 const path = require("path");
 const zlib = require("zlib");
 const c = require('child_process');
@@ -47,6 +47,17 @@ const config = {
     }
 }
 
+//1 gb2utf8         0 utf82gb
+let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+//if(reg.test(f))
+function UTFencode(str,flg){
+    if(flg==1){
+        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
+    }else if(flg==0){
+        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
+    }
+    return str;
+}
 
 //创建http服务端
 let server=http.createServer(function(request,response){
@@ -57,12 +68,17 @@ let server=http.createServer(function(request,response){
         pathname=pathname+config.filename.file;   //默认取当前默认下的index.html
     }
     let realPath = path.join("./", path.normalize(pathname.replace(/\.\./g, "")));
+    
+//    if(reg.test(realPath)){
+//        realPath = UTFencode(realPath,1);
+//    }
+        
     let pathHandle=function(realPath){
     //用fs.stat方法获取文件
         fs.stat(realPath,function(err,stats){
             if(err){
                 response.writeHead(404,"not found",{'Content-Type':'text/plain'});
-                response.write("the request "+realPath+" is not found"+'.'+err);
+                response.write("the request "+realPath+" is not found");
                 response.end();
             }else{
                 if(stats.isDirectory()){
@@ -131,18 +147,6 @@ const mlList = [
     'notes'
     ];
 
-//1 gb2utf8 0 utf82gb
-let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
-//if(reg.test(f))
-function UTFencode(str,flg){
-    if(flg==1){
-        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
-    }else if(flg==0){
-        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
-    }
-    return str;
-}
-
 
 // 添加列表内容
 mlList.forEach(function(f) {
@@ -163,7 +167,7 @@ mlList.forEach(function(f) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
             const tiAtl = /<metac>(.*)<\/metac>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${encodeURI(p[0])}' target='_blank' class='' title='${tiAtl}'>${title}</a></li>`;
+            ul_html += `<li><a href='${p[0]}' target='_blank' class='' title='${tiAtl}'>${title}</a></li>`;
         });
 
         ul_html += '</ul>';
