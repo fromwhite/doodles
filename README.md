@@ -14,8 +14,8 @@ node main
 ```
 
 ###Future
-* add JsCV
-* fixed Matrix
+* add animate
+* fixed canvas
 
 ###Discussing
 * email <shui.14@qq.com>

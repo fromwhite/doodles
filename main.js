@@ -127,7 +127,8 @@ let ul_html = '<div class="main">';
 
 const mlList = [
     'layout',
-    'jsCV'
+    'canvas',
+    'animate'
     ];
 
 //1 gb2utf8 0 utf82gb
