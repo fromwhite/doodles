@@ -7,7 +7,7 @@ window.requestAnimFrame = (function(){
           };
 })();
 //并不是所有设备的绘制时间间隔是1000/60 ms, 以及上面并木有cancel相关方法，所以，就有下面这份更全面的兼容方法
-
+//CSS 动画是可以暂停的。通过 animation-play-state: paused 实现
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
