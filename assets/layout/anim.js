@@ -33,3 +33,4 @@ window.requestAnimFrame = (function(){
         };
 }());
 
+//transform、transitionend、animationend
