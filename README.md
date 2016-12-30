@@ -18,4 +18,4 @@ node main
 * fixed canvas
 
 ###Discussing
-* email <shui.14@qq.com>
+* email <1536642700@qq.com>
