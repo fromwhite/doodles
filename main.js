@@ -123,25 +123,11 @@ const sourcePrefix = 'https://github.com/shui14/notes/tree/master/';
 let html = fs.readFileSync('./index.html').toString();
 
 let ul_html = '<div class="main">';
-//let md_value = '| 标题 |  |\n| :-------- | :--------:|\n';
 
 const mlList = [
     'layout',
-    'canvas',
-    'animate'
+    'canvas'
     ];
-
-//1 gb2utf8 0 utf82gb
-let reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
-//if(reg.test(f))
-function UTFencode(str,flg){
-    if(flg==1){
-        str = str.replace(/[^u0000-u00FF]/g,function($0){return escape($0).replace(/(%u)(w{4})/gi,"&#x$2;")}); 
-    }else if(flg==0){
-        str = unescape(str.replace(/&#x/g,'%u').replace(/;/g,'')); 
-    }
-    return str;
-}
 
 
 // 添加列表内容
@@ -156,7 +142,6 @@ mlList.forEach(function(f) {
   if (array.length > 0) {
     
         const filedir = sourcePrefix + 'assets/' + f;
-        //const filedir = sourcePrefix + 'assets/' + encodeURI(f);
         ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='list'>`;
 
         array.forEach(function(p) {
