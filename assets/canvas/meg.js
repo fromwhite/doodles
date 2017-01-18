@@ -67,4 +67,4 @@
     
     
 
-})(window, Meg || {} )
+})( wwindow, Meg || {} )
