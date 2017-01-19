@@ -9,7 +9,7 @@
 *
 */
 
-(function(){
+( function() {
 
     //Util 公共方法
     var util = {
@@ -67,4 +67,4 @@
     
     
 
-})( wwindow, Meg || {} )
+} )( wwindow, Meg || {} )
