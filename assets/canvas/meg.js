@@ -1,5 +1,5 @@
 /*
-*   create by vinc 31 dec 2016
+*   create by vinc 31 Dec 2016
 *   canvas tiny process
 *   @core   def extend 暴露合并api
 *   @cache  缓存对象 参数:str/array/obj/REG str缓存图片 array缓存图片队列 obj缓存自建对象并初始化对象池 REG正则对象替换路径
