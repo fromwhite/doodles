@@ -14,8 +14,8 @@
     //Util 公共方法
     var util = {
         //判断是否数组
-        isArray : function(v){
-                    return toString.apply(v) === '[object Array]';
+        isArray : function(a){
+                    return toString.apply(a) === '[object Array]';
         }
         
     }
@@ -64,14 +64,8 @@
     }
     
     mg.raf = (function(){
-			return window.requestAnimationFrame ||
-                   window.webkitRequestAnimationFrame || 
-                   window.mozRequestAnimationFrame || 
-                   window.oRequestAnimationFrame || 
-                   window.msRequestAnimationFrame || 
-                   function (callback) {window.setTimeout(callback, 1000 / 60); 
-                };
-		})();
+			return window.requestAnimationFrame || window.webkitRequestAnimationFrame ||  window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {window.setTimeout(callback, 1000 / 60); };
+    })();
     
     
     
