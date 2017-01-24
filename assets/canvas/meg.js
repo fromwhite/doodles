@@ -21,8 +21,8 @@
     }
     
         
-    //判断是用函数创建的还是用new创建的
-    //Meg(config) 或者  new Meg(config)
+
+    //Meg(config) || new Meg(config)
     function Meg(options) {
       if ( !(this instanceof Meg) )   return new Meg(options);
         
