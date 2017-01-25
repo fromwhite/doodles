@@ -13,10 +13,16 @@
 
     //Util 公共方法
     var util = {
+	    
         //判断是否数组
         isArray : function(a){
                     return toString.apply(a) === '[object Array]';
-        }
+        },
+	    
+	//判断是否函数 typeof == 'function'
+	isFunction : function(f){
+		    return Object.prototype.toString.call(f) === '[object Function]';
+	}
         
     }
     
