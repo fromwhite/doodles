@@ -4,7 +4,7 @@
  * Time: 18:12
  * To change this template use File | Settings | File Templates.
  */
-const port=4000;
+const port='4000';
 const base = 'assets/';
 const http = require("http");
 const url  = require("url");
@@ -167,7 +167,7 @@ console.log("http server run in port:"+port);
 
 
 //打开浏览器
-let cmd;
+let cmd = false;
 if (process.platform == 'win32') {
     cmd = 'start';
 } else if (process.platform == 'linux') {
@@ -176,10 +176,11 @@ if (process.platform == 'win32') {
     cmd = 'open';
 }
 
-function copen (url) {
-  c.exec( cmd + ' ' + url );
-};
-copen('http://localhost:4000/');
+// function copen (url) {
+//   c.exec( cmd + ' ' + url );
+// };
+// copen('http://localhost:4000/');
+cmd && c.exec (cmd + ' ' + 'http://localhost:' + port + '/' );
 
 
 function findHtml(folder_path, collector) {
