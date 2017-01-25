@@ -167,7 +167,7 @@ console.log("http server run in port:"+port);
 
 
 //打开浏览器
-let cmd = false;
+let cmd = null;
 if (process.platform == 'win32') {
     cmd = 'start';
 } else if (process.platform == 'linux') {
