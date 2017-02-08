@@ -1,29 +1,34 @@
 /*
-*   create by vinc 31 Dec 2016
+*   create by vinc 31 dec 2016
 *   canvas tiny process
-*   @core   def extend 暴露合并api
-*   @cache  缓存对象 参数:str/array/obj/REG str缓存图片 array缓存图片队列 obj缓存自建对象并初始化对象池 REG正则对象替换路径
-*   @events maps初始化命中表     
-*   @draw   主线程循环
-*   @await  异步流程控制
+*   @ 
+*   @
+*   @cache      imgloader diffctx memony
+*   @events
+*   @init
+*   @draw
 *
 */
 
-( function() {
+;(function(root, fn){
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = fn.call(root) :
+	typeof define === 'function' && define.amd ? define(function(){ return fn.call(root) }) :
+	(root.Meg = fn());
+}(this, function(){
 
+	
     //Util 公共方法
     var util = {
-	  
         //判断是否数组
-        isArray : function(a){
-                    return toString.apply(a) === '[object Array]';
+        isArray : function(v){
+                  	return toString.apply(v) === '[object Array]';
         },
-	    
+		
 	//判断是否函数 typeof == 'function'
 	isFunction : function(f){
-		    return Object.prototype.toString.call(f) === '[object Function]';
+			return Object.prototype.toString.call(f) === '[object Function]';
 	},
-    
+		
 	//数据一致性
 	adler32 : function(data) {
 			var MOD = 65521;
@@ -35,25 +40,32 @@
 			}
 			return a | (b << 16);
 	}
-        
+      
     }
-    
-        
-
-    //Meg(config) || new Meg(config)
+	
+	//常量
+	var constant = {
+		var raf = (function(){
+			return window.requestAnimationFrame || window.webkitRequestAnimationFrame ||  window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback){window.setTimeout(callback, 1000 / 60); };
+    })();
+  		
+	}
+	
+	
+	
+	
+	//Meg(config) || new Meg(config)
     function Meg(options) {
-      if ( !(this instanceof Meg) )   return new Meg(options);
-        
+      if ( !(this instanceof Meg)) return new Meg(options);    
         //参数合并 
-        this._init(options);
-        //暴露合并接口
-        this.options = this.extend({},options); 
+        this.init(options);
     }
-    
+	
+	
     var mg = Meg.prototype;
-    
+	
     //初始化
-    mg._init = function(options){
+    mg.init = function(options){
         options = options || {};
         this.methods = {};
         this.maps = {};
@@ -80,13 +92,5 @@
 
         return this;
     }
-    
-    mg.raf = (function(){
-		return window.requestAnimationFrame || window.webkitRequestAnimationFrame ||  window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {window.setTimeout(callback, 1000 / 60); };
-    })();
-    
-    
-    
-    
-
-} )( window, Meg || {} )
+	
+})
