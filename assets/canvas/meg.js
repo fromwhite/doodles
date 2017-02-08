@@ -71,7 +71,7 @@
         this.maps = {};
         this.cache = {};
         
-        var defaults = {
+     var defaults = {
             root: './',         // 根节点
             maps: {},           // 初始化命中表
             debug: false,       // 如果开启debug模式，则进入自动检索当前目录文件模式
@@ -82,15 +82,15 @@
             
             useCache: false,    // 如果设为true，则使用http缓存
             maxCacheSize: 0.5   // 小于maxCacheSize的资源将以本地文件内容的md5值作为Etag，单位为MB
-        };
+     };
 
-        for (var key in defaults) {
-            this[key] = options.hasOwnProperty(key) ? options[key] : defaults[key];
-        }
+     for (var key in defaults) {
+           this[key] = options.hasOwnProperty(key) ? options[key] : defaults[key];
+     }
 
-        this.handleMap();
+     this.handleMap();
 
-        return this;
+     return this;
     }
 	
 })
