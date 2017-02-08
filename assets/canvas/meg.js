@@ -20,13 +20,13 @@
     //Util 公共方法
     var util = {
         //判断是否数组
-        isArray : function(v){
-                  	return toString.apply(v) === '[object Array]';
+        isArray : function(arr){
+                  	return toString.apply(arr) === '[object Array]';
         },
 		
 	//判断是否函数 typeof == 'function'
-	isFunction : function(f){
-			return Object.prototype.toString.call(f) === '[object Function]';
+	isFunction : function(fn){
+			return Object.prototype.toString.call(fn) === '[object Function]';
 	},
 		
 	//数据一致性
@@ -54,7 +54,7 @@
 	
 	
 	
-	//Meg(config) || new Meg(config)
+    //Meg(config) || new Meg(config)
     function Meg(options) {
       if ( !(this instanceof Meg)) return new Meg(options);    
         //参数合并 
