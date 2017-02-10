@@ -129,3 +129,75 @@
 	return Meg;
 	
 }))
+
+//暂存代码
+;(function(root, fn){
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = fn :
+	typeof define === 'function' && define.amd ? define(function(){ return fn }) :
+	(root.Meg = fn );
+}(this, new function(){
+	var element = Element.prototype;
+	var array = Array.prototype;
+	var node = Node.prototype;
+	var nodelist = NodeList.prototype;
+	
+	var set_to = function(obj1, obj2, key, alias) {
+		obj2[key] = obj1[key];
+		if (alias) {
+			obj2[alias] = obj1[alias] = obj1[key];
+		}
+	}
+	
+	var set_alias = function(obj, key, alias) {
+		obj[alias] = obj[key];
+	}
+	
+	/** 方法别名 ***/
+	set_alias(element, 'querySelectorAll','find');
+	set_alias(document, 'querySelectorAll', 'find');
+	set_to(array, nodelist, 'forEach', 'each');
+	set_to(array, nodelist, 'map');
+	set_to(array, nodelist, 'fliter');
+	set_to(array, nodelist, 'connect');
+	set_to(array, nodelist, 'join');
+	set_to(array, nodelist, 'every');
+	set_to(array, nodelist, 'reduce');
+	set_to(array, nodelist, 'reduceRight');
+	set_to(array, nodelist, 'slice');
+	set_to(array, nodelist, 'some');
+	set_to(array, nodelist, 'splice');
+	
+	/** 串操作 **/
+	element.html = function(html) {
+		if(!html) return this.innerHTML;
+		this.innerHTML = html;
+		return this;
+	}
+	
+	//	创建一个空的对象常量, 便于内部共享使用
+    var bracket = {};
+	//	初始配置
+	var defaults = {
+            el: '',         	// 根节点
+            maps: {},           // 初始化命中表
+            cache: true,        // 是否使用缓存
+			rcWidth: '1000',	// 默认限制最大宽度
+			rcHeight: '600',	// 默认限制最大高度
+			    
+            //debug: false,     // 如果开启debug模式，则进入自动检索当前目录文件模式
+    };
+	
+	this.ctx = function(opt){
+		opt= opt || {};
+		for (var key in defaults) {
+           	bracket[key] = opt.hasOwnProperty(key) ? opt[key] : defaults[key];
+        }
+		return bracket;
+	}
+	
+	//	根节点
+	
+	
+	
+
+}));
