@@ -32,14 +32,11 @@ Create on Feb 22 2017 with match Mar.mid 2017
 （19）当给事件附加数据时，传入一个哈希而不是原始值，这可以让后面的贡献者加入更多数据到事件数据里，而不用找出并更新那个事件的事件处理器
 
 #### bind/call/apply
-`
-//功能基本相同，都是实现继承或者转换对象指针的作用 
-
-.bind(this,arg1,arg2)  
-.call(对象[,参数1，参数2,....])  
-.apply(对象,参数数组)  
-fun2.call.apply(fun.bind,[123,12,67]) //fun.bind(123).call(null,12,67)
-`
+功能基本相同，都是实现继承或者转换对象指针的作用  
+.bind(this,arg1,arg2);   
+.call(对象[,参数1，参数2,....]);   
+.apply(对象,参数数组);   
+fun2.call.apply(fun.bind,[123,12,67]); //fun.bind(123).call(null,12,67)   
 
 #### 媒体查询css
 `@media screen and (max-width: 300px) {
@@ -49,7 +46,7 @@ fun2.call.apply(fun.bind,[123,12,67]) //fun.bind(123).call(null,12,67)
 }`
 
 ####  原型/原型链
-`每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，于是就这样一直找下去，也就是我们平时所说的原型链的概念。
+每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，于是就这样一直找下去，也就是我们平时所说的原型链的概念。
 
 关系：instance.constructor.prototype = instance.__proto__
 
@@ -63,10 +60,10 @@ Func.prototype.getInfo = function() {
 }  
 var person = new Func();  
 console.log(person.getInfo());//"Man"  
-console.log(Func.prototype);//Func { name = "Man", getInfo = function() }`
+console.log(Func.prototype);//Func { name = "Man", getInfo = function() }
 
 #### JavaScript 有几种类型的值？能否画一下它们的内存图？
-`栈：原始数据类型（Undefined，Null，Boolean，Number，String）
+栈：原始数据类型（Undefined，Null，Boolean，Number，String）
 
 堆：引用数据类型（对象、数组、函数）
 
@@ -75,10 +72,10 @@ console.log(Func.prototype);//Func { name = "Man", getInfo = function() }`
 
 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储；
 
-引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。`
+引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
 
 #### 面向对象特性javascript实现 封装继承多态抽象
-`
+
 JS函数不支持多态函数重载,本身无状态 原生支持多态
 封装就是把抽象出来的数据和对数据的操作封装在一起，数据被保护在内部，程序的其它部分只有通过被授权的操作(成员方法)，才能对数据进行操作，JS封装只有两种状态，一种是公开的，一种是私有的。  
 function Master(name){  
@@ -95,7 +92,7 @@ Master.prototype.feed = function(animal,food){}
 2、通过原型法分配的属性是独立.(如果你不修改属性，他们是共享)  
 3、建议，如果我们希望所有的对象使用同一一个函数，最好使用原型法添加函数，这样比较节省内存.  
 通过prototype给所有的对象添加方法，但是这种方式不能去访问类的私有变量
-`
+
 
 #### null 和 undefined 区别
 null 表示一个对象被定义了，值为“空值”；  
@@ -109,36 +106,36 @@ null : 是一个对象(空对象, 没有任何属性和方法)；
 注意： 在验证null时，一定要使用　=== ，因为 == 无法分别 null 和　undefined
 
 #### 判断二维数组是否存在值
-`
-function isContains(arr,str){  
+```
+function isContains(arr,str) {  
 
-    for(var i = 0;i < arr.length >>> 0;i++){    
+        for(var i = 0;i < arr.length >>> 0;i++){    
 
-        if(arr[i] instanceof Array){ 
+            if(arr[i] instanceof Array){ 
 
-            binIndex = binIndex + 1;    
-            isContains(arr[i],str);    
+                binIndex = binIndex + 1;    
+                isContains(arr[i],str);    
 
-        }else{      
+            }else{      
 
-            if(new RegExp(arr[i]).test(str)){    
+                if(new RegExp(arr[i]).test(str)){    
 
-                bankBinName = {'0':'邮政储蓄银行','1':'浦发银行'}[binIndex] || null;    
-                console.log('banBin'+ binIndex,bankBinName,'console绑卡bin');   
+                    bankBinName = {'0':'邮政储蓄银行','1':'浦发银行'}[binIndex] || null;    
+                    console.log('banBin'+ binIndex,bankBinName,'console绑卡bin');   
 
-                return binHandle = true ;
+                    return binHandle = true ;
 
-            }  
+                }  
 
-        }    
-    }
-        
-    return -1;  
+            }    
+        }
+            
+        return -1;  
 }
-`
+```
 
 #### 通用的事件侦听器函数
-`
+``` 
 var Event = {
 
 	addHandler: function(){
@@ -184,7 +181,7 @@ var Event = {
 
 }
 还有很多暂未实习
-`
+```
 
 ### 转行的滑稽
 `
@@ -193,7 +190,7 @@ window.onload = main;
 `
 
 #### pubsub发布/订阅者模式
-`
+```
 function EventHandle() {
 
     var events = {};
@@ -218,7 +215,7 @@ function EventHandle() {
     };
 
 }
-`
+```
 
 #### 闭包(closure) 作用域(scope)
 `有权访问另一个函数作用域中变量的函数，创建闭包的最常见的方式就是在一个函数内创建另一个函数，通过另一个函数访问这个函数的局部变量，利用闭包可以突破作用链域，将函数内部的变量和方法传递到外部。实现私有。隔离作用域。
@@ -231,7 +228,8 @@ function EventHandle() {
 
 
 #### ECMAScript 6 写 class
-`ES6的class可以看作只是一个语法糖，它的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。
+```
+ES6的class可以看作只是一个语法糖，它的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。
 
 //定义类
 class Point { 
@@ -245,19 +243,22 @@ class Point {
       return '(' + this.x + ',' + this.y + ')'; 
   }
 
-}`
+}
+```
 
 #### 代码效率 习惯性（部分尚未验证）
 
 1.缩小dom修改范围/频率，常见DocumentFragment/节流timer  
 2.使用 Array 做为 StringBuffer ，代替字符串拼接的操作,浏览器在对字符串拼接的时候，会创建临时的 String 对象  
-`template: [  
+```
+template: [  
     '<div>',  
         '<a href="#" data-action="close-dialog">×</a>',  
         '<h2><%= data.title %></h2>',  
         '<div><%- data.html %></div>',  
         '</div>'  
-    ].join('')`  
+    ].join('')
+``` 
 3.循环控制，高频率解构，取index，查询获取dom。length 保存到局部变量，减少循环开关，i--。无关顺序时使用while取代for，避免for in。递归控制尾递归特例。  
 4.巧用 || 和 && 布尔运算符  
 5.对象/哈希表比数组快得多  
@@ -318,7 +319,8 @@ class Point {
 #### 编写一个JavaScript函数 parseQueryString，它的用途是把URL参数解析为一个对象，如：
 var url = “http://witmax.cn/index.php?key0=0&key1=1&key2=2″;
 
-`function parseQueryString(url){
+```
+function parseQueryString(url){
 
   var params = {},
       arr = url.split("?");
@@ -336,7 +338,8 @@ var url = “http://witmax.cn/index.php?key0=0&key1=1&key2=2″;
 
 var url = "http://witmax.cn/index.php?key0=0&key1=1&key2=2",
     ps = parseQueryString(url);
-console.log(ps["key1"]);`
+console.log(ps["key1"]);
+```
 
 #### 前端开发有哪些优化
 减少http请求次数：cssspirit,data uri  
@@ -351,5 +354,3 @@ JS，CSS源码压缩
 避免使用CSS Expression  
 图片预载  
 避免在页面的主体布局中使用table，table要等其中的内容完全下载之后才会显示出来，显示比div+css布局慢  
-
-
