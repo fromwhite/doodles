@@ -11,31 +11,33 @@ Create on Feb 22 2017 with match Mar.mid 2017
 其他对象：Function、Argument、Math、Date、RegExp、Error`
 
 #### JavaScript 的基本代码规范
-`（1）不要在同一行声明多个变量
-（2）如果你不知道数组的长度，使用 push
-（3）请使用 ===/!== 来比较 true/false 或者数值
-（4）对字符串使用单引号 ''(因为大多时候我们的字符串。特别html会出现")
-（5）使用对象字面量替代 new Array 这种形式
-（6）绝对不要在一个非函数块里声明一个函数，把那个函数赋给一个变量。浏览器允许你这么做，但是它们解析不同
-（7）不要使用全局函数
-（8）总是使用 var 来声明变量，如果不这么做将导致产生全局变量，我们要避免污染全局命名空间
-（9）Switch 语句必须带有 default 分支
-（10）使用 /**...*/ 进行多行注释，包括描述，指定类型以及参数值和返回值
-（11）函数不应该有时候有返回值，有时候没有返回值
-（12）语句结束一定要加分号
-（13）for 循环必须使用大括号
-（14）if 语句必须使用大括号
-（15）for-in 循环中的变量应该使用 var 关键字明确限定作用域，从而避免作用域污染
-（16）避免单个字符名，让你的变量名有描述意义
-（17）当命名对象、函数和实例时使用驼峰命名规则
-（18）给对象原型分配方法，而不是用一个新的对象覆盖原型，覆盖原型会使继承出现问题
-（19）当给事件附加数据时，传入一个哈希而不是原始值，这可以让后面的贡献者加入更多数据到事件数据里，而不用找出并更新那个事件的事件处理器`
+（1）不要在同一行声明多个变量  
+（2）如果你不知道数组的长度，使用 push  
+（3）请使用 ===/!== 来比较 true/false 或者数值  
+（4）对字符串使用单引号 ''(因为大多时候我们的字符串。特别html会出现")  
+（5）使用对象字面量替代 new Array 这种形式  
+（6）绝对不要在一个非函数块里声明一个函数，把那个函数赋给一个变量。浏览器允许你这么做，但是它们解析不同  
+（7）不要使用全局函数  
+（8）总是使用 var 来声明变量，如果不这么做将导致产生全局变量，我们要避免污染全局命名空间  
+（9）Switch 语句必须带有 default 分支  
+（10）使用 /**...*/ 进行多行注释，包括描述，指定类型以及参数值和返回值  
+（11）函数不应该有时候有返回值，有时候没有返回值  
+（12）语句结束一定要加分号  
+（13）for 循环必须使用大括号  
+（14）if 语句必须使用大括号  
+（15）for-in 循环中的变量应该使用 var 关键字明确限定作用域，从而避免作用域污染  
+（16）避免单个字符名，让你的变量名有描述意义  
+（17）当命名对象、函数和实例时使用驼峰命名规则  
+（18）给对象原型分配方法，而不是用一个新的对象覆盖原型，覆盖原型会使继承出现问题  
+（19）当给事件附加数据时，传入一个哈希而不是原始值，这可以让后面的贡献者加入更多数据到事件数据里，而不用找出并更新那个事件的事件处理器
 
 #### bind/call/apply
-`功能基本相同，都是实现继承或者转换对象指针的作用
-.bind(this,arg1,arg2)
-.call(对象[,参数1，参数2,....]);
-.apply(对象,参数数组);
+`
+//功能基本相同，都是实现继承或者转换对象指针的作用  
+.bind(this,arg1,arg2)  
+.call(对象[,参数1，参数2,....])  
+.apply(对象,参数数组)  
+fun2.call.apply(fun.bind,[123,12,67]) //fun.bind(123).call(null,12,67)
 `
 
 #### 媒体查询css
@@ -49,14 +51,14 @@ Create on Feb 22 2017 with match Mar.mid 2017
 `每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，于是就这样一直找下去，也就是我们平时所说的原型链的概念。
 关系：instance.constructor.prototype = instance.__proto__
 特点：JavaScript对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本，当我们修改原型时，与之相关的对象也会继承这一改变。Object实时传递，Function传递改变后的实例。
-当我们需要一个属性时，JavaScript引擎会先看当前对象中是否有这个属性，如果没有的话，就会查找它的prototype对象是否有这个属性，如此递推下去，一致检索到Object内建对象。
-function Func(){}
-Func.prototype.name = "Man";
-Func.prototype.getInfo = function() {
- return this.name;
-}
-var person = new Func();
-console.log(person.getInfo());//"Man"
+当我们需要一个属性时，JavaScript引擎会先看当前对象中是否有这个属性，如果没有的话，就会查找它的prototype对象是否有这个属性，如此递推下去，一致检索到Object内建对象。  
+function Func(){}  
+Func.prototype.name = "Man";  
+Func.prototype.getInfo = function() {  
+	return this.name;  
+}  
+var person = new Func();  
+console.log(person.getInfo());//"Man"  
 console.log(Func.prototype);//Func { name = "Man", getInfo = function() }`
 
 #### JavaScript 有几种类型的值？能否画一下它们的内存图？
@@ -70,51 +72,49 @@ console.log(Func.prototype);//Func { name = "Man", getInfo = function() }`
 #### 面向对象特性javascript实现 封装继承多态抽象
 `
 JS函数不支持多态函数重载,本身无状态 原生支持多态
-封装就是把抽象出来的数据和对数据的操作封装在一起，数据被保护在内部，程序的其它部分只有通过被授权的操作(成员方法)，才能对数据进行操作，JS封装只有两种状态，一种是公开的，一种是私有的。
-
-function Master(name){
-	// 公开
-	this.name = name;
-	// 私有
-	var salary = sal;
-}
-
-//原型添加成员方法
-Master.prototype.feed = function(animal,food){}
-
-通过构造函数添加成员方法和通过原型法添加成员方法的区别
-1、通过原型法分配的函数是所有对象共享的.
-2、通过原型法分配的属性是独立.(如果你不修改属性，他们是共享)
-3、建议，如果我们希望所有的对象使用同一一个函数，最好使用原型法添加函数，这样比较节省内存.
+封装就是把抽象出来的数据和对数据的操作封装在一起，数据被保护在内部，程序的其它部分只有通过被授权的操作(成员方法)，才能对数据进行操作，JS封装只有两种状态，一种是公开的，一种是私有的。  
+function Master(name){  
+	// 公开  
+	this.name = name;  
+	// 私有  
+	var salary = sal;  
+}  
+//原型添加成员方法  
+Master.prototype.feed = function(animal,food){}  
+  
+通过构造函数添加成员方法和通过原型法添加成员方法的区别  
+1、通过原型法分配的函数是所有对象共享的.  
+2、通过原型法分配的属性是独立.(如果你不修改属性，他们是共享)  
+3、建议，如果我们希望所有的对象使用同一一个函数，最好使用原型法添加函数，这样比较节省内存.  
 通过prototype给所有的对象添加方法，但是这种方式不能去访问类的私有变量
 `
 
 #### null 和 undefined 区别
-`null 表示一个对象被定义了，值为“空值”；
-undefined 表示不存在这个值。
-typeof undefined //"undefined"
-undefined :是一个表示"无"的原始值或者说表示"缺少值"，就是此处应该有一个值，但是还没有定义。当尝试读取时会返回 undefined； 
-例如变量被声明了，但没有赋值时，就等于undefined。
-typeof null //"object" 
-null : 是一个对象(空对象, 没有任何属性和方法)； 
-例如作为函数的参数，表示该函数的参数不是对象；
+`null 表示一个对象被定义了，值为“空值”；  
+undefined 表示不存在这个值。  
+typeof undefined //"undefined"  
+undefined :是一个表示"无"的原始值或者说表示"缺少值"，就是此处应该有一个值，但是还没有定义。当尝试读取时会返回 undefined；   
+例如变量被声明了，但没有赋值时，就等于undefined。  
+typeof null //"object"   
+null : 是一个对象(空对象, 没有任何属性和方法)；   
+例如作为函数的参数，表示该函数的参数不是对象；  
 注意： 在验证null时，一定要使用　=== ，因为 == 无法分别 null 和　undefined`
 
 #### 判断二维数组是否存在值
 `function isContains(arr,str){//多维数组判断是否存在某值
-     for(var i = 0;i < arr.length >>> 0;i++){
-          if(arr[i] instanceof Array){
-               binIndex = binIndex + 1;
-               isContains(arr[i],str);
-     }else{
-          if(new RegExp(arr[i]).test(str)){
-               bankBinName = {'0':'邮政储蓄银行','1':'浦发银行'}[binIndex] || null;
-               console.log('banBin'+ binIndex,bankBinName,'console绑卡bin');
-               return binHandle = true ;
-          }
-     }
-}
-  return -1;
+for(var i = 0;i < arr.length >>> 0;i++){  
+	if(arr[i] instanceof Array){  
+		binIndex = binIndex + 1;  
+		isContains(arr[i],str);  
+	}else{  
+	if(new RegExp(arr[i]).test(str)){  
+		bankBinName = {'0':'邮政储蓄银行','1':'浦发银行'}[binIndex] || null;  
+		console.log('banBin'+ binIndex,bankBinName,'console绑卡bin');  
+		return binHandle = true ;  
+	}
+}  
+}  
+	return -1;  
 }`
 
 #### 通用的事件侦听器函数
