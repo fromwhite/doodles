@@ -354,3 +354,418 @@ JS，CSS源码压缩
 避免使用CSS Expression  
 图片预载  
 避免在页面的主体布局中使用table，table要等其中的内容完全下载之后才会显示出来，显示比div+css布局慢  
+
+#### 重复
+```
+var repeat=(function(){
+     var join=Array.prototype.join,obj={};
+     return function(target,n){
+          obj.length=n+1;
+          return join.call(obj,target);
+     }
+```
+
+#### assign ， extend ， merge 函数
+```
+assign(object, [sources]) 函数会忽略原型链上的属性 会修改原来的对象
+extend(object, [sources]) 把原型链上的属性合并到目标对象(hasOwnProperty过滤)
+merge(object, [sources])  merge 遇到相同属性的时候，如果属性值为纯对象(plain object)或者集合(collection)时，不是用后面的属性值去覆盖前面的属性值，而是会把前后两个属性值合并 如果源对象的属性值为 undefined ，则会忽略该属性
+相同之处 都可以用来合并对象,都会修改原来的对象 (如果原来的对象是作为函数的第一个参数的话)
+var extend = function(target, source) {
+     for (var p in source) {
+         if (source.hasOwnProperty(p)) {
+              target[p] = source[p];
+         }
+     }
+     return target;
+};
+```
+
+#### 数组去重（哈希表）
+```
+var unique = Array.prototype.unique || function(){
+ var res = [];
+ var json = {};
+ for(var i = 0; i < this.length; i++){
+  if(!json[this[i]]){
+   res.push(this[i]);
+   json[this[i]] = 1;
+  }
+ }
+ return res;
+}
+```
+
+#### 冒泡排序
+```
+function bubbleSort(arr){
+  var i = j = 0;
+  for(i=1; i<arr.length; i++){
+    for(j=0; j<=arr.length-i; j++){
+      var temp = 0;
+      // ">" 从小到大排序
+      // "<" 从大到小排序
+      if(arr[j] > arr[j+1]){
+        temp = arr[j]
+        arr[j] = arr[j+1]
+        arr[j+1] = temp
+      }
+    }
+  }
+  return arr
+}
+```
+
+#### 插入排序
+```
+var arr=[2,4,1,5,3];
+  function insertSort(arr){
+    //遍历arr中每个元素(i从1开始)
+    for(var i=1;i<arr.length;i++){
+      //将当前元素临时保存在变量t中
+      var t=arr[i];
+      var p=i-1;//声明变量p=i-1
+      //循环:(arr[p]>t&&p>=0){
+      while(arr[p]>t&&p>=0){
+     //将p位置的值，赋值给p+1位置
+        arr[p+1]=arr[p];
+        p--;//p--
+      }//(循环结束)
+      arr[p+1]=t;//将t放在p+1的位置上
+    }//(循环结束)
+  }
+}
+insertSort(arr);
+console.log(String(arr));
+```
+
+#### 快速排序
+```
+method 1
+function quickSort(arr){
+    //如果arr的length<=1
+    if(arr.length<=1){
+      return arr;//就直接返回arr
+    }
+    //计算参照位p
+    var p=Math.floor(arr.length/2);
+    var left=[];
+    var right=[];
+    //删除p位置的元素
+    var center=arr.splice(p,1)[0];
+    //遍历arr中每个元素
+    for(var i=0;i<arr.length;i++){
+      if(arr[i]>=center){
+        right.push(arr[i]);
+      }else{
+        left.push(arr[i]);
+      }
+    }
+    return quickSort(left) .concat(center,quickSort(right))
+}
+var sortedArr=quickSort(arr);
+console.log(String(sortedArr));
+
+method 2
+function quickSort(arr,l,r){
+  if(l < r){
+    var i = l, j = r, x = arr[i];
+    while(i<j){
+      while(i<j && arr[j]>x)
+        j--;
+      
+      if(i<j)
+        //这里用i++，被换过来的必然比x小，赋值后直接让i自加，不用再比较，可以提高效率
+        arr[i++] = arr[j];
+      
+      while(i<j && arr[i]<x)
+        i++;
+      
+      if(i<j)
+        //这里用j--，被换过来的必然比x大，赋值后直接让j自减，不用再比较，可以提高效率
+        arr[j--] = arr[i];
+    }
+    arr[i] = x;
+    
+    quickSort(arr, l, i-1);
+    quickSort(arr, i+1, r);
+  }
+}
+```
+
+#### 数组中最大差值
+```
+function getMaxProfit(arr){
+  var min = arr[0],
+      max = arr[0];
+  for(var i = 0; i < arr.length; i++){
+    if(arr[i] < min) min = arr[i];
+    if(arr[i] > max) max = arr[i];
+  }
+  return max - min;
+}
+```
+
+#### 阶乘
+```
+非递归实现
+function factorialize(num) {
+  var result = 1;
+    if(num < 0) return -1;
+    if(num == 0 || num == 1) return 1;
+    while(num>1) {
+      result *= num--;
+    }
+    return result;
+}
+
+递归实现
+function factorialize(num) {
+  var result = 1;
+  if(num < 0) return -1;
+  if(num == 0 || num == 1) return 1;
+  if(num > 1) return num*factorialize(num-1);
+}
+```
+
+#### 生成菲波那切数列
+```
+强行递归实现
+function getfib(n){
+  if(n == 0) return 0;
+  if(n == 1) return 1;
+  if(n > 1) return getfib(n-1) + getfib(n-2);
+}
+function fibo(len){
+    var fibo = [];
+    for(var i = 0; i < len; i++){
+      fibo.push(getfib(i));
+    }
+    return fibo;
+}
+
+简约非递归实现
+function getFibonacci(n) {
+  var fibarr = [];
+  var i = 0;
+  while(i < n) {
+    if(i <= 1) {
+      fibarr.push(i);
+    } else {
+      fibarr.push(fibarr[i - 1] + fibarr[i - 2])
+    }
+    i++;
+  }
+  return fibarr;
+}
+```
+
+#### 二分查找
+```
+非递归实现
+function binary_search(arr, key) {
+  var low = 0,
+      high = arr.length - 1;
+  while(low <= high){
+    var mid = parseInt((high + low) / 2);
+    if(key == arr[mid]){
+      return mid;
+    }else if(key > arr[mid]){
+      low = mid + 1;
+    }else if(key < arr[mid]){
+      high = mid -1;
+    }
+  }
+  return -1;
+}
+
+递归实现
+function binary_search2(arr, low, high, key) {
+  if(low > high) return -1;
+  var mid = parseInt((low + high)/2);
+  if(key == arr[mid]) {
+    return mid;
+  } else if(key > arr[mid]) {
+    return binary_search2(arr, mid+1, high, key);
+  } else if(key < arr[mid]) {
+    return binary_search2(arr, low, mid-1, key);
+  }
+}
+```
+
+#### 二路归并
+```
+function merge(left, right) {
+    var result = [],
+        il = 0,
+        ir = 0;
+
+    while (il < left.length && ir < right.length) {
+        if (left[il] < right[ir]) {
+            result.push(left[il++]);
+        } else {
+            result.push(right[ir++]);
+        }
+    }
+    while(left[il]){
+        result.push(left[il++]);
+    }
+    while(right[ir]){
+        result.push(right[ir++]);
+    }
+    return result;
+}
+```
+
+#### 统计字符串中每种字符出现的次数(hash)
+```
+var str="helloworld";
+for(var i=0,hash={};i<str.length;i++){
+    if(hash[str[i]]){
+      hash[str[i]]++
+    }else{
+      hash[str[i]]=1;
+    }
+}
+console.dir(hash);
+```
+
+#### 数组降维
+```
+var arr=[
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+];
+//method 1:
+for(var r=0,arr1=[];r<arr.length;r++){
+    for(var c=0;c<arr[r].length;c++){
+      arr1.push(arr[r][c]);
+    }
+}
+console.dir(arr1);
+//method 2: 
+for(var r=0,arr2=[];r<arr.length;r++){
+    arr2=arr2.concat(arr[r]);
+}
+console.dir(arr2);
+//method 3:
+var arr2=[].concat.apply([],arr);
+console.dir(arr2);
+```
+
+#### 深克隆
+```
+Object.clone=function(obj){//深克隆
+if(typeof(obj)=="object"){//如果obj是对象
+  var o=//有必要区分数组和普通对象
+  Object.prototype.toString.call(obj)=="[object Array]"?[]:{};
+      for(var key in obj){//遍历obj的自有属性
+          //如果key是obj的自有属性
+          if(obj.hasOwnProperty(key)){
+              o[key]=arguments.callee(obj[key]);//arguments.callee调的是当前的Object.clone函数
+              }
+      }
+      return o;
+      }else{//如果obj是原始类型的值，就直接返回副本
+          return obj;
+      }
+}
+```
+
+#### every
+```
+if(Array.prototype.every===undefined){
+     Array.prototype.every=function(fun){
+      //遍历当前数组中每个元素
+      for(var i=0;i<this.length;i++){
+          if(this[i]!==undefined){
+//调用fun,依次传入当前元素值,位置i,当前数组作为参数  ，将返回值，保存在变量r中
+          var r=fun(this[i],i,this);
+          if(r==false){//如果r为false
+             return false;//返回false
+          }
+          }
+           }//(遍历结束)
+       return true;//返回true
+     }
+}
+```
+
+#### some
+```
+if(Array.prototype.some===undefined){
+     Array.prototype.some=function(fun){
+        for(var i=0;i<this.length;i++){
+        if(this[i]!==unefined){
+          var r=fun(this[i],i,this);
+              if(r==true){ return true; }
+                }
+            }
+        return false;
+     }    
+  }
+```
+
+#### map
+```
+if(Array.prototype.map===undefined){
+     Array.prototype.map=function(fun){
+      //创建空数组: newArr
+      var newArr=[];
+      //遍历当前数组中每个元素
+      for(var i=0;i<this.length;i++){
+         //如果当前元素不是undefined
+         if(this[i]!==undefined){//判断稀疏数组
+//调用fun传入当前元素值，位置i，当前数组，将结果保存在r中
+              //将newArr的i位置赋值为r
+          var r=fun(this[i],i,this);
+                  newArr[i]=r;
+         }
+      }//(遍历结束)
+      return newArr;//返回newArr
+     }
+}
+```
+
+#### reduce
+```
+if(Array.prototype.reduce===undefined){
+     Array.prototype.reduce=function(fun,base){
+       base===undefined&&(base=0);
+       for(var i=0;i<this.length;i++){
+      if(this[i]!==undefined){
+         base=fun(base,this[i],i,this);
+      }
+           }
+       return base;
+         }
+}
+```
+
+#### bind
+```
+if(Function.prototype.bind===undefined){
+     Function.prototype.bind=function(obj/*，参数列表*/){
+      var fun=this;//留住this
+              //*****将类数组对象，转化为普通数组
+      var args=Array.prototype.slice.call(arguments,1);
+      //args保存的就是提前绑定的参数列表
+      /*function slice(1){
+         var sub=[];
+         for(var i=0;i<length;i++){
+          sub.push(arguments[i]);
+         }
+         return sub;
+      }*/
+      return function(){
+                 //将后传入的参数值，转为普通数组      
+         var innerArgs=Array.prototype.slice.call(arguments);//将之前绑定的参数值和新传入的参数值，拼接为完整参数之列表
+         var allArgs=args.concat(innerArgs)
+        //调用原始函数fun，替换this为obj，传入所有参数
+        fun.apply(obj,allArgs);
+      }
+     }
+}
+```
