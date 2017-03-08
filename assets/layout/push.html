@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -59,3 +59,446 @@
     </div>
   </body>
 </html>
+ -->
+<!DOCTYPE html>  
+<html lang="en" class="home scrollLock">  
+    <head>  
+        <meta charset="utf-8"> 
+        <meta name="renderer" content="webkit" />
+		<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<metac>pushhere图片渐显模糊</metac>
+        <title>push</title>  
+        <style>
+			/*http://pushhere.com/  http://hleb-dom.ru/en/ */
+			body{
+			margin:0;padding:0;/*	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAAHmWi9wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNpinDFjemBgIAMaePv2zX8MwMSADdBKFCCAGF++fIEuBHQEYb3UFAIIIOwBQWzQEOvVwaMOIICwBDoWRZjRQKaNo4rorQgggBiBCVpISJiBGoCJgXpg1KxRs0aiWQABxPj79+93795SbhAwUxNVLo+G/ahZo2aNmjVq1qhZI8wsgADt1zERADAMAsD6t5B4bRHRgeGj4I8FctKPM3ObLp6fk7w1eSwsLCwsLCwsLCwsrE5WvrHdrTLF8wBDaPAHu14WwgAAAABJRU5ErkJggg==");background-position: center center;background-repeat: repeat;background-size: 20px 20px;overflow: hidden;*/
+			}
+			img, canvas, iframe, video, svg { display: block; max-width: 100%; height: auto; }
+			html.home body{overflow:hidden}
+			.scrollLock, .scrollLock body{overflow:hidden}
+			body{min-height: 100%}
+			html, body {
+				color: #fff;
+				font-family: 'Gotham A', 'Gotham B';
+				font-weight: 400;
+				font-style: normal;
+				font-size: 12px;
+				background: black
+			}
+			canvas,video{display: none}
+			
+			#view_wrapper{width: 100%;height: 100%;overflow: hidden;-webkit-transition:all 0.5s ease;transition:transform 0.5s ease}
+			#previous{display:inline;background-position:right center;border-right:15px solid transparent;position:absolute;top: 5px;right: 0;z-index:2;width: 100%;height: 30px;background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAHCAMAAADgW+cVAAAANlBMVEUAAAD////////////////////////////////////////////////////////////////////xY8b8AAAAEnRSTlMAB1qcbmaVjaNwTRFBKxs4AqsK+C5bAAAAP0lEQVQI102Mxw0AIAwDTU3osP+ylEgo97B1DxtCWgkK8tPTNxPDyRCNaHH2tXXlVucMIXMHGtc/rNxAQ/0O2jsIATAKqwxnAAAAAElFTkSuQmCC") no-repeat right center}
+			#next{display: inline;background-position:right center;border-right: 15px solid transparent;position: absolute;bottom:5px;right: 0;z-index: 2;width: 100%;height: 30px;background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAHCAMAAADgW+cVAAAANlBMVEUAAAD////////////////////////////////////////////////////////////////////xY8b8AAAAEnRSTlMAB1qcbmaVjaNwTRFBKxs4AqsK+C5bAAAAP0lEQVQI102LRw4AIBACse7a9f+ftUblAAwJoIKnQkgcL0ZOQGZ/0HOeEZRcKFXYu7BmuLHiHklXTfjkmtulA0poATCsVqCiAAAAAElFTkSuQmCC") no-repeat right center}
+			
+			#view_index{display: block;position: absolute;/*left: 30px;top: 45px;*/z-index: 5;list-style: none;margin: 0;padding: 0;top: auto;bottom: 10px;left: 5px}
+			#view_index li{padding: 0;text-align: center;}
+			#view_index li a{padding: 8px;width: 6px;
+			height: 6px;display: block}
+			#view_index li a:before{content: '';position: absolute;width: 6px;height: 6px;background: rgba(255,255,255,0.85);left: 12px;border-radius: 10px;}
+			#view_index li a.active{cursor: default;}
+			#view_index li a.active:before{width: 15px;height: 15px;background: none;border: 2px solid white;margin-top: -6px;left: 5px;animation: scaleUp 0.3s forwards;}
+			
+			
+			/* Webkit Animations */
+			@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes scaleUp {
+    0% {
+        -webkit-transform: scale(0.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@-webkit-keyframes fadeUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(1000px) rotateY(-180deg);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0) rotateY(0deg);
+    }
+}
+
+@-webkit-keyframes fadeDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-1000px) rotateY(180deg);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0) rotateY(0deg);
+    }
+}
+
+@-webkit-keyframes flipUp {
+    0% {
+        -webkit-transform: rotateX(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(-180deg);
+    }
+}
+
+@-webkit-keyframes flipBack {
+    0% {
+        -webkit-transform: rotateX(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(-90deg);
+    }
+}
+
+@-webkit-keyframes slideUp {
+    0% {
+        -webkit-transform: translateY(500px);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes slideDown {
+    0% {
+        -webkit-transform: scale(1) translateY(0);
+    }
+    50% {
+        -webkit-transform: scale(0.85) translateY(0);
+    }
+    100% {
+        -webkit-transform: scale(0.85) translateY(500px);
+    }
+}
+
+@-webkit-keyframes slideLeftOut {
+    0% {
+        -webkit-transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+    25% {
+        -webkit-transform: scale(0.75) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(0.75) translateX(-500px);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes slideLeftIn {
+    0% {
+        -webkit-transform: scale(0.75) translateX(500px);
+        opacity: 0;
+    }
+    75% {
+        -webkit-transform: scale(0.75) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes slideRightOut {
+    0% {
+        -webkit-transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+    25% {
+        -webkit-transform: scale(0.75) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(0.75) translateX(500px);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes slideRightIn {
+    0% {
+        -webkit-transform: scale(0.75) translateX(-500px);
+        opacity: 0;
+    }
+    75% {
+        -webkit-transform: scale(0.75) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes kenburns {
+    0% {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+    50% {
+        -webkit-transform: scale(1.4) rotate(0.3deg);
+    }
+    100% {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+}
+
+@-webkit-keyframes grain {
+    0%, 100% {
+        -webkit-transform: translate(0, 0, 0);
+    }
+    10% {
+        -webkit-transform: translate(-1%, -1%);
+    }
+    20% {
+        -webkit-transform: translate(1%, 1%);
+    }
+    30% {
+        -webkit-transform: translate(-2%, -2%);
+    }
+    40% {
+        -webkit-transform: translate(3%, 3%);
+    }
+    50% {
+        -webkit-transform: translate(-3%, -3%);
+    }
+    60% {
+        -webkit-transform: translate(4%, 4%);
+    }
+    70% {
+        -webkit-transform: translate(-4%, -4%);
+    }
+    80% {
+        -webkit-transform: translate(2%, 2%);
+    }
+    90% {
+        -webkit-transform: translate(-2%, -2%);
+    }
+}
+
+@-webkit-keyframes mobileIcon {
+    0% {
+        right: 0;
+    }
+    10% {
+        right: 0;
+    }
+    30% {
+        right: 60px;
+    }
+    80% {
+        right: 60px;
+    }
+    90% {
+        right: 0;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@-webkit-keyframes mobileIconLabel {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    35% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Mobile Animations */
+
+@media only screen and (max-width: 1024px) {
+
+    @keyframes fadeUp {
+        0% {
+            opacity: 0;
+            transform: translateY(320px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-320px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Webkit */
+
+    @-webkit-keyframes fadeUp {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(320px);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+    }
+
+    @-webkit-keyframes fadeDown {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(-320px);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+    }
+
+}
+        </style>
+    </head>  
+    <body data-viewid='4'>  
+        
+      	<canvas id="pixel" width="800" height="500" controls oncontextmenu="return false;"></canvas> 
+		<video src='javascript:void(0)' width="400" height="240" controls oncontextmenu="return false;"></video>
+<!--        <script src="http://apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
+		
+		<main id='view_wrapper' data-url='index'>
+		<a id="previous" href="javascript:void(0)"></a>
+		<a id="next" href="javascript:void(0)"></a>
+		<ul id="view_index">
+			<li><a data-index='1' hrref="javascript:void(0)"></a></li>
+			<li><a data-index='2' hrref="javascript:void(0)"></a></li>
+			<li><a data-index='3' hrref="javascript:void(0)"></a></li>
+			<li><a data-index='4' hrref="javascript:void(0)" class="active"></a></li>
+		</ul>
+		</main>
+		
+		<script>	
+			function main(){
+				//slide
+				var list = document.getElementById('view_index');
+				delegateEvent(list,'a','click',function(){
+					//console.log(this.dataset.index)
+					document.querySelector('.active').classList.remove('active');
+					document.querySelector('body').dataset.viewid = this.dataset.index;
+					this.classList.add('active');
+				})
+				var item = list.querySelectorAll('li');
+				var itemSum = item.length;
+				//slide up
+				function slideUP(){
+					var old_active = document.getElementsByClassName('active')[0];
+					var index = Number(document.getElementsByTagName('body')[0].dataset.viewid);
+					if( index == 1 ){
+						document.querySelector('body').dataset.viewid = itemSum;
+						item[itemSum-1].querySelector('a').classList.add('active');
+					}else{
+						document.querySelector('body').dataset.viewid = index - 1;
+						item[index - 2].querySelector('a').classList.add('active');
+					}
+					old_active.classList.remove('active');
+				}
+				//slideDOWN
+				function slideDown(){
+					var old_active = document.getElementsByClassName('active')[0];
+					var index = Number(document.getElementsByTagName('body')[0].dataset.viewid);
+					if(index == itemSum ){
+						document.querySelector('body').dataset.viewid = 1;
+						item[0].querySelector('a').classList.add('active');
+					} 
+					if(index < itemSum){
+						document.querySelector('body').dataset.viewid = index + 1;
+						item[index].querySelector('a').classList.add('active');
+					}
+					old_active.classList.remove('active');
+				}
+				document.getElementById('previous').addEventListener('click',slideUP,false);
+				document.getElementById('next').addEventListener('click',slideDown,false);
+				document.addEventListener('mousewheel',function(e){
+					var e = e || window.event;
+					if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件               
+						if (e.wheelDelta > 0) { //当滑轮向上滚动时  
+							slideUP(); 
+						}  
+						if (e.wheelDelta < 0) { //当滑轮向下滚动时  
+							slideDown();  
+						}  
+					} else if (e.detail) {  //Firefox滑轮事件  
+						if (e.detail> 0) { //当滑轮向上滚动时  
+							slideUP();  
+						}  
+						if (e.detail< 0) { //当滑轮向下滚动时  
+							slideDown(); 
+						}  
+					}  
+				},false);
+			}
+
+			window.onload = main;
+			
+			
+			function delegateEvent(interfaceEle, selector, type, fn) {
+
+    			if(interfaceEle.addEventListener){
+    				interfaceEle.addEventListener(type, eventfn);
+    			}else{
+    				interfaceEle.attachEvent("on"+type, eventfn);
+    			}
+     
+    			function eventfn(e){
+    				var e = e || window.event;    
+    				var target = e.target || e.srcElement;
+    				//如果目标元素与选择器匹配则执行函数
+    				if (matchSelector(target, selector)) {
+            			if(fn) {
+ 							//将fn内部的this指向target（在此之前this都是指向的绑定事件的元素即	interfaceEle）
+                			fn.call(target, e); 
+            			}
+        			}
+    			}
+				
+				//比较函数：判断事件的作用目标是否与选择器匹配；匹配则返回true
+				function matchSelector(ele, selector) {
+    			// 如果选择器为ID
+    			if (selector.charAt(0) === "#") {            
+        			return ele.id === selector.slice(1);   
+    			}
+      			//charAt(0),返回索引为0的字符
+    			//slice(a，b),从已有的数组或字符串返回从索引从a处开始，截取到索引b之前的子数组或子字符串；
+    			//如果选择器为Class
+    			if (selector.charAt(0) === ".") {
+        			return (" " + ele.className + " ").indexOf(" " + selector.slice(1) + " ") != -1;
+    			}
+    			// 如果选择器为tagName
+				return ele.tagName.toLowerCase() === selector.toLowerCase();
+			}
+		};
+	
+
+		</script>
+    </body>  
+</html>  
