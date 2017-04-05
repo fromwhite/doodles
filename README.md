@@ -1,21 +1,22 @@
-###notes and reserved. 
+### dev
+### notes and reserved. 
 
  * Output static resource
  * Execution request processing method
 
-###Installation dependency & Start
+### Installation dependency & Start
 ```
-git clone git@github.com:shui14/notes.git
-cd notes
+git clone git@github.com:shui14/dev.git
+cd dev
 npm install
 
 //build directory
 node main
 ```
 
-###Future
+### Future
 * add animate
 * fixed canvas
 
 ###Discussing
-* email <1536642700@qq.com>
+* email <vvinc@foxmail.com>
