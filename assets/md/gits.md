@@ -37,10 +37,10 @@ IdentityFile ~/.ssh/id_rsa_work
 ```
 * 记住上面一步 Host 里设置的别名,开始克隆项目,以开github为例 
 ```
-原来 git clone git@github.com:vvinc/notes.git
+原来 git clone git@github.com:vvinc/dev.git
 ```
 ```
-现在 git clone vinc:vvinc/notes.git
+现在 git clone vinc:vvinc/dev.git
 
 ```
 * 记得给这个仓库设置局部的用户名和邮箱
