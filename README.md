@@ -1,4 +1,3 @@
-### dev
 ### notes and reserved. 
 
  * Output static resource
@@ -6,12 +5,14 @@
 
 ### Installation dependency & Start
 ```
-git clone git@github.com:shui14/dev.git
-cd dev
+git clone git@github.com:shui14/noted.git
+cd noted
 npm install
 
 //build directory
 node main
+//serve
+node server [port]
 ```
 
 ### Future
