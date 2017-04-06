@@ -36,8 +36,9 @@ const
 // new server
 http.createServer(function(req, res) {
 
+  let uril = url.parse(req.url).pathname;
   let
-    uri = url.parse(req.url).pathname,
+    uri = uril.indexOf('.')>0 ? uril : uril + '.html',
     filename = path.join(process.cwd(), uri);
 
   // file available?
