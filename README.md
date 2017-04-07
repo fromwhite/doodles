@@ -5,8 +5,8 @@
 
 ### Installation dependency & Start
 ```
-git clone git@github.com:shui14/noted.git
-cd noted
+git clone git@github.com:shui14/dev.git
+cd dev
 npm install
 
 //build directory
