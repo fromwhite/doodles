@@ -16,6 +16,12 @@ exec ssh-agent bash
 系统已经有ssh-key 代理 ,执行下面的命令可以删除
 $ ssh-add -D
 ```
+如果系统提示：could not open a connection to your authentication agent
+则需要执行一下命令：
+```
+ssh-agent bash
+```
+然后再执行上述的ssh-add id_rsa命令
 * 把 .ssh 目录下的2个私钥添加的 ssh-agent 
 ```
 $ ssh-add ~/.ssh/id_rsa_vinc ssh-add ~/.ssh/id_rsa_work
