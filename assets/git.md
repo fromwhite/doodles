@@ -62,4 +62,9 @@ $ git config user.name "work" ; git config user.email "work_email"
 $ rm -f ./.git/index.lock
 ```
 
+* 从git管理目录中删除git记录
+```
+$ git rm -r --cached files
+```
+
 to be continued
