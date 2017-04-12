@@ -12,7 +12,7 @@ npm install
 //build directory
 node main
 //serve
-node server [port]
+node servlet [port]
 ```
 
 ### Future
