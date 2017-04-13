@@ -1,14 +1,3 @@
-#!/usr/bin/env node
-
-/*
-server.js: launches a static file web server from the current folder
-
-make executable with `chmod +x ./server.js`
-run with `./server.js [port]`
-where `[port]` is an optional HTTP port (8888 by default)
-*/
-
-//servlet
 'use strict';
 
 const
@@ -36,9 +25,8 @@ const
 // new server
 http.createServer(function(req, res) {
 
-  let uril = url.parse(req.url).pathname;
   let
-    uri = uril.indexOf('.')>0 ? uril : uril + '.html',
+    uri = url.parse(req.url).pathname,
     filename = path.join(process.cwd(), uri);
 
   // file available?
