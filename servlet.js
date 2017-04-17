@@ -1,3 +1,13 @@
+#!/usr/bin/env node
+
+/*
+launches a static file web server from the current folder
+
+make executable with `chmod +x ./server.js`
+run with `./server.js [port]`
+where `[port]` is an optional HTTP port (8888 by default)
+*/
+
 'use strict';
 
 const
