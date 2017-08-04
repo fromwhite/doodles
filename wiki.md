@@ -14,7 +14,8 @@
 2017.6.10 update account
 folder
 reserved 保留草稿
-。。todo
+assets 文档资源
+common 公共文件
 
 
 
