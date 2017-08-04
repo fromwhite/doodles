@@ -5,7 +5,7 @@
 
 ### Installation dependency & Start
 ```
-git clone git@github.com:shui14/dev.git
+git clone git@github.com:vincc/h5coach.git
 cd dev
 npm install
 
