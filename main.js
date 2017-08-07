@@ -1,9 +1,5 @@
-/**
- * User: vinc
- * Date: 2015 11 9
- * Time: 18:12
- * To change this template use File | Settings | File Templates.
- */
+#!/usr/bin/env node
+
 const port='4000';
 const base = 'assets/';
 const http = require("http");
