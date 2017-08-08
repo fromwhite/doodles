@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const port='4000';
-const base = 'assets/';
+const base = './';
 const http = require("http");
 const url  = require("url");
 const fs   = require("fs");
@@ -114,15 +114,14 @@ files.sort(function(a, b) {
 
 
 const pagePreFix = '';
-const sourcePrefix = 'https://github.com/shui14/notes/tree/master/';
+const sourcePrefix = 'https://github.com/vincc/h5coach/tree/master/';
 
 let html = fs.readFileSync('./index.html').toString();
 
 let ul_html = '<div class="main">';
 
 const mlList = [
-    'layout',
-    'canvas'
+    'src'
     ];
 
 
@@ -155,8 +154,6 @@ ul_html += '</div>';
 html = html.replace(/(<body>)[\s\S]*?(<\/body>)/, '$1' + ul_html + '$2');
 
 fs.writeFileSync('./index.html', html);
-//fs.writeFileSync('./README.md', readme);
-
 
 server.listen(port);
 console.log("http server run in port:"+port);
@@ -172,10 +169,6 @@ if (process.platform == 'win32') {
     cmd = 'open';
 }
 
-// function copen (url) {
-//   c.exec( cmd + ' ' + url );
-// };
-// copen('http://localhost:4000/');
 cmd && c.exec (cmd + ' ' + 'http://localhost:' + port + '/' );
 
 
@@ -201,4 +194,3 @@ function findHtml(folder_path, collector) {
 
   return collector;
 }
-
