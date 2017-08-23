@@ -1,4 +1,5 @@
 node_modules/*
 /reserved
+/assets
 /npm-debug.log
 

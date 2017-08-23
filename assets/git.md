@@ -67,4 +67,27 @@ $ rm -f ./.git/index.lock
 $ git rm -r --cached files
 ```
 
+* 查看远端路径
+```
+git remote show origin 
+```    
+
+* 查看用户名或邮箱
+```
+git config user.name
+git config user.email
+```   
+
+* 修改用户名或邮箱
+```
+git config user.email vvinc@foxmail.com
+```    
+
+* 修改默认push／pull url
+```
+git remote set-url origin https://github.com/vincc/docker4dev.git
+```    
+
+
+
 to be continued
