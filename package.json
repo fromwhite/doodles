@@ -1,13 +1,12 @@
 {
-  "name": "devcase",
+  "name": "showcase",
   "version": "1.0.0",
   "description": "dev",
   "main": "servlet.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node main.js",
     "serve": "node ./servlet.js"
   },
-  "author": "vinc",
+  "author": "vincent",
   "license": "MIT"
 }
