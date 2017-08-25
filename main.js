@@ -1,9 +1,12 @@
-const http = require("http");
-const url  = require("url");
-const fs   = require("fs");
-const path = require("path");
-const zlib = require("zlib");
-const c = require('child_process');
+#!/usr/bin/env node
+
+
+const   http = require("http"),
+        url  = require("url"),
+        fs   = require("fs"),
+        path = require("path"),
+        zlib = require("zlib"),
+        c = require('child_process');
 
 const port  = parseInt(process.argv[2] || 8888, 10);
 const server = require('./servlet.js');
