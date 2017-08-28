@@ -8,7 +8,7 @@
 *
 */
 
-//山寨underscore笔记
+//山寨underscore
 ;(function(){
 	
     var root = this;
