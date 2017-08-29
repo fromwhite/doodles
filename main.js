@@ -52,7 +52,7 @@ mlList.forEach(function(f) {
 
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
-            const tiAtl = /<metac>(.*)<\/metac>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
+            const tiAtl = /<meta description>(.*)<\/meta>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
             ul_html += `<li><a href='${p[0]}' target='_blank' class='' title='${title}'>${tiAtl}</a></li>`;
         });
