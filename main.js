@@ -42,12 +42,14 @@ mlList.forEach(function(f) {
   if (array.length > 0) {
     
         ul_html += `<ul class='list'>`;
-
+        function setDate(){
+            return +new Date()
+        }
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
-            const tiAtl = /<meta description>(.*)<\/meta>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
+            const tiAtl = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${p[0]}' target='_blank' class='' title='${title}'>${tiAtl}</a></li>`;
+            ul_html += `<li><a href='${p[0]}?${setDate()}' target='_blank' class='' title='${title}'>${tiAtl}</a></li>`;
         });
 
         ul_html += '</ul>';
