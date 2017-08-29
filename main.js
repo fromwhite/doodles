@@ -23,17 +23,11 @@ files.sort(function(a, b) {
   return bstat.mtime - astat.mtime;
 });
 
-
-const pagePreFix = '';
-const sourcePrefix = 'https://github.com/vincc/h5coach/tree/master/';
-
 let html = fs.readFileSync('./index.html').toString();
 
 let ul_html = '<div class="main">';
 
-const mlList = [
-    'src'
-    ];
+const mlList = ['src'];
 
 
 // 添加列表内容
@@ -47,8 +41,7 @@ mlList.forEach(function(f) {
 
   if (array.length > 0) {
     
-        const filedir = sourcePrefix + 'assets/' + f;
-        ul_html += `<p><a href='${filedir}' target='_blank' title='查看源码'>${f}</a></p><ul class='list'>`;
+        ul_html += `<ul class='list'>`;
 
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
