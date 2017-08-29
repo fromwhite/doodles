@@ -45,11 +45,16 @@ mlList.forEach(function(f) {
         function setDate(){
             return +new Date()
         }
+        function getColor(){
+            var color = ['#87C4A3','#EF9F64','#9B7FE6','#E794AE','#F4696B','#63C5AB','#F4C3C5','#FEC54F','#98BFF6','#de89ac','#9B7AD5','#FD9372','#ccc5e3','#F68F6F','#3CCAD1','#DFBC94','#FDACB4','#FDACB4','#79BBB5','#A0CADB','#a09de5','#785ebb','#84A5DD'];
+            var r = Math.floor(Math.random()*color.length);
+            return color[r];
+        }
         array.forEach(function(p) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
             const tiAtl = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${p[0]}?${setDate()}' target='_blank'>${tiAtl}</a></li>`;
+            ul_html += `<li><a href='${p[0]}?${setDate()}' style='color:${getColor()}' target='_blank'>${tiAtl}</a></li>`;
         });
 
         ul_html += '</ul>';
