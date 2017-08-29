@@ -49,7 +49,7 @@ mlList.forEach(function(f) {
             const title = /<title>(.*)<\/title>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Document';
             const tiAtl = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(p[0]).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${p[0]}?${setDate()}' target='_blank' class='' title='${title}'>${tiAtl}</a></li>`;
+            ul_html += `<li><a href='${p[0]}?${setDate()}' target='_blank'>${tiAtl}</a></li>`;
         });
 
         ul_html += '</ul>';
