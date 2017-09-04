@@ -5,7 +5,7 @@
 
 #### 获取与快速开始
 ```
-git clone git@github.com:vincc/h5coach.git
+git clone git@github.com:vincc/h5test.git
 cd dev
 npm install
 
