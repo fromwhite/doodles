@@ -27,7 +27,7 @@ let html = fs.readFileSync('./index.html').toString();
 
 let ul_html = '<div class="main">';
 
-const mlList = ['src'];
+const mlList = ['app'];
 
 
 // 添加列表内容

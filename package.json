@@ -4,9 +4,25 @@
   "description": "dev",
   "main": "servlet.js",
   "scripts": {
-    "build": "node main.js",
-    "serve": "node ./servlet.js"
+    "release": "node main.js",
+    "serve": "node ./servlet.js",
+    "build": "export NODE_ENV=PROD && webpack --progress --watch",
+    "dev": "export NODE_ENV=DEV && webpack-dev-server"
   },
   "author": "vincent",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "file-loader": "^0.9.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.1.0-beta.28",
+    "webpack-dev-server": "^2.1.0-beta.12",
+    "html-webpack-plugin": "^2.15.0"
+  }
 }

@@ -1,6 +1,6 @@
 node_modules/*
 /reserved
-/assets
+/reserved/assets
 /npm-debug.log
 */.DS_Store
 .DS_Store

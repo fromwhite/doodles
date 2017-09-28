@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>street1</title>
+    <meta name="description" content="canvas绘制测试(canvas,canvas buffer,webgl 2d)" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="image/facico.ico" type="image/x-icon" />
+    <style>
+    html, body, canvas {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    }
+    body {
+    background: radial-gradient(hsl(255, 18%, 35%), hsl(198, 32%, 8%));
+    }
+    </style>
+  </head>
+  <body>
+        <canvas id='ctx' controls oncontextmenu="return false;"></canvas>
+        <script src="common/stats.min.js"></script>
+        <script src="common/_.js"></script>
+        <script>
+            var stats = new Stats();
+            stats.setMode(0);
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.right = '0px';
+            stats.domElement.style.top = '0px';
+            document.body.appendChild( stats.domElement );
+ 
+
+
+            const canvas = document.querySelector('#ctx');
+            retinaFy(canvas);
+          
+            window.addEventListener('resize', () => {
+                retinaFy(canvas);
+            });
+
+            //world
+            class Street {
+                constructor({ctx}) {
+                    this.ctx = ctx;
+                    this.update();
+                    this.draw();
+                }
+            }
+
+            //loader
+            class Loader {
+                constructor() {
+                    this._images = [];
+                }
+
+                //加载图片数组，全部加载完毕执行回调
+                load() {
+
+                }
+            }
+            
+        function main(){
+            //加载静态资源
+            let loader = new Loader();
+            let source = [
+                {src: 'assets/images/number.png'},
+                {src: 'assets/images/over.png'},
+                {src: 'assets/images/sprites.png'}
+            ];
+            loader.load(source, function() {
+                start(); //开始游戏
+            });
+        }
+        window.onload = main;
+        export let counter = 3;
+        </script>
+  </body>
+</html>
