@@ -17,7 +17,7 @@ let entry = PROD
         street:'./src/'+ chname +'.js'
     }
     :   [
-            './src/street.js',
+            './src/'+ chname +'.js',
             'webpack-dev-server/client?http://localhost:8080',
             'webpack/hot/only-dev-server'
         ];
@@ -59,7 +59,7 @@ var plugins = PROD
         }),
         new HtmlWebpackPlugin(
             {
-                filename: "app/"+ chname +".html",
+                filename: "index.html",
                 title: chname,
                 description:chdescription,
                 template: 'tpl/canvas.html'
