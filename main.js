@@ -9,7 +9,7 @@ const   http = require("http"),
         c = require('child_process');
 
 const port  = parseInt(process.argv[2] || 8888, 10);
-const server = require('./servlet.js');
+const server = require('./server.js');
 
 const base = './';
 
