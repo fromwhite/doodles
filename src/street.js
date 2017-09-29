@@ -47,23 +47,37 @@ class Loader {
     }
 }
 
+// {
+//     font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+//     line-height: 1.5;
+//     font-size: 15px;
+//     font-weight: 400;
+//     color: #ccc;
+//  Loading...
+
+// }
 
 //舞台基类
 class Stage {
     constructor(options) {
-        this.context = options.el.getContext('2d');
-        this.update();
+        this.context = options.stg.getContext('2d');
+        this.load = null;
+        this.reload();
+    }
+    reload() {
+        this._width = options.stg.parentNode.offsetWidth;
+        this._height = options.stg.parentNode.offsetHeight;
+        this.dpr = window.devicePixelRatio || 1;
+        this.width = dpr * this._width;
+        this.height = dpr * this._height;
     }
     clear() {
         this.context.clearRect(0, 0, this.width, this.height);
     }
     update() {
+        //clear loading
         this.clear();
-        this._width = options.el.parentNode.offsetWidth;
-        this._height = options.el.parentNode.offsetHeight;
-        this.dpr = window.devicePixelRatio || 1;
-        this.width = dpr * this._width;
-        this.height = dpr * this._height;
+        
     }
     draw() {
 
@@ -71,6 +85,11 @@ class Stage {
 }
 
 //缓存ctx
+class Buffer {
+    constructor() {
+        this.ctx = null;
+    }
+}
 
 const stats = new Stats();
 stats.setMode(0);
@@ -80,7 +99,7 @@ stats.domElement.style.top = '0px';
 document.body.appendChild( stats.domElement );
 //stats.update()
 
-const canvas = document.querySelector('#ctx');
+const canvas = document.querySelector('#stage');
 
 window.addEventListener('resize', () => {
     
