@@ -54,4 +54,20 @@ const adler32 = function(str){
     return a | (b << 16);
 }
 
+//高频方法，为异步任务fn装配queue task返回数组
+//判断第一个入参是否为数组，循环数组 || currying
+function king(arr,fn){
+    var ret = [];
+    var args = [].slice.call(arguments, 1);
+    
+    if(Object.prototype.toString.call(args)=='[object Array]'){
+//todo
+    }else{
+
+    }
+
+}
+
+
+
 export { queue }
