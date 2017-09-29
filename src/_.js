@@ -55,7 +55,7 @@ const adler32 = function(str){
 }
 
 //高频方法，为异步任务fn装配queue task返回数组
-//判断第一个入参是否为数组，循环数组 || currying
+//判断第一个入参是否为数组，循环数组 || currying向右归并
 function king(arr,fn){
     var ret = [];
     var args = [].slice.call(arguments, 1);

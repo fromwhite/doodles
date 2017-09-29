@@ -34,17 +34,18 @@ class Loader {
         
         return queue(self.task,this)
     }
-    //拦截器 获取已存在图片 <arr:>src  todo:不存在则立即加载 拦截当前加载队列
-    loadImg(src){
-        //return typeof imgArray[src] != 'undefined' ? imgArray[src] : (_images[src] = new Image(), _images[src].src = src, _images[src])
+    //拦截器 获取已存在图片<str>src  todo:不存在则立即加载 拦截当前加载队列
+    im(src,callback) {
+        let self = this;
+        if ( typeof this._images[src] != 'undefined' ){
+            return  this._images[src];
+        } else {
+            let ret = [];
+            ret.push(src);
+            self.load(ret,callback)
+        }
     }
 }
-
-// var s = new Loader()
-// s.load(['../image/favico.ico','../image/corner.svg','../image/border.svg'],function(){
-//     console.log('complete')
-// })
-// console.log(s,11,s._images['../image/favico.ico'])
 
 
 //舞台基类
