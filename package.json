@@ -5,7 +5,7 @@
   "main": "servlet.js",
   "scripts": {
     "release": "node main.js",
-    "serve": "node ./servlet.js",
+    "serve": "node ./server.js",
     "build": "export NODE_ENV=PROD && webpack --progress --watch",
     "dev": "export NODE_ENV=DEV && webpack-dev-server"
   },
