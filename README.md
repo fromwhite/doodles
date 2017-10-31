@@ -9,10 +9,10 @@ git clone git@github.com:vvinc/h5test.git
 cd dev
 npm install
 
-//build directory
+//构建一次 集成列表
 node main [port]
-//dev server
-node server [port]
+//启动开发环境
+npm run dev
 ```
 
 #### Future
