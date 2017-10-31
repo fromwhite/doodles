@@ -11,7 +11,7 @@ npm install
 
 //build directory
 node main [port]
-//dev serve
+//dev server
 node server [port]
 ```
 
