@@ -10,7 +10,7 @@ cd dev
 npm install
 
 //构建一次 集成列表
-node main [port]
+npm run release
 //启动开发环境
 npm run dev
 ```
