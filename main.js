@@ -29,9 +29,9 @@ files.forEach(function(f) {
     if (/^[^_].+\.html/.test(f)) {
     
         //const title = /<title>(.*)<\/title>/.test(fs.readFileSync(path.join(base,f)).toString()) ? RegExp.$1 : 'Document';
-        const tiAtl = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(path.join(base,f)).toString()) ? RegExp.$1 : 'Null';
+        const title = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(path.join(base,f)).toString()) ? RegExp.$1 : 'Null';
 
-        ul_html += `<li><a href='${path.join(base,f)}?${+new Date()}' style='color:${color[Math.floor(Math.random()*color.length)]}' target='_blank'>${tiAtl}</a></li>`;
+        ul_html += `<li><a href='${path.join(base,f)}?${+new Date()}' style='color:${color[Math.floor(Math.random()*color.length)]}' target='_blank'>${title}</a></li>`;
     }
 });
 
