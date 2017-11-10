@@ -37,7 +37,7 @@ let plugins = PROD
                 filename: "app/"+ chname +".html",
                 title: chname,
                 description:chdescription,
-                template: 'tpl/canvas.html'
+                template: 'image/canvas_tpl.html'
             }
         ),
         new webpack.DefinePlugin({
@@ -57,7 +57,7 @@ let plugins = PROD
                 filename: "index.html",
                 title: chname,
                 description:chdescription,
-                template: 'tpl/canvas.html'
+                template: 'image/canvas_tpl.html'
             }
         )
     ];
