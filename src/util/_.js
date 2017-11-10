@@ -1,13 +1,6 @@
 /*
 *   create by vincent 31 dec 2016
-*   underscore shell
-*   @ queue 
-*   @ before/after	
-*   @   
-*   @ raf
-*   @ retinaFy
-*   @ log
-*
+*   
 */
 
 const raf = window.requestAnimationFrame
@@ -16,7 +9,7 @@ const raf = window.requestAnimationFrame
 || window.oRequestAnimationFrame
 || window.msRequestAnimationFrame
 || function(callback) {
-  window.setTimeout(callback, 1000 / 60); //每帧1000/60ms
+  window.setTimeout(callback, 1000 / 60);
 };
 
 const retinaFy = function (canvas) {
@@ -54,20 +47,41 @@ const adler32 = function(str){
     return a | (b << 16);
 }
 
-//高频方法，为异步任务fn装配queue task返回数组
-//判断第一个入参是否为数组，循环数组 || currying向右归并
-function king(arr,fn){
-    var ret = [];
-    var args = [].slice.call(arguments, 1);
-    
-    if(Object.prototype.toString.call(args)=='[object Array]'){
-//todo
-    }else{
-
+const observer = function(observer, key, fn) {
+    if (observer[key]) {
+      observer.__[key] = {}
     }
+  
+    Object.defineProperty(observer, key, {
+      get: () => {
+        return observer.__[key]
+      },
+      set: value => {
+        fn(value, observer.__[key])
+        observer.__[key] = value
+      }
+    })
+}
 
+
+class Event {
+    constructor() {
+      this.subscribers = new Map([['any', []]]);
+    }
+  
+    on(fn, type = 'any') {
+      let subs = this.subscribers;
+      if (!subs.get(type)) return subs.set(type, [fn]);
+      subs.set(type, (subs.get(type).push(fn)));
+    }
+  
+    emit(content, type = 'any') {
+      for (let fn of this.subscribers.get(type)) {
+        fn(content);
+      }
+    }
 }
 
 
 
-export { queue }
+export { queue , observer, Event }

@@ -1,8 +1,8 @@
 {
   "name": "showcase",
   "version": "1.0.0",
-  "description": "dev",
-  "main": "servlet.js",
+  "description": "h5test",
+  "main": "release.js",
   "scripts": {
     "build": "export NODE_ENV=PROD && webpack --progress --watch &",
     "dev": "export NODE_ENV=DEV && webpack-dev-server",
