@@ -18,10 +18,6 @@ const   port    = parseInt(process.argv[2] || 8080, 10);
 let DEV = process.env.NODE_ENV === 'DEV'; //开发模式
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
-let entry = {
-    
-}
-
 
 Object.assign(config, {
     devServer: {
@@ -46,12 +42,6 @@ webpack(config, (err, stats) => {
 
     console.log('Done processing.');
 
-
-//dev
-DEV && function(){
-    console.log('dev..');
-}();
-
 //release
 PROD && function(){
 
@@ -68,22 +58,21 @@ PROD && function(){
     });
 
     let html = fs.readFileSync('./index.html').toString();
-    let ul_html = '<div class="main"><ul class="list">';
+    let html_fragment = '<div class="main"><ul class="list">';
 
     files.forEach(function(f) {
         let npath = path.join(base, f);
 
         if (/^[^_].+\.html/.test(f)) {
         
-            //const title = /<title>(.*)<\/title>/.test(fs.readFileSync(path.join(base,f)).toString()) ? RegExp.$1 : 'Document';
             const title = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(path.join(base,f)).toString()) ? RegExp.$1 : 'Null';
 
-            ul_html += `<li><a href='${path.join(base,f)}?${+new Date()}' style='color:${color[Math.floor(Math.random()*color.length)]}' target='_blank'>${title}</a></li>`;
+            html_fragment += `<li><a href='${path.join(base,f)}?${+new Date()}' style='color:${color[Math.floor(Math.random()*color.length)]}' target='_blank'>${title}</a></li>`;
         }
     });
 
-    ul_html += '</ul></div>';
-    html = html.replace(/(<body>)[\s\S]*?(<\/body>)/, '$1' + ul_html + '$2');
+    html_fragment += '</ul></div>';
+    html = html.replace(/(<body>)[\s\S]*?(<\/body>)/, '$1' + html_fragment + '$2');
     fs.writeFileSync('./index.html', html);
 
     //server
@@ -101,16 +90,13 @@ PROD && function(){
     });
 
 
-
-    let cmd = null;
-    if (process.platform == 'win32') {
-        cmd = 'start';
-    } else if (process.platform == 'linux') {
-        cmd = 'xdg-open';
-    } else if (process.platform == 'darwin') {
-        cmd = 'open';
-    }
-    cmd && c.exec (cmd + ' ' + 'http://localhost:' + port + '/' );
+    let cli = {
+        'win32':'start',
+        'linux':'xdg-open',
+        'darwin':'open'
+    };
+    let cmd = cli[process.platform] || null;
+    cmd && c.exec(`${cmd} http://localhost:${port}/`);
 
     console.log('release');
 }();
