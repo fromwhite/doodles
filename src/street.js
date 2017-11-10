@@ -106,6 +106,7 @@ class Stage extends Event {
     clear(x = 0, y = 0,width = this.width , height = this.height) {
         this.context.clearRect(x, y, width, height);
     }
+    //主loop
     update(type,obj,x,y,rx,ry) {
         this.emit('jaja', 'myEvent');
        //drawImage
@@ -117,10 +118,11 @@ class Stage extends Event {
        //todo MAP
        let t = this.im.pick('../image/this.jpg')
        this.context.drawImage(t,0,0,t.width,t.height);
-        console.log(t)
+
     }
+    //收集并重写精灵的行为
     draw() {
-        //update type:text,filltext;image,drawImage 封装常用方法 保村坐标到this.store
+        //update type:text,filltext;image,drawImage 封装常用方法 保留坐标到this.store
     }
 }
 
@@ -140,7 +142,9 @@ stats.domElement.style.top = '0px';
 document.body.appendChild( stats.domElement );
 //stats.update()
 
-var s = new Stage({stg:document.querySelector('#stage'),list:['../image/this.jpg']});
+window.onload = function(){
+    var s = new Stage({stg:document.querySelector('#stage'),list:['../image/this.jpg']});
+}
 
 window.addEventListener('resize', () => {
     s.init();
