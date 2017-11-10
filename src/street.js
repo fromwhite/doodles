@@ -144,7 +144,7 @@ window.addEventListener('resize', () => {
     s.load(true);
 });
       
-
+console.log('11')
 if (module.hot) {
     module.hot.accept();
 }

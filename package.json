@@ -7,7 +7,8 @@
     "release":"npm run build && npm run list",
     "list": "node main.js &",
     "build": "export NODE_ENV=PROD && webpack --progress --watch &",
-    "dev": "export NODE_ENV=DEV && webpack-dev-server"
+    "dev": "export NODE_ENV=DEV && webpack-dev-server",
+    "do":"export NODE_ENV=PROD && node release.js"
   },
   "author": "vincent",
   "license": "MIT",
@@ -21,8 +22,8 @@
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.1.0-beta.28",
-    "webpack-dev-server": "^2.1.0-beta.12",
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1",
     "html-webpack-plugin": "^2.15.0"
   }
 }

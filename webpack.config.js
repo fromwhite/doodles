@@ -1,9 +1,9 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const   path = require('path');
+const   webpack = require('webpack');
+const   ExtractTextPlugin = require('extract-text-webpack-plugin');
+const   HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let DEV = process.env.NODE_ENV === 'DEV'; //开发模式
+let DEV = process.env.NODE_ENV === 'DEV'; //开发
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
 //项目
@@ -17,13 +17,13 @@ let entry = PROD
         street:'./src/'+ chname +'.js'
     }
     :   [
-            './src/'+ chname +'.js',
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server'
-        ];
+        './src/'+ chname +'.js',
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server'
+    ];
 
-var plugins = PROD
-    ? [
+let plugins = PROD
+    ?   [
         new webpack.optimize.UglifyJsPlugin({
             //comments: true,
             //mangle: false,
@@ -44,14 +44,9 @@ var plugins = PROD
             'process.env': {
                 NODE_ENV: JSON.stringify('production'),
             },
-        }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name:'vendor',
-        //     //name:["react","react-dom","jquery"],
-        //     minChunks:Infinity
-        // })
+        })
     ]
-    : [
+    :   [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             DEVELOPMENT: JSON.stringify(DEV),
@@ -65,18 +60,10 @@ var plugins = PROD
                 template: 'tpl/canvas.html'
             }
         )
-      ];
+    ];
 
-// var cssIdentName = PROD ? '[hash:base64:10]' : '[path][name]-[local]-[hash:base64:24]';
 
-// var cssLoader = PROD
-//     ?   ExtractTextPlugin.extract({
-//         fallbackLoader: "style-loader",
-//         loader: 'css-loader?localIdentName=' + cssIdentName
-//     })
-//     :   ['style-loader', 'css-loader?localIdentName=' + cssIdentName];
 
-//webpack配置文件项
 module.exports = {
     devtool: "source-map",
     //入口文件
