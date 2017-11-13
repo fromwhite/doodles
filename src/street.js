@@ -48,28 +48,33 @@ class Loader {
 class Stage extends EventEmitter {
     constructor(options) {
         super();
-        this.ops = options;
-        this.stg = options.stg;
-        this.context = options.stg.getContext('2d');
-        this.im = new Loader(options.list);
-        this.store = null;
+        this.dpr = window.devicePixelRatio || 1;
+        //资源列表
+        this.assets = options.list || null;
+        //dom节点
+        this.el = options.el;
+        this.context = options.el.getContext('2d');
+        
         this.init();
     }
     init () {
 
         this.on((content) => console.log(`get published content: ${content}`), 'myEvent')
         
-        this._width = this.stg.parentNode.clientWidth;
-        this._height = this.stg.parentNode.clientHeight;
-        this.dpr = window.devicePixelRatio || 1;
+        //canvas外层容器宽高 利用css响应布局
+        this._width = this.el.parentNode.clientWidth;
+        this._height = this.el.parentNode.clientHeight;
+        //真实宽高
         this.width = this.dpr * this._width;
         this.height = this.dpr * this._height;
+        //初始化canvas元素
+        this.el.style.width = `${this._width}px`;
+        this.el.style.height = `${this._height}px`;
+        this.el.width = ~~ this.width;
+        this.el.height = ~~ this.height;
+        //初始化loader
+        this.im = new Loader(this.assets);
 
-        this.stg.style.width = `${this._width}px`;
-        this.stg.style.height = `${this._height}px`;
-        this.stg.width = ~~ this.width;
-        this.stg.height = ~~ this.height;
-         
         //加载资源
         this.load();
     }
@@ -78,12 +83,12 @@ class Stage extends EventEmitter {
     }
     load () {
         //判断是否需要加载资源
-        if( this.ops.list ){
+        if( this.assets ){
 
             //加载周期
             this.on(()=>{this.update()},'load');
 
-            this.im.load(this.ops.list,()=>{this.emit(console.log('load success'),'load')});
+            this.im.load(this.assets,()=>{this.emit(console.log('load success'),'load')});
 
             let loadTxt = 'Loading..';
             let textWidth = ~~ this.context.measureText(loadTxt).width * this.dpr;
@@ -111,20 +116,18 @@ class Stage extends EventEmitter {
     //主loop
     update(type,obj,x,y,rx,ry) {
         this.emit('jaja', 'myEvent');
-       //drawImage
-       //this.context[type].call(this.context,[].slice.call(arguments,1));
-       //this.context[type]('111',10,20);
-       //this.store = [].slice.call(arguments,2);
-       //console.log(this.store,arguments,[].slice.call(arguments,1));
-       this.clear();
-       //todo MAP
-       let t = this.im.pick('../assets/this.jpg')
-       this.context.drawImage(t,0,0,t.width,t.height);
+
+        this.clear();
+        //todo MAP
+        let t = this.im.pick('../assets/this.jpg')
+        this.context.drawImage(t,0,0,t.width,t.height);
     }
     //收集并重写精灵的行为
     draw() {
         //update type:text,filltext;image,drawImage 封装常用方法 保留坐标到this.store
     }
+    //map
+
 }
 
 //精灵类
@@ -144,7 +147,12 @@ document.body.appendChild( stats.domElement );
 //stats.update()
 
 window.onload = function(){
-    new Stage({stg:document.querySelector('#stage'),list:['../assets/this.jpg']});
+    new Stage({
+        el:document.querySelector('#stage'),
+        list:['../assets/this.jpg']
+    },function(){
+        console.log('sucess')
+    });
 }
 
 window.addEventListener('resize', () => {

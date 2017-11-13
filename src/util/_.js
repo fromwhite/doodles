@@ -101,9 +101,10 @@ class EventEmitter {
     for (let i = 0; i < cb.length; i++) {
       cb[i].apply(this, arguments);
     }
+    delete this.list[type]
   }
 }
 
 
 
-export { queue , observer, Event, EventEmitter }
+export { queue , observer, EventEmitter }
