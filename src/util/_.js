@@ -82,6 +82,28 @@ class Event {
     }
 }
 
+class EventEmitter {
+  constructor (){
+    this.list = {};
+  }
+  on ( fn, type = 'any') {
+    if(!this.list[type]){
+      this.list[type] = [];
+    }
+    this.list[type].push(fn);
+  }
+  emit ( content, type = 'any'){
+    let key = Array.prototype.pop.call(arguments);
+    let cb = this.list[key];
+    if (!cb || cb.length === 0) {
+      return;
+    }
+    for (let i = 0; i < cb.length; i++) {
+      cb[i].apply(this, arguments);
+    }
+  }
+}
 
 
-export { queue , observer, Event }
+
+export { queue , observer, Event, EventEmitter }

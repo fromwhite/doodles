@@ -1,5 +1,5 @@
 import Stats from 'util/stats.min'
-import { queue,Event } from 'util/_'
+import { queue,EventEmitter } from 'util/_'
 
 //资源加载
 class Loader {
@@ -45,7 +45,7 @@ class Loader {
 }
 
 //舞台
-class Stage extends Event {
+class Stage extends EventEmitter {
     constructor(options) {
         super();
         this.ops = options;
@@ -56,7 +56,9 @@ class Stage extends Event {
         this.init();
     }
     init () {
+
         this.on((content) => console.log(`get published content: ${content}`), 'myEvent')
+        
         this._width = this.stg.parentNode.clientWidth;
         this._height = this.stg.parentNode.clientHeight;
         this.dpr = window.devicePixelRatio || 1;
@@ -118,7 +120,6 @@ class Stage extends Event {
        //todo MAP
        let t = this.im.pick('../assets/this.jpg')
        this.context.drawImage(t,0,0,t.width,t.height);
-
     }
     //收集并重写精灵的行为
     draw() {
