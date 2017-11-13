@@ -116,7 +116,7 @@ class Stage extends Event {
        //console.log(this.store,arguments,[].slice.call(arguments,1));
        this.clear();
        //todo MAP
-       let t = this.im.pick('../image/this.jpg')
+       let t = this.im.pick('../assets/this.jpg')
        this.context.drawImage(t,0,0,t.width,t.height);
 
     }
@@ -143,12 +143,12 @@ document.body.appendChild( stats.domElement );
 //stats.update()
 
 window.onload = function(){
-    var s = new Stage({stg:document.querySelector('#stage'),list:['../image/this.jpg']});
+    new Stage({stg:document.querySelector('#stage'),list:['../assets/this.jpg']});
 }
 
 window.addEventListener('resize', () => {
-    s.init();
-    s.load(true);
+    // s.init();
+    // s.load(true);
 });
       
 console.log('333')
