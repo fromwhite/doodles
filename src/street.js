@@ -7,7 +7,7 @@ class Loader {
         this._images = {};
         this.task = [];
     }
-    //加载器
+    //加载图片
     load(arr,callback) {
         let self = this;
         for(let i = 0;i<arr.length;i++) {
@@ -33,13 +33,12 @@ class Loader {
         
         return queue(self.task,this)
     }
-    //拦截器 获取已存在图片<str>src  todo:不存在则立即加载 拦截当前加载队列
+    //获取图片
     pick(src) {
-        let self = this;
         if ( typeof this._images[src] != 'undefined' ){
             return  this._images[src];
         } else {
-            new Error('image not found')
+            throw new Error('请传入图片对象')
         }
     }
 }
@@ -58,8 +57,8 @@ class Stage extends EventEmitter {
         this.init();
     }
     init () {
-
-        this.on((content) => console.log(`get published content: ${content}`), 'myEvent')
+        //event测试
+        //this.on((content) => console.log(`get published content: ${content}`), 'myEvent')
         
         //canvas外层容器宽高 利用css响应布局
         this._width = this.el.parentNode.clientWidth;
@@ -87,7 +86,7 @@ class Stage extends EventEmitter {
 
             //加载周期
             this.on(()=>{this.update()},'load');
-
+            //加载回调
             this.im.load(this.assets,()=>{this.emit(console.log('load success'),'load')});
 
             let loadTxt = 'Loading..';
@@ -115,7 +114,8 @@ class Stage extends EventEmitter {
     }
     //主loop
     update(type,obj,x,y,rx,ry) {
-        this.emit('jaja', 'myEvent');
+        //event测试
+        //this.emit('jaja', 'myEvent');
 
         this.clear();
         //todo MAP
@@ -160,7 +160,6 @@ window.addEventListener('resize', () => {
     // s.load(true);
 });
       
-console.log('333')
 if (module.hot) {
     module.hot.accept();
 }
