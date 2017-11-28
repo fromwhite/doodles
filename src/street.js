@@ -53,7 +53,11 @@ class Stage extends EventEmitter {
         //dom节点
         this.el = options.el;
         this.context = options.el.getContext('2d');
-        
+        //精灵字典
+        this.sprites = [];
+        //世界地图
+        this.map = options.map || null;
+
         this.init();
     }
     init () {
@@ -127,7 +131,16 @@ class Stage extends EventEmitter {
         //update type:text,filltext;image,drawImage 封装常用方法 保留坐标到this.store
     }
     //map
-
+    //添加精灵元素
+    addSprite (name,sprite) {
+        this.sprites[name]=sprite; 
+    }
+    //移除精灵元素
+    removeSprite (name) {
+        if ( this.sprites[name] ){
+            delete this.sprites[name];
+        }
+    }
 }
 
 //精灵类
