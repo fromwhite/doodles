@@ -173,6 +173,5 @@ window.addEventListener('resize', () => {
     // s.load(true);
 });
       
-if (module.hot) {
-    module.hot.accept();
-}
+
+if (module.hot) module.hot.accept();
