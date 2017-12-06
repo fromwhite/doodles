@@ -62,7 +62,7 @@ class Stage extends EventEmitter {
     }
     init () {
         //event测试
-        //this.on((content) => console.log(`get published content: ${content}`), 'myEvent')
+        //this.on((content) => console.log(`get published content: ${content}`), 'Event test')
         
         //canvas外层容器宽高 利用css响应布局
         this._width = this.el.parentNode.clientWidth;
@@ -119,7 +119,7 @@ class Stage extends EventEmitter {
     //主loop
     update(type,obj,x,y,rx,ry) {
         //event测试
-        //this.emit('jaja', 'myEvent');
+        //this.emit('pub', 'Event test');
 
         this.clear();
         //todo MAP
@@ -164,7 +164,7 @@ window.onload = function(){
         el:document.querySelector('#stage'),
         list:['../assets/ji.jpg']
     },function(){
-        console.log('sucess')
+        console.log('su!!')
     });
 }
 
