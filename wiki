@@ -1,4 +1,0 @@
-1.快速预览
-    执行node main 构建一个列表，提供描述链接
-2.基于canvas，es6模块化，在tpl目录下的模版，webpack编译依赖到build，生成入口文件到app目录
-    webpack开发，node mian构建list

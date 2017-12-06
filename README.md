@@ -9,15 +9,15 @@ git clone git@github.com:vvinc/h5test.git
 cd h5test
 npm install
 
-//构建一次 集成列表
+//构建 集成列表
 npm run release
 //启动开发环境
 npm run dev
 ```
 
 #### Future
-* h5视觉呈现
-* 快速实现模型
+* react／vue
+* webgl render
 
 #### 联系vincent
 * email <vvinc@foxmail.com>
