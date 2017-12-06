@@ -123,7 +123,7 @@ class Stage extends EventEmitter {
 
         this.clear();
         //todo MAP
-        let t = this.im.pick('../assets/this.jpg')
+        let t = this.im.pick('../assets/ji.jpg')
         this.context.drawImage(t,0,0,t.width,t.height);
     }
     //收集并重写精灵的行为
@@ -162,7 +162,7 @@ document.body.appendChild( stats.domElement );
 window.onload = function(){
     new Stage({
         el:document.querySelector('#stage'),
-        list:['../assets/this.jpg']
+        list:['../assets/ji.jpg']
     },function(){
         console.log('sucess')
     });
