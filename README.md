@@ -6,7 +6,7 @@
 #### 获取与快速开始
 ```
 git clone git@github.com:vvinc/h5test.git
-cd dev
+cd h5test
 npm install
 
 //构建一次 集成列表
