@@ -16,7 +16,7 @@ npm run dev
 ```
 
 #### Future
-* react／vue
+* react/vue
 * webgl renderer
 
 #### 联系vincent
