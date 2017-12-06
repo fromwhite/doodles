@@ -14,10 +14,10 @@ const
 
 let entry = PROD 
     ?   {
-        street:'./src/'+ chname +'.js'
+        street:'./src/'+ _name +'.js'
     }
     :   [
-        './src/'+ chname +'.js',
+        './src/'+ _name +'.js',
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server'
     ];
