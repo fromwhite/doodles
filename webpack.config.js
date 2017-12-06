@@ -6,10 +6,10 @@ const   HtmlWebpackPlugin = require('html-webpack-plugin');
 let DEV = process.env.NODE_ENV === 'DEV'; //开发
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
-//项目描述 @chname @chdescription @template
+//项目描述 @_name @_description @template
 const 
-    chname='street',
-    chdescription='canvas绘制测试(canvas,canvas buffer,webgl 2d)'
+    _name='street',
+    _description='canvas绘制测试(canvas,canvas buffer,webgl 2d)'
 ;
 
 let entry = PROD 
@@ -34,9 +34,9 @@ let plugins = PROD
         //new ExtractTextPlugin('css/[name].css'),
         new HtmlWebpackPlugin(
             {
-                filename: "app/"+ chname +".html",
-                title: chname,
-                description:chdescription,
+                filename: "app/"+ _name +".html",
+                title: _name,
+                description:_description,
                 template: 'assets/canvas_tpl.html'
             }
         ),
@@ -55,8 +55,8 @@ let plugins = PROD
         new HtmlWebpackPlugin(
             {
                 filename: "index.html",
-                title: chname,
-                description:chdescription,
+                title: _name,
+                description:_description,
                 template: 'assets/canvas_tpl.html'
             }
         )
