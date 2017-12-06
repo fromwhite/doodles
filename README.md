@@ -17,7 +17,7 @@ npm run dev
 
 #### Future
 * react／vue
-* webgl render
+* webgl renderer
 
 #### 联系vincent
 * email <vvinc@foxmail.com>
