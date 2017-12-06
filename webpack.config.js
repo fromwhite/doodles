@@ -6,7 +6,7 @@ const   HtmlWebpackPlugin = require('html-webpack-plugin');
 let DEV = process.env.NODE_ENV === 'DEV'; //开发
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
-//项目
+//项目描述 @chname @chdescription @template
 const 
     chname='street',
     chdescription='canvas绘制测试(canvas,canvas buffer,webgl 2d)'

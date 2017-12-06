@@ -45,7 +45,7 @@ webpack(config, (err, stats) => {
 //release
 PROD && function(){
 
-    var compiler = webpack(config);
+    let compiler = webpack(config);
 
     const   base    = './app/';
     const   color   = ['#87C4A3','#EF9F64','#9B7FE6','#E794AE','#F4696B','#63C5AB','#F4C3C5','#FEC54F','#98BFF6','#de89ac','#9B7AD5','#FD9372','#ccc5e3','#F68F6F','#3CCAD1','#DFBC94','#FDACB4','#FDACB4','#79BBB5','#A0CADB','#a09de5','#785ebb','#84A5DD'];
@@ -76,7 +76,7 @@ PROD && function(){
     fs.writeFileSync('./index.html', html);
 
     //server
-    var server = new WebpackDevServer(compiler, {
+    let server = new WebpackDevServer(compiler, {
         hot: true,
         publicPath: '/',
         //inline: true,
