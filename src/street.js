@@ -100,9 +100,10 @@ class Stage extends EventEmitter {
             let rx = ~~ ( this._width - textWidth ) / 2;
             let ry = ~~ ( this._height - textHeight ) / 2;
             
-            let loadPx = 15;
+            let loadPx = 14;
             this.textAlign="center";
-            this.context.font = `400 ${loadPx*this.dpr}px 微软雅黑,Sans-Serif`;
+            //this.context.font = `400 ${loadPx*this.dpr}px 微软雅黑,Sans-Serif`;
+            this.context.font = `normal small-caps 400 ${loadPx*this.dpr}px 'Lato', sans-serif`;
     
             this.context.fillStyle = '#ccc';
             
