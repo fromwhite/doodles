@@ -62,7 +62,7 @@ class Stage extends EventEmitter {
     }
     init () {
         //event测试
-        //this.on((content) => console.log(`get published content: ${content}`), 'Event test')
+        this.on((content) => console.log(`get published content: ${content}`), 'Event test')
         
         //canvas外层容器宽高 利用css响应布局
         this._width = this.el.parentNode.clientWidth;
@@ -117,19 +117,21 @@ class Stage extends EventEmitter {
     clear(x = 0, y = 0,width = this.width , height = this.height) {
         this.context.clearRect(x, y, width, height);
     }
-    //主loop
+    //sprite behaviors
     update(type,obj,x,y,rx,ry) {
         //event测试
-        //this.emit('pub', 'Event test');
+        this.emit('pub', 'Event test');
 
         this.clear();
         //todo MAP
+
+        this.draw()
+        
+    }
+    //sprite paint
+    draw() {
         let t = this.im.pick('../assets/ji.jpg')
         this.context.drawImage(t,0,0,t.width,t.height);
-    }
-    //收集并重写精灵的行为
-    draw() {
-        //update type:text,filltext;image,drawImage 封装常用方法 保留坐标到this.store
     }
     //map
     //添加精灵元素
@@ -146,9 +148,11 @@ class Stage extends EventEmitter {
 
 //精灵类
 class Sprite {
-    constructor (){
+    constructor(name, painter, behaviors){
 
     }
+    update() {}
+    draw() {}
 }
 
 
