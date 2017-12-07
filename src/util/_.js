@@ -106,4 +106,4 @@ class EventEmitter {
 }
 
 
-export { queue , observer, EventEmitter }
+export { queue , observer, EventEmitter,raf }

@@ -1,5 +1,5 @@
 import Stats from 'util/stats.min'
-import { queue,EventEmitter } from 'util/_'
+import { queue,EventEmitter,raf } from 'util/_'
 
 //资源加载
 class Loader {
@@ -126,12 +126,13 @@ class Stage extends EventEmitter {
         //todo MAP
 
         this.draw()
-        
+
     }
     //sprite paint
     draw() {
         let t = this.im.pick('../assets/ji.jpg')
         this.context.drawImage(t,0,0,t.width,t.height);
+        //raf(this.draw)
     }
     //map
     //添加精灵元素
