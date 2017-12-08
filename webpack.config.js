@@ -15,7 +15,7 @@ const
 let entry = PROD 
     ?   {
         sprite:'./src/'+ _name +'.js',
-        chunk:['stage']
+        stage:['stage']
     }
     :   [
         './src/'+ _name +'.js',
@@ -49,7 +49,7 @@ let plugins = PROD
         //common
         new webpack.optimize.CommonsChunkPlugin({
             name:['stage'],
-            minChunks: 2
+            minChunks:Infinity
         })
     ]
     :   [
