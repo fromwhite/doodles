@@ -8,8 +8,8 @@ let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
 //项目描述 @_name @_description @template
 const 
-    _name='street',
-    _description='canvas绘制测试(canvas,canvas buffer,webgl 2d)'
+    _name='sprite',
+    _description='canvas2d精灵动画'
 ;
 
 let entry = PROD 
