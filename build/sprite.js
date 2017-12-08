@@ -1,0 +1,1 @@
+webpackJsonp([1],[,function(e,n,o){"use strict";var t=o(0);window.onload=function(){new t.Stage({el:document.querySelector("#stage"),list:["../assets/ji.jpg"]},function(){console.log("su!!")})},window.addEventListener("resize",function(){})}],[1]);

@@ -14,7 +14,8 @@ const
 
 let entry = PROD 
     ?   {
-        street:'./src/'+ _name +'.js'
+        sprite:'./src/'+ _name +'.js',
+        chunk:['stage']
     }
     :   [
         './src/'+ _name +'.js',
@@ -44,6 +45,11 @@ let plugins = PROD
             'process.env': {
                 NODE_ENV: JSON.stringify('production'),
             },
+        }),
+        //common
+        new webpack.optimize.CommonsChunkPlugin({
+            name:['stage'],
+            minChunks: 2
         })
     ]
     :   [
@@ -116,8 +122,7 @@ module.exports = {
         publicPath: '/',
         stats: {
             colors: true
-        },
-        
+        }
     },
     performance: {
         hints: false
