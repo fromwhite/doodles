@@ -103,8 +103,11 @@ module.exports = {
     },
     resolve:{
         modules: [
-            "node_modules",
-            path.join(__dirname, "src")
+            //"node_modules",
+            //path.join(__dirname, "src"),
+            path.resolve('./src'),
+            path.resolve('./src/util'),
+            path.resolve('./node_modules')
         ],
         extensions: [".js", ".json", ".jsx", ".css", ".gif"],
     },
