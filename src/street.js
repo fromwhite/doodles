@@ -1,5 +1,5 @@
 import Stats from 'util/stats.min'
-import { queue,EventEmitter,raf } from 'util/_'
+import { queue,Event,raf } from 'util/_'
 
 //资源加载
 class Loader {
@@ -44,7 +44,7 @@ class Loader {
 }
 
 //舞台
-class Stage extends EventEmitter {
+class Stage extends Event {
     constructor(options) {
         super();
         this.dpr = window.devicePixelRatio || 1;
@@ -63,6 +63,7 @@ class Stage extends EventEmitter {
     init () {
         //event测试
         this.on((content) => console.log(`get published content: ${content}`), 'Event test')
+        this.on((content) => console.log(`get content: ${content}`))
         
         //canvas外层容器宽高 利用css响应布局
         this._width = this.el.parentNode.clientWidth;
@@ -122,7 +123,7 @@ class Stage extends EventEmitter {
         //event测试
         this.emit('pub', 'Event test');
 
-        this.clear();
+        
         //todo MAP
 
         this.draw()
@@ -130,9 +131,16 @@ class Stage extends EventEmitter {
     }
     //sprite paint
     draw() {
+        this.emit('clear')
+        this.clear();
         let t = this.im.pick('../assets/ji.jpg')
         this.context.drawImage(t,0,0,t.width,t.height);
-        //raf(this.draw)
+
+        //raf(stats.update)
+        // setTimeout(() => {
+        //     this.draw()
+        //     stats.update()
+        // }, 10);
     }
     //map
     //添加精灵元素

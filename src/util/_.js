@@ -66,7 +66,7 @@ const observer = function(observer, key, fn) {
 
 class Event {
     constructor() {
-      this.subscribers = new Map([['any', []]]);
+      this.subscribers = new Map([[]]);
     }
   
     on(fn, type = 'any') {
@@ -76,8 +76,10 @@ class Event {
     }
   
     emit(content, type = 'any') {
-      for (let fn of this.subscribers.get(type)) {
-        fn(content);
+      let fns = this.subscribers.get(type);
+      this.subscribers.delete(type);
+      for (let fn of fns) {
+        fn.apply(this, arguments);
       }
     }
 }
@@ -93,8 +95,7 @@ class EventEmitter {
     this.list[type].push(fn);
   }
   emit ( content, type = 'any'){
-    let key = Array.prototype.pop.call(arguments);
-    let cb = this.list[key];
+    let cb = this.list[type];
     if (!cb || cb.length === 0) {
       return;
     }
@@ -106,4 +107,4 @@ class EventEmitter {
 }
 
 
-export { queue , observer, EventEmitter,raf }
+export { queue , observer, Event,raf }
