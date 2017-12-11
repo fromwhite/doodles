@@ -113,6 +113,7 @@ module.exports = {
             //path.join(__dirname, "src"),
             path.resolve('./src'),
             path.resolve('./src/util'),
+            path.resolve('./src/util/stage'),
             path.resolve('./node_modules')
         ],
         extensions: [".js", ".json", ".jsx", ".css", ".gif"],

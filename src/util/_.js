@@ -76,9 +76,10 @@ class Event {
     }
   
     emit(content, type = 'any') {
-      let fns = this.subscribers.get(type);
-      this.subscribers.delete(type);
-      for (let fn of fns) {
+      let handlers = this.subscribers.get(type);
+      if(!handlers) return
+      //this.subscribers.delete(type);
+      for (let fn of handlers) {
         fn.apply(this, arguments);
       }
     }
