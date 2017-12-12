@@ -239,9 +239,9 @@ class Gl {
     }
     loadTexture (gl, src, onSuccess, onFail) {
         let image = new Image();
-        
+        let that = this
         image.onload = function() {
-            this.loadTextureWithImage(gl, image);
+            that.loadTextureWithImage(gl, image);
             if(image.texture) {
                 if(onSuccess) {
                     onSuccess(image);
