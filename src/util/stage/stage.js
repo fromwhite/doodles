@@ -1,6 +1,8 @@
 import { queue,Event,raf } from '_'
 import Loader from 'loader'
-import Gl from 'gl2d'
+import Gl from 'glsl'
+import mat3 from 'mat3'
+import vec3 from 'vec3'
 
 
 //舞台
@@ -13,6 +15,8 @@ class Stage extends Event {
 
         //dom节点
         this.container = options.el || null;
+        this.gl = null;
+
         //el设置为空或者为父节点
         if ( !this.container || this.container.nodeName !== 'CANVAS' ){
             let canvas = document.createElement('canvas');
@@ -20,22 +24,18 @@ class Stage extends Event {
             canvas.oncontextmenu = function (){
                 return false;
             }
-            document.body.appendChild(canvas); 
+
+            if (!this.container){
+                document.body.appendChild(canvas); 
+            }
+            if (this.container.nodeName !== 'CANVAS'){
+                this.container.appendChild(canvas)
+            }
+            
+            //重置
             this.container = document.querySelector('#gl');
         }
 
-        // 尝试获取标准上下文，如果失败，回退到试验性上下文
-        // this.gl = this.container.getContext("webgl") || this.container.getContext("experimental-webgl");
-        // if (this.gl) {
-        //     this.gl.clearColor(1, 1, 1,1);
-        //     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        //     //初始化
-        //     this.init();
-        // } else {
-        //     throw new Error("Failed to get the rendering context for WebGL.");
-        // }
-
-        this.gl = new Gl(this.container);
         this.init();
 
         //精灵字典
@@ -60,6 +60,10 @@ class Stage extends Event {
         //this.gl.viewport(0, 0, this._width, this._height);
         this.container.width = ~~ this.width;
         this.container.height = ~~ this.height;
+        
+        this.glsl = new Gl(this.container);
+        this.gl = this.glsl.gl;
+
         //初始化loader
         this.im = new Loader(this.assets);
 
