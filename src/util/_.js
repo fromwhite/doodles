@@ -1,6 +1,5 @@
 /*
-*   create by vincent 31 dec 2016
-*   
+*   create by vincent 31 Dec 2016
 */
 
 const raf = window.requestAnimationFrame
@@ -12,19 +11,7 @@ const raf = window.requestAnimationFrame
   window.setTimeout(callback, 1000 / 60);
 };
 
-const retinaFy = function (canvas) {
-    const height = document.body.clientHeight;
-    const width = document.body.clientWidth;
-  
-    canvas.width = width * window.devicePixelRatio;
-    canvas.height = height * window.devicePixelRatio;
-  
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-}
-
 const log = function (){
-    //console.clear();
     console.log.apply(console, arguments);
 }
 

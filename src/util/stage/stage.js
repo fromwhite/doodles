@@ -1,9 +1,6 @@
 import { queue,Event,raf } from '_'
 import Loader from 'loader'
-import Gl from 'glsl'
-import mat3 from 'mat3'
-import vec3 from 'vec3'
-
+import gl2d from 'glsl'
 
 //舞台
 class Stage extends Event {
@@ -57,12 +54,11 @@ class Stage extends Event {
         //初始化canvas元素
         this.container.style.width = `${this._width}px`;
         this.container.style.height = `${this._height}px`;
-        //this.gl.viewport(0, 0, this._width, this._height);
+        
         this.container.width = ~~ this.width;
         this.container.height = ~~ this.height;
         
-        this.glsl = new Gl(this.container);
-        this.gl = this.glsl.gl;
+        this.gl = gl2d(this.container);
 
         //初始化loader
         this.im = new Loader(this.assets);
@@ -121,7 +117,7 @@ class Stage extends Event {
                     originalEvent: e,
                     type:event
                 }
-                if(e.changedTouches) { //mobile
+                if(e.changedTouches) {
                     const {clientX, clientY} = e.changedTouches[0]
                     
                     originalX = Math.round(clientX - left)
