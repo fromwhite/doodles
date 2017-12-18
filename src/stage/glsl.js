@@ -55,8 +55,13 @@ class Gl {
 
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texcoords), gl.STATIC_DRAW);
 
+
         //gl.tex = this.loadTexture.bind(this,arguments);
         //gl.draw = this.drawImage.bind(this,arguments);
+
+        // gl.draw = function (){
+        //     drawImage
+        // }
 
     }
     getFragmentShaderSource(){
