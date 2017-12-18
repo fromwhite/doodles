@@ -1,18 +1,16 @@
-import { queue,Event,raf } from '_'
-import Loader from 'loader'
+import { Event,raf } from '_'
 import gl2d from 'glsl'
+import Tex from 'texture'
 
 //舞台
-class Stage extends Event {
-    constructor(options) {
+class _Stage extends Event {
+    constructor(canvas) {
         super();
         this.dpr = window.devicePixelRatio || 1;
-        //资源列表
-        this.assets = options.list || null;
-
         //dom节点
-        this.container = options.el || null;
+        this.container = canvas || null;
         this.gl = null;
+        this.then = 0;
 
         //el设置为空或者为父节点
         if ( !this.container || this.container.nodeName !== 'CANVAS' ){
@@ -34,16 +32,11 @@ class Stage extends Event {
         }
 
         this.init();
-
-        //精灵字典
-        this.sprites = [];
-        //世界地图
-        this.map = options.map || null;
     }
     init () {
         //event测试
         this.on((content) => console.log(`get published content: ${content}`), 'Event test')
-        this.on((content) => console.log(`get content: ${content}`))
+        this.on((content) => console.log(`get content: ${content}`),'sss')
         
         //canvas外层容器宽高 利用css响应布局
         this._width = this.container.parentNode.clientWidth;
@@ -60,11 +53,7 @@ class Stage extends Event {
         
         this.gl = gl2d(this.container);
 
-        //初始化loader
-        this.im = new Loader(this.assets);
-
-        //加载资源
-        this.load();
+        this.initEvent();
     }
     dp (px) {
         return ~~ px * this.dpr
@@ -164,17 +153,23 @@ class Stage extends Event {
         //     stats.update()
         // }, 10);
     }
-    //map
-    //添加精灵元素
-    addSprite (name,sprite) {
-        this.sprites[name]=sprite; 
+    render (time){
+        let now = time * 0.001;
+        let deltaTime = Math.min(0.1, now - then);
+        then = now;
+    
+        //update(deltaTime);
+        //draw();
+    
+        raf(render);
     }
-    //移除精灵元素
-    removeSprite (name) {
-        if ( this.sprites[name] ){
-            delete this.sprites[name];
-        }
+    //raf(render);
+}
+
+const Stage = {
+    create: function(...args){
+        return new _Stage(...args);
     }
 }
 
-export { Stage }
+export default Stage
