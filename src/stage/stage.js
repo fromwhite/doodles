@@ -1,6 +1,5 @@
 import { Event,raf } from '_'
 import gl2d from 'glsl'
-import Tex from 'texture'
 
 //舞台
 class _Stage extends Event {
