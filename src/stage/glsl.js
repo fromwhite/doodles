@@ -44,7 +44,7 @@ class Gl {
         this.texcoordBuffer = texcoordBuffer;
 
         // Put texcoords in the buffer
-        var texcoords = [
+        let texcoords = [
             0, 0,
             0, 1,
             1, 0,

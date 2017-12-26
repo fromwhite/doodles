@@ -101,31 +101,19 @@ class _Stage extends Event {
     clear (gl = this.gl) {
         gl.clear(gl.COLOR_BUFFER_BIT);
     }
-    update() {
-        this.emit('update',this.deltaTime)
-    }
-    draw() {
-        this.emit('draw',this.deltaTime)
-    }
-    // define hook
-    // 'update' || 'draw'
-    def (any,fn) {
-        this.on(any,fn)
-    }
+    update() {}
+    draw() {}
     render (time){
-console.log(1)
-        //raf(render);
-        raf(()=>this.loop());
-        
+        console.log('render');
+        raf(()=>this.loop()); 
     }
     loop (time){
         let now = time * 0.001;
         this.deltaTime = Math.min(0.1, now - this.then);
         this.then = now;
-
+        console.log('loop');
         this.update();
         this.draw();
-    console.log(2)
         raf(()=>this.loop());
     }
 }
