@@ -6,6 +6,7 @@ class Gl {
         this.canvas = canvas;
         this.gl = undefined;
         this.transform = new Transform();
+        this._resources = new Map();
         this.init();
     }
     init (){
@@ -129,34 +130,69 @@ class Gl {
         gl.useProgram(shaderProgram);
         return shaderProgram
     }
-    loadTexture(url){
-        let gl = this.gl;
-        let tex = gl.createTexture();
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-        // Fill the texture with a 1x1 blue pixel.
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,new Uint8Array([0, 0, 255, 255]));
-        // let's assume all images are not a power of 2
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    loadTexture(url,timeout = 30000){
 
-        let textureInfo = {
-            width: 1,   // we don't know the size until it loads
-            height: 1,
-            texture: tex,
-        };
+        if (typeof url !== 'string') throw new Error('loadTexture faild');
+        let loadedTex = this._resources;
+        const mapKey = url;
 
-        let img = new Image();
-        img.addEventListener('load', function() {
-          textureInfo.width = img.width;
-          textureInfo.height = img.height;
-    
-          gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-        });
-        img.src = url;
+        if ( !loadedTex.has(mapKey) ){
+            return new Promise((resolve,reject)=>{
+                let gl = this.gl;
+                let tex = gl.createTexture();
+                
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                // Fill the texture with a 1x1 blue pixel.
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,new Uint8Array([0, 0, 255, 255]));
+                // let's assume all images are not a power of 2
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        
+                let textureInfo = {
+                    width: 1,
+                    height: 1,
+                    texture: tex,
+                };
+                const timer = setTimeout(() => {
+                    reject(new Error('loadTexture timeout'))
+                }, timeout);
+                let img = new Image();
+                img.addEventListener('load', function() {
+                  textureInfo.width = img.width;
+                  textureInfo.height = img.height;
+            
+                  gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
+                  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
 
-        return textureInfo;
+                  resolve(textureInfo);
+                  loadedTex.set(mapKey,textureInfo);
+                  clearTimeout(timer);
+                });
+                img.src = url;
+                //return textureInfo;
+            });
+            return Promise.resolve(loadedTex.get(mapKey));
+        }
+
+       
+    }
+    async loadTex(resources){
+        if (typeof resources === 'string' ){
+            return await this.loadTexture(resources);
+        } 
+        if (Array.isArray(resources)){
+            const ret = [];
+            for(let i = 0; i < resources.length; i++) {
+                const res = resources[i];
+                if(typeof res === 'string') {
+                    ret.push(await this.loadTexture(res))
+                } else {
+                    throw new Error(`loadTexs faild in progress:${i}`);
+                }    
+            }
+            return ret 
+        } 
     }
     drawImage (
         tex, texWidth, texHeight,

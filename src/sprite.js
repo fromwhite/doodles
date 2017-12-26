@@ -1,17 +1,18 @@
 import Stage from 'stage'
 
 document.addEventListener("DOMContentLoaded", main, false);
-function main(){
+async function main(){
     
   let s = Stage.create(document.getElementById('gl'));
 
-  let textureInfos = [
-      s.im.loadTexture('../assets/tex.jpg')
-  ];
-      
+  let textureInfos = 
+      //[await s.im.loadTexture('../assets/tex.jpg')]
+      await s.im.loadTex(['../assets/tex.jpg','../assets/hero.jpg','../assets/ji.jpg'])
+  ;
+  
   let gl = s.gl
   let drawInfos = [];
-  let numToDraw = 1;
+  let numToDraw = 3;
   let speed = 60;
   for (let ii = 0; ii < numToDraw; ++ii) {
       let drawInfo = {

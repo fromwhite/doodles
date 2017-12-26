@@ -122,7 +122,8 @@ module.exports = {
         publicPath: '/',
         stats: {
             colors: true
-        }
+        },
+        open: true
     },
     performance: {
         hints: false
