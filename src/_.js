@@ -56,18 +56,17 @@ class Event {
       this.subscribers = new Map([[]]);
     }
   
-    on(fn, type = 'any') {
+    on( type, fn) {
       let subs = this.subscribers;
       if (!subs.get(type)) return subs.set(type, [fn]);
       subs.set(type, (subs.get(type).push(fn)));
     }
   
-    emit(content, type = 'any') {
+    emit( type,content) {
       let handlers = this.subscribers.get(type);
       if(!handlers) return
-      //this.subscribers.delete(type);
       for (let fn of handlers) {
-        fn.apply(this, arguments);
+        fn.apply(this, [].slice.call(arguments, 1));
       }
     }
 }

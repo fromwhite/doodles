@@ -6,10 +6,16 @@ class _Stage extends Event {
     constructor(canvas) {
         super();
         this.dpr = window.devicePixelRatio || 1;
-        //dom节点
+  
         this.container = canvas || null;
+        // context
         this.gl = null;
+        // image matting
+        this.im = null;
+
+        // ticker
         this.then = 0;
+
 
         //el设置为空或者为父节点
         if ( !this.container || this.container.nodeName !== 'CANVAS' ){
@@ -50,45 +56,15 @@ class _Stage extends Event {
         this.container.width = ~~ this.width;
         this.container.height = ~~ this.height;
         
-        this.gl = gl2d(this.container);
+        // Sprite Painter
+        this.im = gl2d(this.container);
+        // target
+        this.gl = this.im.gl;
 
         this.initEvent();
     }
     dp (px) {
         return ~~ px * this.dpr
-    }
-    load () {
-        //判断是否需要加载资源
-        if( this.assets ){
-
-            //加载周期
-            this.on(()=>{this.initEvent()},'load');
-            //加载回调
-            this.im.load(this.assets,()=>{this.emit(console.log('load success'),'load')});
-
-            //let loadTxt = 'Loading..';
-            //let textWidth = ~~ this.context.measureText(loadTxt).width * this.dpr;
-            //let textHeight =  15*this.dpr;
-            
-            //let rx = ~~ ( this._width - textWidth ) / 2;
-            //let ry = ~~ ( this._height - textHeight ) / 2;
-            
-            //let loadPx = 14;
-            //this.textAlign="center";
-            //this.context.font = `400 ${loadPx*this.dpr}px 微软雅黑,Sans-Serif`;
-            //this.context.font = `normal small-caps 400 ${loadPx*this.dpr}px 'Lato', sans-serif`;
-    
-            //this.context.fillStyle = '#ccc';
-            
-            //this.context.fillText(loadTxt,rx*this.dpr,ry*this.dpr);
-
-        } else {
-            this.initEvent();
-        }
-
-    }
-    clear(x = 0, y = 0,width = this.width , height = this.height) {
-        this.context.clearRect(x, y, width, height);
     }
     //single bus
     initEvent () {
@@ -119,50 +95,39 @@ class _Stage extends Event {
             },true);
         })
     }
-    //sprite behaviors
-    update(type,obj,x,y,rx,ry) {
-        //event测试
-        this.emit('pub', 'Event test');
-
-        
-        //todo MAP
-
-        this.draw()
-
+    viewport (gl = this.gl){
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     }
-    //sprite paint
+    clear (gl = this.gl) {
+        gl.clear(gl.COLOR_BUFFER_BIT);
+    }
+    update() {
+        this.emit('update',this.deltaTime)
+    }
     draw() {
-        this.emit('clear')
-        this.clear();
-        let t = this.im.pick('../assets/ji.jpg')
-        let t1 = this.im.pick('../assets/hero.jpg')
-        let t2 = this.im.pick('../assets/grain.png')
-        this.context.drawImage(t,0,0,t.width,t.height);
-        setTimeout(() => {
-            this.context.drawImage(t1,0,0,t1.width,t.height);
-        }, 100);
-        setTimeout(() => {
-            this.context.drawImage(t2,0,0,t2.width,t.height);
-        }, 500);
-        
-
-        //raf(stats.update)
-        // setTimeout(() => {
-        //     this.draw()
-        //     stats.update()
-        // }, 10);
+        this.emit('draw',this.deltaTime)
+    }
+    // define hook
+    // 'update' || 'draw'
+    def (any,fn) {
+        this.on(any,fn)
     }
     render (time){
-        let now = time * 0.001;
-        let deltaTime = Math.min(0.1, now - then);
-        then = now;
-    
-        //update(deltaTime);
-        //draw();
-    
-        raf(render);
+console.log(1)
+        //raf(render);
+        raf(()=>this.loop());
+        
     }
-    //raf(render);
+    loop (time){
+        let now = time * 0.001;
+        this.deltaTime = Math.min(0.1, now - this.then);
+        this.then = now;
+
+        this.update();
+        this.draw();
+    console.log(2)
+        raf(()=>this.loop());
+    }
 }
 
 const Stage = {
