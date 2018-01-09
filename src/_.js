@@ -24,10 +24,10 @@ const queue = function(funcs, scope){
 }
 
 const adler32 = function(str){
-    var MOD = 65521;
-    var a = 1;
-    var b = 0;
-    for (var i = 0; i < data.length >>> 0 ; i++) {
+    let MOD = 65521;
+    let a = 1;
+    let b = 0;
+    for (let i = 0; i < data.length >>> 0 ; i++) {
         a = (a + data.charCodeAt(i)) % MOD;
         b = (b + a) % MOD;
     }
