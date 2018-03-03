@@ -90,9 +90,9 @@ module.exports = {
                 test: /(\.js$|\.jsx$)/,
                 exclude: '/node_modules/',
                 loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                }
+                // query: {
+                //     presets: ['es2015',"stage-3"]
+                // }
             },
             {
                 test: /\.(jpg|gif|png)$/,
