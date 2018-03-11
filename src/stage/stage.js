@@ -8,32 +8,28 @@ class _Stage extends Event {
         this.dpr = window.devicePixelRatio || 1;
   
         this.container = canvas || null;
-        // context
+
         this.gl = null;
-        // image matting
         this.im = null;
 
         // ticker
         this.then = 0;
 
-
-        //el设置为空或者为父节点
         if ( !this.container || this.container.nodeName !== 'CANVAS' ){
-            let canvas = document.createElement('canvas');
-            canvas.id = 'gl';
-            canvas.oncontextmenu = function (){
+            let c = document.createElement('canvas');
+            c.id = 'gl';
+            c.oncontextmenu = function (){
                 return false;
             }
 
             if (!this.container){
-                document.body.appendChild(canvas); 
+                document.body.appendChild(c); 
             }
             if (this.container.nodeName !== 'CANVAS'){
-                this.container.appendChild(canvas)
+                this.container.appendChild(c)
             }
             
-            //重置
-            this.container = document.querySelector('#gl');
+            this.container = c;
         }
 
         this.init();
@@ -66,7 +62,6 @@ class _Stage extends Event {
     dp (px) {
         return ~~ px * this.dpr
     }
-    //single bus
     initEvent () {
         const events = ['mousedown', 'mouseup', 'mousemove',
         'touchstart', 'touchend', 'touchmove',

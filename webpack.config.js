@@ -9,7 +9,7 @@ let PROD = process.env.NODE_ENV === 'PROD'; //生产
 //项目描述 @_name @_description @template
 const 
     _name='sprite',
-    _description='canvas2d精灵动画'
+    _description='webgl 2d精灵动画'
 ;
 
 let entry = PROD 
