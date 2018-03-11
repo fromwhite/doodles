@@ -25,7 +25,7 @@ class _Stage extends Event {
             if (!this.container){
                 document.body.appendChild(c); 
             }
-            if (this.container.nodeName !== 'CANVAS'){
+            if (this.container && this.container.nodeName !== 'CANVAS'){
                 this.container.appendChild(c)
             }
             
@@ -42,6 +42,7 @@ class _Stage extends Event {
         //canvas外层容器宽高 利用css响应布局
         this._width = this.container.parentNode.clientWidth;
         this._height = this.container.parentNode.clientHeight;
+
         //真实宽高
         this.width = this.dpr * this._width;
         this.height = this.dpr * this._height;
