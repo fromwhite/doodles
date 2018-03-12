@@ -34,23 +34,6 @@ const adler32 = function(str){
     return a | (b << 16);
 }
 
-const observer = function(observer, key, fn) {
-    if (observer[key]) {
-      observer.__[key] = {}
-    }
-  
-    Object.defineProperty(observer, key, {
-      get: () => {
-        return observer.__[key]
-      },
-      set: value => {
-        fn(value, observer.__[key])
-        observer.__[key] = value
-      }
-    })
-}
-
-
 class Event {
     constructor() {
       this.subscribers = new Map([[]]);
@@ -69,28 +52,6 @@ class Event {
         fn.apply(this, [].slice.call(arguments, 1));
       }
     }
-}
-
-class EventEmitter {
-  constructor (){
-    this.list = {};
-  }
-  on ( fn, type = 'any') {
-    if(!this.list[type]){
-      this.list[type] = [];
-    }
-    this.list[type].push(fn);
-  }
-  emit ( content, type = 'any'){
-    let cb = this.list[type];
-    if (!cb || cb.length === 0) {
-      return;
-    }
-    for (let i = 0; i < cb.length; i++) {
-      cb[i].apply(this, arguments);
-    }
-    delete this.list[type]
-  }
 }
 
 
