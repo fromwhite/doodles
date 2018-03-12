@@ -36,21 +36,21 @@ const adler32 = function(str){
 
 class Event {
     constructor() {
-      this.subscribers = new Map([[]]);
+    	this.subscribers = new Map([[]]);
     }
   
     on( type, fn) {
-      let subs = this.subscribers;
-      if (!subs.get(type)) return subs.set(type, [fn]);
-      subs.set(type, (subs.get(type).push(fn)));
+    	let subs = this.subscribers;
+    	if (!subs.get(type)) return subs.set(type, [fn]);
+    	subs.set(type, (subs.get(type).push(fn)));
     }
   
     emit( type,content) {
-      let handlers = this.subscribers.get(type);
-      if(!handlers) return
-      for (let fn of handlers) {
-        fn.apply(this, [].slice.call(arguments, 1));
-      }
+    	let handlers = this.subscribers.get(type);
+    	if(!handlers) return
+    	for (let fn of handlers) {
+    		fn.apply(this, [].slice.call(arguments, 1));
+    	}
     }
 }
 
