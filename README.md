@@ -18,5 +18,5 @@ npm run dev
 #### Future
 * webgl renderer
 
-#### 联系vincent
+#### 联系我
 * email <vvinc@foxmail.com>
