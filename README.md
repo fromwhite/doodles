@@ -11,7 +11,7 @@ npm install
 
 //构建 集成列表
 npm run release
-//启动开发环境
+//启动 开发环境
 npm run dev
 ```
 
@@ -19,4 +19,4 @@ npm run dev
 * webgl renderer
 
 #### 联系我
-* email <vvinc@foxmail.com>
+*  <vvinc@foxmail.com>
