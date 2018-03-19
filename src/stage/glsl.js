@@ -1,33 +1,37 @@
 import Transform from 'transform'
-import {m4} from 'math'
+import {
+    m4
+} from 'math'
 
 class Gl {
-    constructor(canvas){
+    constructor(canvas) {
         this.canvas = canvas;
         this.gl = undefined;
         this.transform = new Transform();
         this._resources = new Map();
         this.init();
     }
-    init (){
+    init() {
         this.gl = this.canvas.getContext("webgl") || this.canvas.getContext("experimental-webgl");
         let gl = this.gl;
+
         if (!gl) throw new Error('connot get gl context!');
 
-  
+
         let program = this.createProgram(gl);
         this.positionLocation = gl.getAttribLocation(program, "a_position");
         this.texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
-      
+
         this.matrixLocation = gl.getUniformLocation(program, "u_matrix");
         this.textureMatrixLocation = gl.getUniformLocation(program, "u_textureMatrix");
+        
         let textureLocation = gl.getUniformLocation(program, "u_texture");
 
         // Create a buffer.
         let positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
         this.positionBuffer = positionBuffer;
-         // Put a unit quad in the buffer
+        // Put a unit quad in the buffer
         let positions = [
             0, 0,
             0, 1,
@@ -65,9 +69,9 @@ class Gl {
         // }
 
     }
-    getFragmentShaderSource(){
-        let source = 
-        `precision mediump float;
+    getFragmentShaderSource() {
+        let source =
+            `precision mediump float;
         
         varying vec2 v_texcoord;
         
@@ -78,9 +82,9 @@ class Gl {
         }`;
         return source
     }
-    getVertexShaderSource(){
-        let source = 
-        `attribute vec4 a_position;
+    getVertexShaderSource() {
+        let source =
+            `attribute vec4 a_position;
         attribute vec2 a_texcoord;
         
         uniform mat4 u_matrix;
@@ -94,61 +98,61 @@ class Gl {
         }`;
         return source
     }
-    getFragmentShader(gl){
+    getFragmentShader(gl) {
         return this.getShader(gl, gl.FRAGMENT_SHADER, this.getFragmentShaderSource());
     }
-    getVertexShader(gl){
+    getVertexShader(gl) {
         return this.getShader(gl, gl.VERTEX_SHADER, this.getVertexShaderSource());
     }
-    getShader(gl, type, source){
+    getShader(gl, type, source) {
         let shader = gl.createShader(type);
-        
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-        
-            if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                console.log(gl.getShaderInfoLog(shader));
-                return null;
-            }
-        
-            return shader;
+
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.log(gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
     }
-    createProgram (gl){
+    createProgram(gl) {
         let fragmentShader = this.getFragmentShader(gl);
-        let vertexShader = this.getVertexShader(gl); 
+        let vertexShader = this.getVertexShader(gl);
         let shaderProgram = gl.createProgram();
-        
+
         gl.attachShader(shaderProgram, vertexShader);
         gl.attachShader(shaderProgram, fragmentShader);
         gl.linkProgram(shaderProgram);
-    
+
         let lineStatus = gl.getProgramParameter(shaderProgram, gl.LINK_STATUS);
-        if(!lineStatus) {
+        if (!lineStatus) {
             console.log("Could not initialise shaders:" + gl.getProgramInfoLog(shaderProgram));
         }
-    
+
         gl.useProgram(shaderProgram);
         return shaderProgram
     }
-    loadTexture(url,timeout = 30000){
+    loadTexture(url, timeout = 30000) {
 
         if (typeof url !== 'string') throw new Error('loadTexture faild');
         let loadedTex = this._resources;
         const mapKey = url;
 
-        if ( !loadedTex.has(mapKey) ){
-            return new Promise((resolve,reject)=>{
+        if (!loadedTex.has(mapKey)) {
+            return new Promise((resolve, reject) => {
                 let gl = this.gl;
                 let tex = gl.createTexture();
-                
+
                 gl.bindTexture(gl.TEXTURE_2D, tex);
                 // Fill the texture with a 1x1 blue pixel.
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,new Uint8Array([0, 0, 255, 255]));
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
                 // let's assume all images are not a power of 2
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        
+
                 let textureInfo = {
                     width: 1,
                     height: 1,
@@ -159,15 +163,15 @@ class Gl {
                 }, timeout);
                 let img = new Image();
                 img.addEventListener('load', function() {
-                  textureInfo.width = img.width;
-                  textureInfo.height = img.height;
-            
-                  gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
-                  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                    textureInfo.width = img.width;
+                    textureInfo.height = img.height;
 
-                  resolve(textureInfo);
-                  loadedTex.set(mapKey,textureInfo);
-                  clearTimeout(timer);
+                    gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+
+                    resolve(textureInfo);
+                    loadedTex.set(mapKey, textureInfo);
+                    clearTimeout(timer);
                 });
                 img.src = url;
                 //return textureInfo;
@@ -175,31 +179,31 @@ class Gl {
             return Promise.resolve(loadedTex.get(mapKey));
         }
 
-       
+
     }
-    async loadTex(resources){
-        if (typeof resources === 'string' ){
+    async loadTex(resources) {
+        if (typeof resources === 'string') {
             return await this.loadTexture(resources);
-        } 
-        if (Array.isArray(resources)){
+        }
+        if (Array.isArray(resources)) {
             const ret = [];
-            for(let i = 0; i < resources.length; i++) {
+            for (let i = 0; i < resources.length; i++) {
                 const res = resources[i];
-                if(typeof res === 'string') {
+                if (typeof res === 'string') {
                     ret.push(await this.loadTexture(res))
                 } else {
                     throw new Error(`loadTexs faild in progress:${i}`);
-                }    
+                }
             }
-            return ret 
-        } 
+            return ret
+        }
     }
-    drawImage (
+    drawImage(
         tex, texWidth, texHeight,
         srcX, srcY, srcWidth, srcHeight,
         dstX, dstY, dstWidth, dstHeight,
         srcRotation
-    ){
+    ) {
         let gl = this.gl;
         if (dstX === undefined) {
             dstX = srcX;
@@ -245,12 +249,12 @@ class Gl {
 
         let texMatrix = m4.scaling(1 / texWidth, 1 / texHeight, 1);
 
-            texMatrix = m4.translate(texMatrix, texWidth * 0.5, texHeight * 0.5, 0);
-            texMatrix = m4.zRotate(texMatrix, srcRotation);
-            texMatrix = m4.translate(texMatrix, texWidth * -0.5, texHeight * -0.5, 0);
+        texMatrix = m4.translate(texMatrix, texWidth * 0.5, texHeight * 0.5, 0);
+        texMatrix = m4.zRotate(texMatrix, srcRotation);
+        texMatrix = m4.translate(texMatrix, texWidth * -0.5, texHeight * -0.5, 0);
 
-            texMatrix = m4.translate(texMatrix, srcX, srcY, 0);
-            texMatrix = m4.scale(texMatrix, srcWidth, srcHeight, 1);
+        texMatrix = m4.translate(texMatrix, srcX, srcY, 0);
+        texMatrix = m4.scale(texMatrix, srcWidth, srcHeight, 1);
 
         gl.uniformMatrix4fv(this.textureMatrixLocation, false, texMatrix);
 
@@ -259,7 +263,7 @@ class Gl {
     }
 }
 
-const gl2d = function (...args){
+const gl2d = function(...args) {
     return new Gl(...args);
 }
 
