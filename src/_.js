@@ -27,8 +27,8 @@ const adler32 = function(str) {
     let MOD = 65521;
     let a = 1;
     let b = 0;
-    for (let i = 0; i < data.length >>> 0; i++) {
-        a = (a + data.charCodeAt(i)) % MOD;
+    for (let i = 0; i < str.length >>> 0; i++) {
+        a = (a + str.charCodeAt(i)) % MOD;
         b = (b + a) % MOD;
     }
     return a | (b << 16);
