@@ -72,10 +72,11 @@ let plugins = PROD ? [
 // 补充 CommonsChunk 依赖
 if (PROD && _vendor) {
     entry[_vendor] = _vendor;
+    let manifest = 'load-' + task.name;
     plugins.push(
         // 抽取 webpack loader 剥离 webpackJson 冗余
         new webpack.optimize.CommonsChunkPlugin({
-            name: [_vendor],
+            name: [task.name, _vendor, manifest],
             minChunks: Infinity
         })
     )
