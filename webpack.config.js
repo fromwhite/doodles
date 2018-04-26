@@ -6,16 +6,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 let DEV = process.env.NODE_ENV === 'DEV'; //开发
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
-//项目描述 @_name @_description @template
-const
-    _name = 'sprite',
-    _description = 'webgl 2d精灵动画';
+// 任务描述 @_name @_description @template
+const works = {
+    sprite: {
+        name: 'sprite',
+        description: 'webgl 2d精灵动画',
+        template: 'template.html',
+        vendor: 'stage'
+    }
+}
+// 设定本任务
+const task = works['sprite'];
 
+
+//stage: ['stage']
+let _vendor = task.vendor;
 let entry = PROD ? {
-    sprite: './src/' + _name + '.js',
-    stage: ['stage']
+    sprite: './src/' + task.name + '.js',
+    //_vendor: task.vendor
 } : [
-    './src/' + _name + '.js',
+    './src/' + task.name + '.js',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server'
 ];
@@ -30,10 +40,10 @@ let plugins = PROD ? [
     }),
     //new ExtractTextPlugin('css/[name].css'),
     new HtmlWebpackPlugin({
-        filename: "app/" + _name + ".html",
-        title: _name,
-        description: _description,
-        template: 'assets/canvas_tpl.html'
+        filename: "app/" + task.name + ".html",
+        title: task.name,
+        description: task.description,
+        template: 'assets/' + task.template
     }),
     new webpack.DefinePlugin({
         'process.env': {
@@ -41,10 +51,11 @@ let plugins = PROD ? [
         },
     }),
     //common
-    new webpack.optimize.CommonsChunkPlugin({
-        name: ['stage'],
-        minChunks: Infinity
-    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //     //name: ['stage'],
+    //     name: [_vendor],
+    //     minChunks: Infinity
+    // })
 ] : [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
@@ -53,12 +64,20 @@ let plugins = PROD ? [
     }),
     new HtmlWebpackPlugin({
         filename: "index.html",
-        title: _name,
-        description: _description,
-        template: 'assets/canvas_tpl.html'
+        title: task.name,
+        description: task.description,
+        template: 'assets/' + task.template
     })
 ];
 
+// 补充 CommonsChunk 依赖
+if (PROD && _vendor) {
+    entry[_vendor] = _vendor;
+    plugins.push(new webpack.optimize.CommonsChunkPlugin({
+        name: [_vendor],
+        minChunks: Infinity
+    }))
+}
 
 
 module.exports = {
