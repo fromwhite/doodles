@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 let DEV = process.env.NODE_ENV === 'DEV'; //开发
 let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
-// 任务描述 @_name @_description @template
+// 任务描述 @name @description @template
 const works = {
     sprite: {
         name: 'sprite',
@@ -19,11 +19,10 @@ const works = {
 const task = works['sprite'];
 
 
-//stage: ['stage']
+// entry.stage: ['stage']
 let _vendor = task.vendor;
 let entry = PROD ? {
     sprite: './src/' + task.name + '.js',
-    //_vendor: task.vendor
 } : [
     './src/' + task.name + '.js',
     'webpack-dev-server/client?http://localhost:8080',
@@ -73,10 +72,13 @@ let plugins = PROD ? [
 // 补充 CommonsChunk 依赖
 if (PROD && _vendor) {
     entry[_vendor] = _vendor;
-    plugins.push(new webpack.optimize.CommonsChunkPlugin({
-        name: [_vendor],
-        minChunks: Infinity
-    }))
+    plugins.push(
+        // 抽取 webpack loader 剥离 webpackJson 冗余
+        new webpack.optimize.CommonsChunkPlugin({
+            name: [_vendor],
+            minChunks: Infinity
+        })
+    )
 }
 
 
@@ -91,9 +93,12 @@ module.exports = {
         //bundle.js输出路径,是一个绝对路径
         path: path.join(__dirname),
         //在html页面中需要的导入资源的路径
-        chunkFilename: "build/[name].js"
+        chunkFilename: "build/[name].js",
+        // libraryTarget: "window",
+        // library: [_vendor]
     },
     plugins: plugins,
+    //externals: [task.vendor],
     module: {
         loaders: [{
                 test: /(\.js$|\.jsx$)/,
