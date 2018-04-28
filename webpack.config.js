@@ -79,15 +79,10 @@ let plugins = PROD ? [
 
 module.exports = {
     devtool: "source-map",
-    //入口文件
     entry: entry,
-    //输出打包的文件
     output: {
-        //打包文件名
         filename: 'build/[name].js',
-        //bundle.js输出路径,是一个绝对路径
         path: path.join(__dirname),
-        //在html页面中需要的导入资源的路径
         chunkFilename: "build/[name].js",
         // libraryTarget: "window",
         // library: [_vendor]
