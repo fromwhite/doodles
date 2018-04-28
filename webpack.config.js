@@ -18,9 +18,6 @@ const works = {
 // 设定本任务
 const task = works['sprite'];
 
-
-// entry.stage: ['stage']
-let _vendor = task.vendor;
 let entry = PROD ? {
     sprite: './src/' + task.name + '.js',
 } : [
@@ -37,7 +34,6 @@ let plugins = PROD ? [
             warnings: false
         }
     }),
-    //new ExtractTextPlugin('css/[name].css'),
     new HtmlWebpackPlugin({
         filename: "app/" + task.name + ".html",
         title: task.name,
@@ -49,7 +45,6 @@ let plugins = PROD ? [
             NODE_ENV: JSON.stringify('production'),
         },
     }),
-    //common
     // new webpack.optimize.CommonsChunkPlugin({
     //     //name: ['stage'],
     //     name: [_vendor],
@@ -116,19 +111,12 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: '/node_modules/',
-                loader: ['style-loader', 'css-loader']
-            },
-            {
-                test: /.scss$/,
-                loaders: ['style', 'css', 'sass']
-            },
+                loaders: ['style-loader', 'css-loader']
+            }
         ]
     },
     resolve: {
         modules: [
-            //"node_modules",
-            //path.join(__dirname, "src"),
             path.resolve('./src'),
             path.resolve('./src/stage'),
             path.resolve('./node_modules')
