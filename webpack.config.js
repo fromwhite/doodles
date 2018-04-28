@@ -107,7 +107,7 @@ module.exports = {
                 test: /\.(jpg|gif|png)$/,
                 exclude: '/node_modules/',
                 // loader: 'file-loader'
-                loader: 'url-loader?limit=512&name=[path][name].[ext]?[hash]'
+                loader: 'url-loader?limit=50000'
             },
             {
                 test: /\.css$/,
