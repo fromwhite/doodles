@@ -12,7 +12,7 @@ const works = {
         name: 'sprite',
         description: 'webgl 2d精灵动画',
         template: 'template.html',
-        vendor: 'stage'
+        //vendor: 'stage'
     }
 }
 // 设定本任务
@@ -70,18 +70,17 @@ let plugins = PROD ? [
 ];
 
 // 补充 CommonsChunk 依赖
-if (PROD && _vendor) {
-    entry[_vendor] = _vendor;
-    let manifest = 'load-' + task.name;
-    plugins.push(
-        // 抽取 webpack loader 剥离 webpackJson 冗余
-        new webpack.optimize.CommonsChunkPlugin({
-            name: [task.name, _vendor, manifest],
-            minChunks: Infinity
-        })
-    )
-}
-
+// if (PROD && _vendor) {
+//     entry[_vendor] = _vendor;
+//     let manifest = 'load-' + task.name;
+//     plugins.push(
+//         // 抽取 webpack loader 剥离 webpackJson 冗余
+//         new webpack.optimize.CommonsChunkPlugin({
+//             name: [task.name, _vendor, manifest],
+//             minChunks: Infinity
+//         })
+//     )
+// }
 
 module.exports = {
     devtool: "source-map",
@@ -105,9 +104,9 @@ module.exports = {
                 test: /(\.js$|\.jsx$)/,
                 exclude: '/node_modules/',
                 loader: 'babel-loader',
-                // query: {
-                //     presets: ['es2015',"stage-3"]
-                // }
+                query: {
+                    presets: ['es2015', "stage-3"]
+                }
             },
             {
                 test: /\.(jpg|gif|png)$/,
@@ -115,11 +114,15 @@ module.exports = {
                 // loader: 'file-loader'
                 loader: 'url-loader?limit=512&name=[path][name].[ext]?[hash]'
             },
-            // {
-            //     test: /\.css$/,
-            //     exclude: '/node_modules/',
-            //     loader: cssLoader
-            // }
+            {
+                test: /\.css$/,
+                exclude: '/node_modules/',
+                loader: ['style-loader', 'css-loader']
+            },
+            {
+                test: /.scss$/,
+                loaders: ['style', 'css', 'sass']
+            },
         ]
     },
     resolve: {

@@ -1,5 +1,5 @@
 import Stage from 'stage'
-
+import 'master.css';
 document.addEventListener("DOMContentLoaded", main, false);
 async function main() {
 
