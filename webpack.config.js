@@ -12,14 +12,13 @@ const works = {
         name: 'sprite',
         description: 'webgl 2d精灵动画',
         template: 'template.html',
-        //vendor: 'stage'
+        vendor: 'stage'
     }
 }
-// 设定本任务
+// 设定本任务 和入口文件
 const task = works['sprite'];
-
 let entry = PROD ? {
-    sprite: './src/' + task.name + '.js',
+    'sprite': './src/' + task.name + '.js',
 } : [
     './src/' + task.name + '.js',
     'webpack-dev-server/client?http://localhost:8080',
@@ -45,11 +44,10 @@ let plugins = PROD ? [
             NODE_ENV: JSON.stringify('production'),
         },
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //     //name: ['stage'],
-    //     name: [_vendor],
-    //     minChunks: Infinity
-    // })
+    new webpack.optimize.CommonsChunkPlugin({
+        name: [task.vendor],
+        minChunks: Infinity
+    })
 ] : [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
@@ -65,17 +63,17 @@ let plugins = PROD ? [
 ];
 
 // 补充 CommonsChunk 依赖
-// if (PROD && _vendor) {
-//     entry[_vendor] = _vendor;
-//     let manifest = 'load-' + task.name;
-//     plugins.push(
-//         // 抽取 webpack loader 剥离 webpackJson 冗余
-//         new webpack.optimize.CommonsChunkPlugin({
-//             name: [task.name, _vendor, manifest],
-//             minChunks: Infinity
-//         })
-//     )
-// }
+if (PROD && task.vendor) {
+    entry[task.vendor] = task.vendor;
+    //let manifest = 'manifest-' + task.name;
+    plugins.push(
+        // 抽取 webpack loader 剥离 webpackJson 冗余
+        new webpack.optimize.CommonsChunkPlugin({
+            name: [task.name, task.vendor, 'manifest'],
+            minChunks: Infinity
+        })
+    )
+}
 
 module.exports = {
     devtool: "source-map",
@@ -83,12 +81,12 @@ module.exports = {
     output: {
         filename: 'build/[name].js',
         path: path.join(__dirname),
-        chunkFilename: "build/[name].js",
-        // libraryTarget: "window",
-        // library: [_vendor]
+        chunkFilename: "build/[name].js"
     },
+    // externals: {
+    //     stage:'stage'
+    // },
     plugins: plugins,
-    //externals: [task.vendor],
     module: {
         loaders: [{
                 test: /(\.js$|\.jsx$)/,

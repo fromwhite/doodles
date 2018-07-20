@@ -5,7 +5,6 @@ const webpackDevMiddleware = require("webpack-dev-middleware");
 const WebpackDevServer = require('webpack-dev-server');
 const config = require("./webpack.config.js");
 
-//after building => ci
 const http = require("http"),
     url = require("url"),
     fs = require("fs"),
@@ -41,10 +40,8 @@ webpack(config, (err, stats) => {
     }
 
     console.log('Done processing.');
-
+   
     //release
-    PROD && function() {
-
         let compiler = webpack(config);
 
         const base = './app/';
@@ -62,11 +59,8 @@ webpack(config, (err, stats) => {
 
         files.forEach(function(f) {
             let npath = path.join(base, f);
-
             if (/^[^_].+\.html/.test(f)) {
-
                 const title = /<meta name="description" content="(.*)" \/>/.test(fs.readFileSync(path.join(base, f)).toString()) ? RegExp.$1 : 'Null';
-
                 html_fragment += `<li><a href='${path.join(base,f)}?${+new Date()}' style='color:${color[Math.floor(Math.random()*color.length)]}' target='_blank'>${title}</a></li>`;
             }
         });
@@ -97,10 +91,7 @@ webpack(config, (err, stats) => {
         };
         let cmd = cli[process.platform] || null;
         cmd && c.exec(`${cmd} http://localhost:${port}/`);
-
         console.log('release');
-    }();
-
 
     //lsof -i:8080 => pkill node
     process.on('SIGINT', function() {

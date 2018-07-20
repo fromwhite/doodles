@@ -5,8 +5,11 @@
   "main": "release.js",
   "scripts": {
     "build": "export NODE_ENV=PROD && webpack --progress --watch &",
-    "dev": "export NODE_ENV=DEV && webpack-dev-server",
-    "release": "export NODE_ENV=PROD && node release.js"
+    "clear": "rm -rf build&& mkdir build",
+    "dev": "export NODE_ENV=DEV&& webpack-dev-server",
+    "release": "export NODE_ENV=PROD&& node release.js",
+    "win-dev":"set NODE_ENV=DEV&& webpack-dev-server",
+    "win-release": "set NODE_ENV=PROD&& node release.js"
   },
   "author": "vincent",
   "license": "MIT",

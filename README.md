@@ -7,6 +7,4 @@
 * webgl renderer
 
 #### 联系我
-*  <vvinc@foxmail.com>
-
-todo:fixed win10 NODE_ENV
+*  <fatliu@foxmail.com>
