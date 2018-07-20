@@ -18,7 +18,8 @@ const works = {
 // 设定本任务 和入口文件
 const task = works['sprite'];
 let entry = PROD ? {
-    'sprite': './src/' + task.name + '.js',
+    //'sprite': './src/' + task.name + '.js',
+    
 } : [
     './src/' + task.name + '.js',
     'webpack-dev-server/client?http://localhost:8080',
@@ -43,10 +44,6 @@ let plugins = PROD ? [
         'process.env': {
             NODE_ENV: JSON.stringify('production'),
         },
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-        name: [task.vendor],
-        minChunks: Infinity
     })
 ] : [
     new webpack.HotModuleReplacementPlugin(),
@@ -64,12 +61,12 @@ let plugins = PROD ? [
 
 // 补充 CommonsChunk 依赖
 if (PROD && task.vendor) {
+    entry[task.name] = `./src/${task.name}.js`
     entry[task.vendor] = task.vendor;
-    //let manifest = 'manifest-' + task.name;
     plugins.push(
         // 抽取 webpack loader 剥离 webpackJson 冗余
         new webpack.optimize.CommonsChunkPlugin({
-            name: [task.name, task.vendor, 'manifest'],
+            name: [task.name, task.vendor,'manifest'],
             minChunks: Infinity
         })
     )
@@ -81,7 +78,9 @@ module.exports = {
     output: {
         filename: 'build/[name].js',
         path: path.join(__dirname),
-        chunkFilename: "build/[name].js"
+        chunkFilename: "build/[name].js",
+        // library:task.vendor,
+        // libraryTarget: "umd"
     },
     // externals: {
     //     stage:'stage'
