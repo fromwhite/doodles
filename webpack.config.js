@@ -10,7 +10,7 @@ let PROD = process.env.NODE_ENV === 'PROD'; //生产
 const works = {
     sprite: {
         name: 'sprite',
-        description: 'webgl 2d精灵动画',
+        description: 'webgl2d渲染随机图片',
         template: 'template.html',
         vendor: 'stage'
     }
