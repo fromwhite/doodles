@@ -8,18 +8,22 @@ let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
 // 任务描述 @name @description @template
 const works = {
-    sprite: {
-        name: 'sprite',
+    sprite_webgl: {
+        name: 'sprite_webgl',
         description: 'webgl2d渲染随机图片',
         template: 'template.html',
         vendor: 'stage'
+    },
+    sprite_canvas:{
+        name: 'sprite_canvas',
+        description: 'canvas渲染随机图片',
+        template: 'template.html'
     }
 }
 // 设定本任务 和入口文件
-const task = works['sprite'];
+const task = works['sprite_canvas'];
 let entry = PROD ? {
-    //'sprite': './src/' + task.name + '.js',
-    
+    // 'sprite': './src/' + task.name + '.js',
 } : [
     './src/' + task.name + '.js',
     'webpack-dev-server/client?http://localhost:8080',
@@ -60,8 +64,9 @@ let plugins = PROD ? [
 ];
 
 // 补充 CommonsChunk 依赖
-if (PROD && task.vendor) {
+if (PROD) {
     entry[task.name] = `./src/${task.name}.js`
+    if(task.vendor){
     entry[task.vendor] = task.vendor;
     plugins.push(
         // 抽取 webpack loader 剥离 webpackJson 冗余
@@ -69,7 +74,7 @@ if (PROD && task.vendor) {
             name: [task.name, task.vendor,'manifest'],
             minChunks: Infinity
         })
-    )
+    )}
 }
 
 module.exports = {
