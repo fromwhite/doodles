@@ -15,7 +15,7 @@ const works = {
         vendor: 'stage'
     },
     sprite_canvas:{
-        name: 'sprite_canvas',
+        name: 'sprite_webgl',
         description: 'canvas渲染随机图片',
         template: 'template.html'
     }
