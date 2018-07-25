@@ -1,4 +1,5 @@
 import "master.css"
+
 document.addEventListener("DOMContentLoaded", main, false);
 let Texture = new Map()
 async function main() {

@@ -15,13 +15,14 @@ const works = {
         vendor: 'stage'
     },
     sprite_canvas:{
-        name: 'sprite_webgl',
+        name: 'sprite_canvas',
         description: 'canvas渲染随机图片',
         template: 'template.html'
     }
 }
 // 设定本任务 和入口文件
-const task = works['sprite_canvas'];
+let task = works['sprite_webgl'];
+
 let entry = PROD ? {
     // 'sprite': './src/' + task.name + '.js',
 } : [
