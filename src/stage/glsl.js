@@ -27,7 +27,7 @@ class Gl {
         
         let textureLocation = gl.getUniformLocation(program, "u_texture");
 
-        // Create a buffer.
+        // Create a buffer
         let positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
         this.positionBuffer = positionBuffer;

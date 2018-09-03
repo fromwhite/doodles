@@ -34,6 +34,14 @@ const adler32 = function(str) {
     return a | (b << 16);
 }
 
+const getType = function (obj) {
+    var type = Object.prototype.toString.call(obj).match(/^\[object (.*)\]$/)[1].toLowerCase();
+    if(type === 'string' && typeof obj === 'object') return 'object'; // Let "new String('')" return 'object'
+    if (obj === null) return 'null'; // PhantomJS has type "DOMWindow" for null
+    if (obj === undefined) return 'undefined'; // PhantomJS has type "DOMWindow" for undefined
+    return type;
+}
+
 class Event {
     constructor() {
         this.subscribers = new Map([
@@ -81,5 +89,6 @@ export {
     queue,
     Event,
     raf,
-    Loader
+    Loader,
+    getType
 }
