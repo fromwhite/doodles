@@ -56,9 +56,13 @@ class Event {
     }
 }
 
+class Loader {
+
+}
 
 export {
     queue,
     Event,
-    raf
+    raf,
+    Loader
 }
