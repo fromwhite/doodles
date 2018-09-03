@@ -9,12 +9,10 @@ import gl2d from 'glsl'
 export default class extends Event {
     constructor(element) {
         super();
-        this.dpr = window.devicePixelRatio || 1;
         this.container = element || null;
 
         this.gl = null;
         this.im = null;
-        this.args = args[0] || null;
 
         // ticker
         this.then = 0;
@@ -41,19 +39,6 @@ export default class extends Event {
         //event测试
         this.on((content) => console.log(`get published content: ${content}`), 'Event test')
         this.on((content) => console.log(`get content: ${content}`), 'sss')
-
-        //canvas外层容器宽高 利用css响应布局
-        this._width = this.container.parentNode.clientWidth;
-        this._height = this.container.parentNode.clientHeight;
-
-        //真实宽高
-        this.width = this.dpr * this._width;
-        this.height = this.dpr * this._height;
-        //初始化canvas元素
-        this.container.style.width = `${this._width}px`;
-        this.container.style.height = `${this._height}px`;
-        this.container.width = ~~this.width;
-        this.container.height = ~~this.height;
 
         // Sprite Painter
         this.im = gl2d(this.container);

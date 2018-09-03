@@ -12,6 +12,21 @@ class Gl {
         this.init();
     }
     init() {
+        // default
+        this.canvas.oncontextmenu = function() {
+            return false;
+        }
+        // dpr
+        this.dpr = window.devicePixelRatio || 1;
+        this._width = this.canvas.parentNode.clientWidth;
+        this._height = this.canvas.parentNode.clientHeight;
+        this.width = this.dpr * this._width;
+        this.height = this.dpr * this._height;
+        this.canvas.style.width = `${this._width}px`;
+        this.canvas.style.height = `${this._height}px`;
+        this.canvas.width = ~~this.width;
+        this.canvas.height = ~~this.height;
+
         this.gl = this.canvas.getContext("webgl") || this.canvas.getContext("experimental-webgl");
         let gl = this.gl;
 

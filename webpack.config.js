@@ -8,20 +8,27 @@ let PROD = process.env.NODE_ENV === 'PROD'; //生产
 
 // 任务描述 @name @description @template
 const works = {
-    sprite_webgl: {
-        name: 'sprite_webgl',
-        description: 'webgl2d渲染随机图片',
+    sprite_stage: {
+        name: 'sprite_stage',
+        description: 'webgl2d Stage渲染',
         template: 'template.html',
         vendor: 'stage'
     },
     sprite_canvas:{
         name: 'sprite_canvas',
-        description: 'canvas渲染随机图片',
+        description: 'canvas随机图片',
         template: 'template.html'
+    },
+    webgl2d:{
+        name:"webgl2d",
+        description:'webgl2d glsl渲染图片',
+        template: 'template.html',
+        vendor:'glsl'
     }
 }
 // 设定本任务 和入口文件
-let task = works['sprite_webgl'];
+let task = works['sprite_stage'];
+//let task = works['webgl2d']
 
 let entry = PROD ? {
     // 'sprite': './src/' + task.name + '.js',
