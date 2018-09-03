@@ -57,7 +57,24 @@ class Event {
 }
 
 class Loader {
-
+    constructor(arr) {
+        this._images = {};
+        this.task = [];
+    }
+    load(arr,callback) {
+        let self = this;
+        for(let i = 0;i<arr.length;i++) {        
+            return queue(self.task,this)
+        }	   
+    }
+    pick(src) {
+        let self = this;	
+        if ( typeof this._images[src] != 'undefined' ){
+            return  this._images[src];	           
+        } else {	      
+            new Error('image not found')	           
+        }	        
+    }	    
 }
 
 export {
