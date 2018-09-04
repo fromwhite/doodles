@@ -4,7 +4,7 @@ import {
 } from 'math'
 
 class Gl {
-    constructor(canvas) {
+    constructor(canvas,...args) {
         this.canvas = canvas;
         this.gl = undefined;
         this.transform = new Transform();
@@ -189,12 +189,9 @@ class Gl {
                     clearTimeout(timer);
                 });
                 img.src = url;
-                //return textureInfo;
             });
             return Promise.resolve(loadedTex.get(mapKey));
         }
-
-
     }
     async loadTex(resources) {
         if (typeof resources === 'string') {
