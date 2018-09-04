@@ -8,7 +8,7 @@ void drawImage 类似canvas2d drawImage 增加transform
 todo：打包glsl最小封装 stage包含loop与eventbus为库文件
 
 core提供loop生命周期和事件
-glsl封装webgl2d
+glsl封装webgl2d gl2d(element[,width,height])
 math计算库
 sprite精灵对象
 transform状态栈

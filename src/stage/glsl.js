@@ -9,17 +9,25 @@ class Gl {
         this.gl = undefined;
         this.transform = new Transform();
         this._resources = new Map();
-        this.init();
+        this.init(args);
     }
-    init() {
+    init(args) {
         // default
         this.canvas.oncontextmenu = function() {
             return false;
         }
         // dpr
         this.dpr = window.devicePixelRatio || 1;
-        this._width = this.canvas.parentNode.clientWidth;
-        this._height = this.canvas.parentNode.clientHeight;
+        if(args[0] && args[1]){
+            // 入参 宽高
+            console.log('1')
+            this._width = args[0]
+            this._height = args[1]
+        } else {
+            // 没有传入宽高 取父节点宽高初始化
+            this._width = this.canvas.parentNode.clientWidth
+            this._height = this.canvas.parentNode.clientHeight
+        }
         this.width = this.dpr * this._width;
         this.height = this.dpr * this._height;
         this.canvas.style.width = `${this._width}px`;

@@ -3,7 +3,7 @@ import "master.css"
 document.addEventListener("DOMContentLoaded", main, false);
 async function main() {
     
-    let s = gl2d(document.getElementById('gl'));
+    let s = gl2d(document.getElementById('gl'),500,350);
 
     let textureInfos =
         //[await s.loadTexture('../assets/tex.jpg')]
