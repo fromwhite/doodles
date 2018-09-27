@@ -18,7 +18,7 @@ const log = function() {
 const queue = function(funcs, scope) {
     (function next() {
         if (funcs.length > 0) {
-            funcs.shift().apply(scope || {}, [next].concat(Array.prototype.slice.call(arguments, 0)));
+            funcs.shift().apply(scope || {}, [next].concat(Array.prototype.slice.call(arguments, null)));
         }
     })();
 }
@@ -71,9 +71,17 @@ class Loader {
     }
     load(arr,callback) {
         let self = this;
-        for(let i = 0;i<arr.length;i++) {        
-            return queue(self.task,this)
-        }	   
+        for(let i = 0;i<arr.length;i++) {
+            self.task.push(function() {	
+                self._images[arr[i]] = new Image();	
+                self._images[arr[i]].onload = function() {	
+                    callback();	
+                    if(i == arr.length - 1) return	
+                }	
+                self._images[arr[i]].src = arr[i];	
+            })	        
+        }	
+        return queue(self.task,this)   
     }
     pick(src) {
         let self = this;	
