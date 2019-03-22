@@ -1,10 +1,8 @@
 import Transform from 'transform'
-import {
-    m4
-} from 'math'
+import {m4} from 'math'
 
 class Gl {
-    constructor(canvas,...args) {
+    constructor(canvas, ...args) {
         this.canvas = canvas;
         this.gl = undefined;
         this.transform = new Transform();
@@ -13,12 +11,12 @@ class Gl {
     }
     init(args) {
         // default
-        this.canvas.oncontextmenu = function() {
+        this.canvas.oncontextmenu = function () {
             return false;
         }
         // dpr
         this.dpr = window.devicePixelRatio || 1;
-        if(args[0] && args[1]){
+        if (args[0] && args[1]) {
             // 入参 宽高
             console.log('1')
             this._width = args[0]
@@ -35,19 +33,23 @@ class Gl {
         this.canvas.width = ~~this.width;
         this.canvas.height = ~~this.height;
 
-        this.gl = this.canvas.getContext("webgl") || this.canvas.getContext("experimental-webgl");
+        this.gl = this
+            .canvas
+            .getContext("webgl") || this
+            .canvas
+            .getContext("experimental-webgl");
         let gl = this.gl;
 
-        if (!gl) throw new Error('connot get gl context!');
-
-
+        if (!gl) 
+            throw new Error('connot get gl context!');
+        
         let program = this.createProgram(gl);
         this.positionLocation = gl.getAttribLocation(program, "a_position");
         this.texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
 
         this.matrixLocation = gl.getUniformLocation(program, "u_matrix");
         this.textureMatrixLocation = gl.getUniformLocation(program, "u_textureMatrix");
-        
+
         let textureLocation = gl.getUniformLocation(program, "u_texture");
 
         // Create a buffer
@@ -56,12 +58,18 @@ class Gl {
         this.positionBuffer = positionBuffer;
         // Put a unit quad in the buffer
         let positions = [
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
         ];
 
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
@@ -73,28 +81,28 @@ class Gl {
 
         // Put texcoords in the buffer
         let texcoords = [
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
         ];
 
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texcoords), gl.STATIC_DRAW);
 
-
-        //gl.tex = this.loadTexture.bind(this,arguments);
-        //gl.draw = this.drawImage.bind(this,arguments);
-
-        // gl.draw = function (){
-        //     drawImage
-        // }
+        // gl.tex = this.loadTexture.bind(this,arguments); gl.draw =
+        // this.drawImage.bind(this,arguments); gl.draw = function (){     drawImage }
 
     }
     getFragmentShaderSource() {
-        let source =
-            `precision mediump float;
+        let source = `precision mediump float;
         
         varying vec2 v_texcoord;
         
@@ -106,8 +114,7 @@ class Gl {
         return source
     }
     getVertexShaderSource() {
-        let source =
-            `attribute vec4 a_position;
+        let source = `attribute vec4 a_position;
         attribute vec2 a_texcoord;
         
         uniform mat4 u_matrix;
@@ -159,7 +166,8 @@ class Gl {
     }
     loadTexture(url, timeout = 30000) {
 
-        if (typeof url !== 'string') throw new Error('loadTexture faild');
+        if (typeof url !== 'string') 
+            throw new Error('loadTexture faild');
         let loadedTex = this._resources;
         const mapKey = url;
 
@@ -179,13 +187,13 @@ class Gl {
                 let textureInfo = {
                     width: 1,
                     height: 1,
-                    texture: tex,
+                    texture: tex
                 };
                 const timer = setTimeout(() => {
                     reject(new Error('loadTexture timeout'))
                 }, timeout);
                 let img = new Image();
-                img.addEventListener('load', function() {
+                img.addEventListener('load', function () {
                     textureInfo.width = img.width;
                     textureInfo.height = img.height;
 
@@ -218,12 +226,7 @@ class Gl {
             return ret
         }
     }
-    drawImage(
-        tex, texWidth, texHeight,
-        srcX, srcY, srcWidth, srcHeight,
-        dstX, dstY, dstWidth, dstHeight,
-        srcRotation
-    ) {
+    drawImage(tex, texWidth, texHeight, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, srcRotation) {
         let gl = this.gl;
         if (dstX === undefined) {
             dstX = srcX;
@@ -283,7 +286,7 @@ class Gl {
     }
 }
 
-const gl2d = function(...args) {
+const gl2d = function (...args) {
     return new Gl(...args);
 }
 

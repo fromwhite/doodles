@@ -4,12 +4,14 @@ document.addEventListener("DOMContentLoaded", main, false);
 let Texture = new Map()
 async function main() {
     let dpr = window.devicePixelRatio || 1
-    let wrapper = document.getElementById('gl').parentNode
+    let wrapper = document
+        .getElementById('gl')
+        .parentNode
     let ctx = document.getElementById('gl')
     ctx._width = wrapper.clientWidth
     ctx._height = wrapper.clientHeight
-    ctx.width = ~~ dpr * ctx._width
-    ctx.height = ~~ dpr * ctx._height
+    ctx.width = ~~dpr * ctx._width
+    ctx.height = ~~dpr * ctx._height
     ctx.style.width = `${ctx._width}px`
     ctx.style.height = `${ctx._height}px`;
     let c = ctx.getContext("2d")
@@ -22,8 +24,12 @@ async function main() {
         let drawInfo = {
             x: Math.random() * ctx.width,
             y: Math.random() * ctx.height,
-            dx: Math.random() > 0.5 ? -1 : 1,
-            dy: Math.random() > 0.5 ? -1 : 1,
+            dx: Math.random() > 0.5
+                ? -1
+                : 1,
+            dy: Math.random() > 0.5
+                ? -1
+                : 1,
             xScale: Math.random() * 0.25 + 0.25,
             yScale: Math.random() * 0.25 + 0.25,
             offX: Math.random() * 0.75,
@@ -31,47 +37,51 @@ async function main() {
             offX: 0,
             offY: 0,
             rotation: Math.random() * Math.PI * 2,
-            deltaRotation: (0.5 + Math.random() * 0.5) * (Math.random() > 0.5 ? -1 : 1),
+            deltaRotation: (0.5 + Math.random() * 0.5) * (Math.random() > 0.5
+                ? -1
+                : 1),
             width: 1,
             height: 1,
-            textureInfo: textureInfos[Math.random() * textureInfos.length | 0],
+            textureInfo: textureInfos[Math.random() * textureInfos.length | 0]
         };
         drawInfos.push(drawInfo);
     }
-    function update(deltaTime){
-        drawInfos.forEach(function(drawInfo) {
-            drawInfo.x += drawInfo.dx * speed * deltaTime;
-            drawInfo.y += drawInfo.dy * speed * deltaTime;
-            if (drawInfo.x < 0) {
-                drawInfo.dx = 1;
-            }
-            if (drawInfo.x >= ctx.width) {
-                drawInfo.dx = -1;
-            }
-            if (drawInfo.y < 0) {
-                drawInfo.dy = 1;
-            }
-            if (drawInfo.y >= ctx.height) {
-                drawInfo.dy = -1;
-            }
-            drawInfo.rotation += drawInfo.deltaRotation * deltaTime;  
-        });
+    function update(deltaTime) {
+        drawInfos
+            .forEach(function (drawInfo) {
+                drawInfo.x += drawInfo.dx * speed * deltaTime;
+                drawInfo.y += drawInfo.dy * speed * deltaTime;
+                if (drawInfo.x < 0) {
+                    drawInfo.dx = 1;
+                }
+                if (drawInfo.x >= ctx.width) {
+                    drawInfo.dx = -1;
+                }
+                if (drawInfo.y < 0) {
+                    drawInfo.dy = 1;
+                }
+                if (drawInfo.y >= ctx.height) {
+                    drawInfo.dy = -1;
+                }
+                drawInfo.rotation += drawInfo.deltaRotation * deltaTime;
+            });
     }
     function draw() {
 
-        drawInfos.forEach(function(drawInfo, i) {
-            let dstX = drawInfo.x;
-            let dstY = drawInfo.y;
-            let dstWidth = drawInfo.textureInfo.width * drawInfo.xScale;
-            let dstHeight = drawInfo.textureInfo.height * drawInfo.yScale;
+        drawInfos
+            .forEach(function (drawInfo, i) {
+                let dstX = drawInfo.x;
+                let dstY = drawInfo.y;
+                let dstWidth = drawInfo.textureInfo.width * drawInfo.xScale;
+                let dstHeight = drawInfo.textureInfo.height * drawInfo.yScale;
 
-            let srcX = drawInfo.textureInfo.width * drawInfo.offX;
-            let srcY = drawInfo.textureInfo.height * drawInfo.offY;
-            let srcWidth = drawInfo.textureInfo.width * drawInfo.width;
-            let srcHeight = drawInfo.textureInfo.height * drawInfo.height;
+                let srcX = drawInfo.textureInfo.width * drawInfo.offX;
+                let srcY = drawInfo.textureInfo.height * drawInfo.offY;
+                let srcWidth = drawInfo.textureInfo.width * drawInfo.width;
+                let srcHeight = drawInfo.textureInfo.height * drawInfo.height;
 
-            c.drawImage(drawInfo.textureInfo,srcX,srcY,srcWidth, srcHeight,dstX,dstY,dstWidth,dstHeight)
-        });
+                c.drawImage(drawInfo.textureInfo, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight)
+            });
     }
 
     let then = 0;
@@ -86,7 +96,7 @@ async function main() {
     requestAnimationFrame(render);
 }
 
-async function loader(resources){
+async function loader(resources) {
     if (typeof resources === 'string') {
         return await loadImage(resources);
     }
@@ -103,8 +113,9 @@ async function loader(resources){
         return ret
     }
 }
-function loadImage(url,timeout = 30000){
-    if (typeof url !== 'string') throw new Error('loadTexture faild');
+function loadImage(url, timeout = 30000) {
+    if (typeof url !== 'string') 
+        throw new Error('loadTexture faild');
     const mapKey = url;
     if (!Texture.has(mapKey)) {
         return new Promise((resolve, reject) => {
@@ -112,7 +123,7 @@ function loadImage(url,timeout = 30000){
                 reject(new Error('loadTexture timeout'))
             }, timeout);
             let img = new Image();
-            img.addEventListener('load', function() {
+            img.addEventListener('load', function () {
                 resolve(img);
                 Texture.set(mapKey, img);
                 clearTimeout(timer);
