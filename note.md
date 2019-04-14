@@ -1,3 +1,32 @@
+## 目录备注
+.
+|____.babelrc
+|____.gitignore
+|____app
+|____assets
+|____build
+|____index.html
+|____note.md
+|____package-lock.json
+|____package.json
+|____README.md
+|____release.js
+|____src
+| |_____.js
+| |____master.css
+| |____stage
+|____webpack.config.js
+
+
+* app       展示页面集合文件夹
+* assets    资源文件
+* build     打包目录
+* index     快速预览入口          
+* release   打包脚本
+* src       开发目录,stage库/master全局样式/工具库_
+
+
+
 * stage
 两种方式，通过Stage对象实例来绘制动画，stage实例提供一个loop环境。另外也可以通过stage暴露的一些方法，自己额外增加一个长循环来完成绘制，stage.im提供基本的drawImage和loadTex方法，已经必要的事件处理，这种方式主要是开发初期测试方便使用，也为自由不愿意受库束缚而维持这些api
 如果不需要额外的状态时，单独使用glsl模块，接收一个canvas element对象，封装了loader和常用方法
