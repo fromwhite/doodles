@@ -1,3 +1,3 @@
 class Sprite {}
 
-export default Sprite
+export default Sprite;

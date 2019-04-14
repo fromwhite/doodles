@@ -1,4 +1,4 @@
-import {m4} from 'math'
+import { m4 } from "math";
 
 class Transform {
     constructor() {
@@ -8,9 +8,7 @@ class Transform {
     }
     // 抛出顶部的矩阵，重置为前一个矩阵
     restore() {
-        this
-            .stack
-            .pop();
+        this.stack.pop();
         // 永远不要让栈为空
         if (this.stack.length < 1) {
             this.stack[0] = m4.identity();
@@ -18,19 +16,15 @@ class Transform {
     }
     // 讲当前矩阵备份到栈中
     save() {
-        this
-            .stack
-            .push(this.getCurrentMatrix());
+        this.stack.push(this.getCurrentMatrix());
     }
     // 获取当前矩阵（栈顶的矩阵）
     getCurrentMatrix() {
-        return this
-            .stack[this.stack.length - 1]
-            .slice();
+        return this.stack[this.stack.length - 1].slice();
     }
     // 设置当前矩阵
     setCurrentMatrix() {
-        return this.stack[this.stack.length - 1] = m;
+        return (this.stack[this.stack.length - 1] = m);
     }
     // 平移当前矩阵
     translate(x, y, z = 0) {
@@ -48,4 +42,4 @@ class Transform {
     }
 }
 
-export default Transform
+export default Transform;
