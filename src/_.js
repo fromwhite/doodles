@@ -23,7 +23,7 @@ const queue = function(funcs, scope) {
                 .shift()
                 .apply(
                     scope || {},
-                    [next].concat(Array.prototype.slice.call(arguments, null))
+                    [next].concat(Array.prototype.slice.call(arguments, 0))
                 );
         }
     })();
@@ -53,21 +53,25 @@ const getType = function(obj) {
 
 class Event {
     constructor() {
-        this.subscribers = new Map([[]]);
+        this.subscribers = new Map([["any", []]]);
     }
 
-    on(type, fn) {
+    on(type = "any", fn) {
         let subs = this.subscribers;
         if (!subs.get(type)) return subs.set(type, [fn]);
         subs.set(type, subs.get(type).push(fn));
     }
 
-    emit(type, content) {
+    emit(type = "any", ...content) {
         let handlers = this.subscribers.get(type);
-        if (!handlers) return;
+        if (!handlers)
+            return console.log(`%ctypeError,${type}`, `color:#f4696b`);
         for (let fn of handlers) {
-            fn.apply(this, [].slice.call(arguments, 1));
+            fn.apply(this, content);
         }
+        type == "any"
+            ? this.subscribers.set("any", [])
+            : this.subscribers.delete(type);
     }
 }
 
