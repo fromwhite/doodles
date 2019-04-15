@@ -2,7 +2,7 @@
  *   create by vincent 31 Dec 2016
  */
 
-const raf =
+const rAF =
     window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
