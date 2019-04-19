@@ -1,13 +1,15 @@
-import gl2d from 'glsl'
+import {Stage} from 'stage'
 import "master.css"
 document.addEventListener("DOMContentLoaded", main, false);
 async function main() {
 
-    let s = gl2d(document.getElementById('gl'), 500, 350);
+    let s = Stage.create(document.getElementById('gl'));
 
     let textureInfos =
-    //[await s.loadTexture('../assets/tex.jpg')]
-    await s.loadTex(['../assets/tex.jpg', '../assets/hero.jpg', '../assets/ji.jpg']);
+    //[await s.im.loadTexture('../assets/tex.jpg')]
+    await s
+        .im
+        .loadTex(['../assets/tex.jpg', '../assets/hero.jpg', '../assets/ji.jpg']);
 
     let gl = s.gl
     let drawInfos = [];
@@ -78,7 +80,9 @@ async function main() {
             let srcWidth = drawInfo.textureInfo.width * drawInfo.width;
             let srcHeight = drawInfo.textureInfo.height * drawInfo.height;
 
-            s.drawImage(drawInfo.textureInfo.texture, drawInfo.textureInfo.width, drawInfo.textureInfo.height, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, drawInfo.rotation);
+            s
+                .im
+                .drawImage(drawInfo.textureInfo.texture, drawInfo.textureInfo.width, drawInfo.textureInfo.height, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, drawInfo.rotation);
         });
     }
 

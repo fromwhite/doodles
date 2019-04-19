@@ -1,4 +1,4 @@
-import { Event, raf, getType } from "_";
+import { Event, rAF, getType } from "_";
 import gl2d from "glsl";
 
 // loop
@@ -124,7 +124,7 @@ export default class extends Event {
     draw() {}
     render(time) {
         console.log("render");
-        raf(() => this.loop());
+        rAF(() => this.loop());
     }
     loop(time) {
         let now = time * 0.001;
@@ -133,6 +133,6 @@ export default class extends Event {
         console.log("loop");
         this.update();
         this.draw();
-        raf(() => this.loop());
+        rAF(() => this.loop());
     }
 }

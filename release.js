@@ -40,7 +40,6 @@ webpack(config, (err, stats) => {
 
     console.log("Done processing.");
 
-    //release
     let compiler = webpack(config);
 
     const base = "./app/";

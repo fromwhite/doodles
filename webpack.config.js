@@ -6,35 +6,30 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 let DEV = process.env.NODE_ENV === "DEV"; //开发
 let PROD = process.env.NODE_ENV === "PROD"; //生产
 
-// 任务描述 @name @description @template
+// 任务描述 @name @description name与vendor不要重复
 const works = {
-    webgl2d_stage: {
-        name: "webgl2d_stage",
-        description: "webgl2d Stage",
-        template: "template.html",
-        vendor: "stage"
+    h5canvas: {
+        name: "h5canvas",
+        description: "h5canvas随机图片"
     },
-    sprite_canvas: {
-        name: "sprite_canvas",
-        description: "canvas随机图片",
-        template: "template.html"
+    glsl2dctx: {
+        name: "glsl2dctx",
+        description: "webgl2d glsl渲染",
+        vendor: "glsl"
     },
     webgl2d: {
         name: "webgl2d",
-        description: "webgl2d glsl渲染",
-        template: "template.html",
-        vendor: "glsl"
+        description: "webgl2d Stage",
+        vendor: "stage"
     }
 };
 
 let task = works["webgl2d"];
 
 let entry = PROD
-    ? {
-          // 'sprite': './src/' + task.name + '.js',
-      }
+    ? {}
     : [
-          "./src/" + task.name + ".js",
+          `./src/${task.name}.js`,
           "webpack-dev-server/client?http://localhost:8080",
           "webpack/hot/only-dev-server"
       ];
@@ -48,10 +43,10 @@ let plugins = PROD
               }
           }),
           new HtmlWebpackPlugin({
-              filename: "app/" + task.name + ".html",
+              filename: `app/${task.name}.html`,
               title: task.name,
               description: task.description,
-              template: "assets/" + task.template
+              template: "assets/index.html"
           }),
           new webpack.DefinePlugin({
               "process.env": {
@@ -69,7 +64,7 @@ let plugins = PROD
               filename: "index.html",
               title: task.name,
               description: task.description,
-              template: "assets/" + task.template
+              template: "assets/index.html"
           })
       ];
 
@@ -97,7 +92,6 @@ module.exports = {
         chunkFilename: "build/[name].js"
         // library:task.vendor, libraryTarget: "umd"
     },
-    // externals: {     stage:'stage' },
     plugins: plugins,
     module: {
         loaders: [
@@ -106,7 +100,8 @@ module.exports = {
                 exclude: "/node_modules/",
                 loader: "babel-loader",
                 query: {
-                    presets: ["es2015", "stage-3"]
+                    presets: ["es2015", "stage-3"],
+                    compact: false
                 }
             },
             {
@@ -124,7 +119,7 @@ module.exports = {
     resolve: {
         modules: [
             path.resolve("./src"),
-            path.resolve("./src/stage"),
+            path.resolve("./src/Stage"),
             path.resolve("./node_modules")
         ],
         extensions: [".js", ".json", ".jsx", ".css", ".gif"]

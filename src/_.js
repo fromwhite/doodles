@@ -104,4 +104,4 @@ class Loader {
     }
 }
 
-export { queue, Event, raf, Loader, getType };
+export { queue, Event, rAF, Loader, getType };

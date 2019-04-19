@@ -1,37 +1,37 @@
 {
-  "name": "h5test",
-  "version": "1.0.0",
-  "description": "h5test",
-  "main": "release.js",
-  "scripts": {
-    "build": "export NODE_ENV=PROD && webpack --progress --watch &",
-    "clear": "rm -rf build&& mkdir build",
-    "dev": "cross-env NODE_ENV=DEV webpack-dev-server",
-    "release": "cross-env NODE_ENV=PROD node release.js"
-  },
-  "author": "vincent",
-  "license": "MIT",
-  "dependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-runtime": "^6.26.0",
-    "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "^2.0.0-beta.4",
-    "file-loader": "^0.9.0",
-    "html-webpack-plugin": "^2.15.0",
-    "sass": "^1.3.0",
-    "sass-loader": "^7.0.1",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
-  },
-  "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "babel-runtime": "^6.26.0",
-    "cross-env": "^5.2.0"
-  }
+    "name": "h5test",
+    "version": "1.0.0",
+    "description": "h5test",
+    "main": "release.js",
+    "scripts": {
+        "build": "export NODE_ENV=PROD && webpack --progress --watch &",
+        "clear": "rm -rf build/* && rm -rf app/*",
+        "dev": "cross-env NODE_ENV=DEV webpack-dev-server",
+        "release": "cross-env NODE_ENV=PROD node release.js"
+    },
+    "author": "vincent",
+    "license": "MIT",
+    "dependencies": {
+        "babel-core": "^6.21.0",
+        "babel-loader": "^6.2.10",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "babel-runtime": "^6.26.0",
+        "css-loader": "^0.26.1",
+        "extract-text-webpack-plugin": "^2.0.0-beta.4",
+        "file-loader": "^0.9.0",
+        "html-webpack-plugin": "^2.15.0",
+        "sass": "^1.3.0",
+        "sass-loader": "^7.0.1",
+        "style-loader": "^0.13.1",
+        "url-loader": "^0.5.7",
+        "webpack": "^3.1.0",
+        "webpack-dev-server": "^2.5.1"
+    },
+    "devDependencies": {
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-stage-3": "^6.24.1",
+        "babel-runtime": "^6.26.0",
+        "cross-env": "^5.2.0"
+    }
 }
