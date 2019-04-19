@@ -51,6 +51,10 @@ const getType = function(obj) {
     return type;
 };
 
+/**
+ * not Event => Handler
+ * try it Behavior Tree
+ */
 class Event {
     constructor() {
         this.subscribers = new Map([["any", []]]);
@@ -59,19 +63,30 @@ class Event {
     on(type = "any", fn) {
         let subs = this.subscribers;
         if (!subs.get(type)) return subs.set(type, [fn]);
-        subs.set(type, subs.get(type).push(fn));
+        subs.set(type, [...subs.get(type), fn]);
     }
 
     emit(type = "any", ...content) {
         let handlers = this.subscribers.get(type);
-        if (!handlers)
-            return console.log(`%ctypeError,${type}`, `color:#f4696b`);
+        if (!handlers) return console.log(`%c⚡ ${type}`, `color:#f4696b`);
         for (let fn of handlers) {
             fn.apply(this, content);
         }
+    }
+
+    off(type = "any", fn = "any") {
         type == "any"
             ? this.subscribers.set("any", [])
-            : this.subscribers.delete(type);
+            : fn == "any"
+            ? this.subscribers.delete(type)
+            : this.subscribers.set(type, [
+                  ...this.subscribers.get(type).filter(item => item !== fn)
+              ]);
+    }
+
+    once(...args) {
+        this.emit(...args);
+        this.off(...args);
     }
 }
 

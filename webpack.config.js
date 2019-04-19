@@ -24,7 +24,7 @@ const works = {
     }
 };
 
-let task = works["webgl2d"];
+let task = works["h5canvas"];
 
 let entry = PROD
     ? {}
