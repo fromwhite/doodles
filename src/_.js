@@ -51,10 +51,6 @@ const getType = function(obj) {
     return type;
 };
 
-/**
- * not Event => Handler
- * try it Behavior Tree
- */
 class Event {
     constructor() {
         this.subscribers = new Map([["any", []]]);
