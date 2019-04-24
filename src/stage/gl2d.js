@@ -1,7 +1,7 @@
 import Transform from "transform";
 import { m4 } from "math";
 
-class Gl {
+class Gl2d {
     constructor(canvas, ...args) {
         this.canvas = canvas;
         this.gl = undefined;
@@ -330,7 +330,7 @@ class Gl {
 }
 
 const gl2d = function(...args) {
-    return new Gl(...args);
+    return new Gl2d(...args);
 };
 
 export default gl2d;

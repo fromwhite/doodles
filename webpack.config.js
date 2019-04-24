@@ -11,10 +11,15 @@ const works = {
     webgl2d: {
         name: "webgl2d",
         description: "webgl2d drawImage"
+    },
+    stage_test: {
+        name: "stage_test",
+        description: "webgl2d stage 增加事件",
+        vendor: "stage"
     }
 };
 
-let task = works["webgl2d"];
+let task = works["stage_test"];
 
 let entry = PROD
     ? {}
@@ -109,7 +114,7 @@ module.exports = {
     resolve: {
         modules: [
             path.resolve("./src"),
-            path.resolve("./src/Stage"),
+            path.resolve("./src/stage"),
             path.resolve("./node_modules")
         ],
         extensions: [".js", ".json", ".jsx", ".css", ".gif"]
