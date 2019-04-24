@@ -7,9 +7,9 @@ class Gl {
         this.gl = undefined;
         this.transform = new Transform();
         this._resources = new Map();
-        this.init(args);
+        this.init(...args);
     }
-    init(args) {
+    init(...args) {
         // default
         this.canvas.oncontextmenu = function() {
             return false;
@@ -18,7 +18,6 @@ class Gl {
         this.dpr = window.devicePixelRatio || 1;
         if (args[0] && args[1]) {
             // 入参 宽高
-            console.log("1");
             this._width = args[0];
             this._height = args[1];
         } else {

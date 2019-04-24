@@ -8,23 +8,13 @@ let PROD = process.env.NODE_ENV === "PROD"; //生产
 
 // 任务描述 @name @description name与vendor不要重复
 const works = {
-    h5canvas: {
-        name: "h5canvas",
-        description: "h5canvas随机图片"
-    },
-    glsl2dctx: {
-        name: "glsl2dctx",
-        description: "webgl2d glsl渲染",
-        vendor: "glsl"
-    },
     webgl2d: {
         name: "webgl2d",
-        description: "webgl2d Stage",
-        vendor: "stage"
+        description: "webgl2d drawImage"
     }
 };
 
-let task = works["h5canvas"];
+let task = works["webgl2d"];
 
 let entry = PROD
     ? {}

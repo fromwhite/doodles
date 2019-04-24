@@ -1,12 +1,11 @@
 import { Event, rAF, getType } from "_";
-import gl2d from "glsl";
+import gl2d from "gl2d";
 
-// loop
-export default class extends Event {
+class _Stage extends Event {
     constructor(element) {
         super();
-        this.container = element || null;
 
+        this.container = element || null;
         this.gl = null;
         this.im = null;
 
@@ -33,11 +32,10 @@ export default class extends Event {
     }
     init() {
         //event测试
-        this.on(
-            content => console.log(`get published content: ${content}`),
-            "Event test"
+        this.on("Event test", content =>
+            console.log(`get published content: ${content}`)
         );
-        this.on(content => console.log(`get content: ${content}`), "sss");
+        this.on("sss", content => console.log(`get content: ${content}`));
 
         // Sprite Painter
         this.im = gl2d(this.container);
@@ -136,3 +134,11 @@ export default class extends Event {
         rAF(() => this.loop());
     }
 }
+
+const Stage = {
+    create: function(...args) {
+        return new _Stage(...args);
+    }
+};
+
+export { Stage };
