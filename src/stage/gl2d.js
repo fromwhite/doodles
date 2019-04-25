@@ -81,6 +81,13 @@ class Gl2d {
         // gl.tex = this.loadTexture.bind(this,arguments); gl.draw =
         // this.drawImage.bind(this,arguments); gl.draw = function (){     drawImage }
     }
+    viewport() {
+        this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    clear() {
+        this.gl.clear(gl.COLOR_BUFFER_BIT);
+    }
     getFragmentShaderSource() {
         let source = `precision mediump float;
         

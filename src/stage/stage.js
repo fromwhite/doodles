@@ -1,12 +1,12 @@
 import { Event, rAF, getType } from "_";
 import gl2d from "gl2d";
+import { Shape } from "shape";
 
 class _Stage extends Event {
     constructor(element, ...args) {
         super();
 
-        this.scene = element || null;
-        this.gl = null;
+        this.element = element || null;
         this.context = null;
         this._shadow = null;
         this._context = null;
@@ -18,23 +18,22 @@ class _Stage extends Event {
 
     init(...args) {
         // 接收canvas element对象 或者 在容器插入element
-        if (!this.scene || this.scene.nodeName !== "CANVAS") {
+        if (!this.element || this.element.nodeName !== "CANVAS") {
             let c = document.createElement("canvas");
             c.id = "gl";
             c.oncontextmenu = function() {
                 return false;
             };
-            if (!this.scene) {
+            if (!this.element) {
                 document.body.appendChild(c);
             }
-            if (this.scene && this.scene.nodeName !== "CANVAS") {
-                this.scene.appendChild(c);
+            if (this.element && this.element.nodeName !== "CANVAS") {
+                this.element.appendChild(c);
             }
-            this.scene = c;
+            this.element = c;
         }
 
-        this.context = gl2d(this.scene, ...args);
-        this.gl = this.context.gl;
+        this.context = gl2d(this.element, ...args);
 
         this.dpr = this.context.dpr;
 
@@ -57,7 +56,7 @@ class _Stage extends Event {
         ];
         events.forEach(event => {
             let that = this;
-            this.scene.addEventListener(
+            this.element.addEventListener(
                 event,
                 e => {
                     const { left, top } = e.target.getBoundingClientRect();
@@ -107,14 +106,8 @@ class _Stage extends Event {
         return [x * 10, y * 10];
     }
 
-    isPathIn() {}
-
-    viewport(gl = this.gl) {
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    }
-
-    clear(gl = this.gl) {
-        gl.clear(gl.COLOR_BUFFER_BIT);
+    isPathIn(shape, x, y) {
+        // rect
     }
 
     // add event
@@ -129,9 +122,13 @@ class _Stage extends Event {
     }
 
     // add shape
-    add() {}
+    add(shape) {
+        this.shapes.add(shape);
+    }
 
-    remove() {}
+    remove(shape) {
+        this.shapes.delete(shape);
+    }
 
     render(time) {
         console.log("render");
@@ -154,4 +151,4 @@ const Stage = {
     }
 };
 
-export { Stage };
+export { Stage, Shape };

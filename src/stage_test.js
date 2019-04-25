@@ -1,34 +1,32 @@
-import { Stage } from "stage";
+import { Stage, Shape } from "stage";
 import "master.css";
 
 document.addEventListener("DOMContentLoaded", main, false);
 async function main() {
-    let s = Stage.create(document.getElementById("gl"));
+    let s = Stage.create(document.getElementById("canvas"));
+    let scene = s.context;
+    let textureInfos = await scene.loadTex([
+        "../assets/tex.jpg",
+        "../assets/hero.jpg",
+        "../assets/ji.jpg"
+    ]);
 
-    let textureInfos =
-        //[await s.context.loadTexture('../assets/tex.jpg')]
-        await s.context.loadTex([
-            "../assets/tex.jpg",
-            "../assets/hero.jpg",
-            "../assets/ji.jpg"
-        ]);
-
-    s.on("mousemove", function() {
-        console.log("mouse");
+    let cat = Shape.create(textureInfos[0]);
+    cat.on("click", function() {
+        console.log("click");
     });
 
-    s.on("click", function(e) {
-        console.log("click", e);
-    });
+    s.add(cat);
 
-    let gl = s.context.gl;
+    console.log(s, cat);
+
     let drawInfos = [];
     let numToDraw = 3;
     let speed = 60;
     for (let ii = 0; ii < numToDraw; ++ii) {
         let drawInfo = {
-            x: Math.random() * gl.canvas.width,
-            y: Math.random() * gl.canvas.height,
+            x: Math.random() * scene.width,
+            y: Math.random() * scene.height,
             dx: Math.random() > 0.5 ? -1 : 1,
             dy: Math.random() > 0.5 ? -1 : 1,
             xScale: Math.random() * 0.25 + 0.25,
@@ -54,13 +52,13 @@ async function main() {
             if (drawInfo.x < 0) {
                 drawInfo.dx = 1;
             }
-            if (drawInfo.x >= gl.canvas.width) {
+            if (drawInfo.x >= scene.width) {
                 drawInfo.dx = -1;
             }
             if (drawInfo.y < 0) {
                 drawInfo.dy = 1;
             }
-            if (drawInfo.y >= gl.canvas.height) {
+            if (drawInfo.y >= scene.height) {
                 drawInfo.dy = -1;
             }
             drawInfo.rotation += drawInfo.deltaRotation * deltaTime;
@@ -68,10 +66,6 @@ async function main() {
     }
 
     function draw() {
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-        gl.clear(gl.COLOR_BUFFER_BIT);
-
         drawInfos.forEach(function(drawInfo, i) {
             let dstX = drawInfo.x;
             let dstY = drawInfo.y;
@@ -83,7 +77,7 @@ async function main() {
             let srcWidth = drawInfo.textureInfo.width * drawInfo.width;
             let srcHeight = drawInfo.textureInfo.height * drawInfo.height;
 
-            s.context.drawImage(
+            scene.drawImage(
                 drawInfo.textureInfo.texture,
                 drawInfo.textureInfo.width,
                 drawInfo.textureInfo.height,
