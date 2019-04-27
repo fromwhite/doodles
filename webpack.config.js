@@ -10,13 +10,11 @@ let PROD = process.env.NODE_ENV === "PROD";
 const works = {
     webgl2d: {
         name: "webgl2d",
-        description: "webgl2d drawImage",
-        vendor: "gl2d"
+        description: "webgl2d drawImage"
     },
     stage_test: {
         name: "stage_test",
-        description: "stage增加事件",
-        vendor: "stage"
+        description: "stage增加事件"
     }
 };
 
