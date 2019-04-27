@@ -1,4 +1,4 @@
-import { Event, rAF, getType } from "_";
+import { Event, requestAnimationFrame, cancelAnimationFram } from "_";
 import gl2d from "gl2d";
 import { Shape } from "shape";
 
@@ -13,14 +13,16 @@ class _Stage extends Event {
         this.events = new Set();
         this.shapes = new Set();
 
+        this.then = 0;
+        this.tick = null;
+
         this.init(...args);
     }
 
     init(...args) {
-        // 接收canvas element对象 或者 在容器插入element
         if (!this.element || this.element.nodeName !== "CANVAS") {
             let c = document.createElement("canvas");
-            c.id = "gl";
+            c.id = "canvas";
             c.oncontextmenu = function() {
                 return false;
             };
@@ -37,10 +39,10 @@ class _Stage extends Event {
 
         this.dpr = this.context.dpr;
 
-        this._shadow = document.createElement("canvas");
-        this._shadow.width = this.context.width / 10;
-        this._shadow.height = this.context.height / 10;
-        this._context = this._shadow.getContext("2d");
+        // this._shadow = document.createElement("canvas");
+        // this._shadow.width = this.context.width / 10;
+        // this._shadow.height = this.context.height / 10;
+        // this._context = this._shadow.getContext("2d");
 
         // default events
         const events = [
@@ -55,7 +57,6 @@ class _Stage extends Event {
             "touchmove"
         ];
         events.forEach(event => {
-            let that = this;
             this.element.addEventListener(
                 event,
                 e => {
@@ -75,8 +76,8 @@ class _Stage extends Event {
                         originalY = Math.round(e.clientY - top);
                     }
                     let x, y;
-                    x = that.dp(originalX);
-                    y = that.dp(originalY);
+                    x = this.dp(originalX);
+                    y = this.dp(originalY);
                     Object.assign(evtArgs, { originalX, originalY }, { x, y });
 
                     // stage handler
@@ -85,9 +86,15 @@ class _Stage extends Event {
                     }
 
                     // shape handler
-                    this.shapes.forEach(shape => {});
-
-                    // shape event
+                    this.shapes.forEach(shape => {
+                        for (let item of shape.events.keys()) {
+                            item == event
+                                ? this.isInside(shape, [evtArgs.x, evtArgs.y])
+                                    ? this.emit.apply(shape, event, evtArgs)
+                                    : 0
+                                : 0;
+                        }
+                    });
                 },
                 true
             );
@@ -106,8 +113,14 @@ class _Stage extends Event {
         return [x * 10, y * 10];
     }
 
-    isPathIn(shape, x, y) {
-        // rect
+    //Function to check whether a point is inside a rectangle
+    isInside(shape, pos) {
+        return (
+            pos.x > shape.pos.x &&
+            pos.x < shape.pos.x + shape.width &&
+            pos.y < shape.pos.y + shape.height &&
+            pos.y > shape.pos.y
+        );
     }
 
     // add event
@@ -130,18 +143,34 @@ class _Stage extends Event {
         this.shapes.delete(shape);
     }
 
-    render(time) {
-        console.log("render");
-        rAF(() => this.loop());
+    _draw(context = this.context, ...args) {
+        this.shapes.forEach(item => {
+            item._draw.apply(context, args);
+        });
+        !!this.draw && this.draw.apply(context, args);
     }
-    loop(time) {
+
+    _update() {
+        this.shapes.forEach(item => {
+            item._update();
+        });
+        !!this.update && this.update();
+    }
+
+    render(time) {
         let now = time * 0.001;
-        this.deltaTime = Math.min(0.1, now - this.then);
+        let then = this.then || 0;
+        let deltaTime = Math.min(0.1, now - then);
         this.then = now;
-        console.log("loop");
-        this.update();
-        this.draw();
-        rAF(() => this.loop());
+        this._update(deltaTime);
+        this._draw();
+        this.tick = requestAnimationFrame(time => this.render(time));
+    }
+    loop() {
+        requestAnimationFrame(time => this.render(time));
+    }
+    end() {
+        !!this.tic && cancelAnimationFram(this.tick);
     }
 }
 

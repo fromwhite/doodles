@@ -12,13 +12,14 @@ async function main() {
     ]);
 
     let cat = Shape.create(textureInfos[0]);
-    cat.on("click", function() {
-        console.log("click");
-    });
+    // cat.on("click", function() {
+    //     console.log("click");
+    // });
 
     s.add(cat);
 
-    console.log(s, cat);
+    s.loop();
+    //console.log(s, cat);
 
     let drawInfos = [];
     let numToDraw = 3;
@@ -94,18 +95,22 @@ async function main() {
         });
     }
 
-    let then = 0;
+    // let then = 0;
+    // let id;
 
-    function render(time) {
-        let now = time * 0.001;
-        let deltaTime = Math.min(0.1, now - then);
-        then = now;
-
-        update(deltaTime);
-        draw();
-        requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
+    // function render(time = ctime) {
+    //     let now = time * 0.001;
+    //     let deltaTime = Math.min(0.1, now - then);
+    //     then = now;
+    //     update(deltaTime);
+    //     draw();
+    //     id = requestAnimationFrame(render);
+    // }
+    //requestAnimationFrame(render);
+    // s.on("click", function() {
+    //     console.log("click");
+    //     cancelAnimationFrame(id);
+    // });
 }
 
 if (module.hot) module.hot.accept();

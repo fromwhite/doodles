@@ -1,23 +1,21 @@
 import { Event } from "_";
 
 class _Shape extends Event {
-    // img :tofix path2d
     constructor(resources) {
         super();
-
+        this.pos = null;
         this.texture = resources.texture || null;
-        this._pos = null;
         this.width = resources.width || null;
         this.height = resources.height || null;
         this.events = new Set();
     }
-    set pos([x, y]) {
-        this._pos = [x, y];
-    }
+    // set pos([x, y]) {
+    //     this.pos = [x, y];
+    // }
 
-    get pos() {
-        return this._pos;
-    }
+    // get pos() {
+    //     return this.pos;
+    // }
 
     on(type = "any", fn) {
         this.events.add(type);
@@ -27,6 +25,14 @@ class _Shape extends Event {
     off(type = "any", fn = "any") {
         this.event.delete(type);
         super.off(type, fn);
+    }
+
+    _draw(painter, ...args) {
+        !!this.draw && this.draw.apply(painter, args);
+    }
+
+    _update() {
+        !!this.update && this.update();
     }
 }
 

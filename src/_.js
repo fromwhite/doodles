@@ -1,16 +1,14 @@
 /*
  *   create by vincent 31 Dec 2016
  */
-
-const rAF =
+const requestAnimationFrame =
     window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
     function(callback) {
-        window.setTimeout(callback, 1000 / 60);
+        window.Timer = () => setTimeout(callback, 1000 / 60);
     };
+
+const cancelAnimationFram =
+    window.cancelAnimationFram || clearTimeout(window.Timer);
 
 const log = function() {
     console.log.apply(console, arguments);
@@ -86,4 +84,4 @@ class Event {
     }
 }
 
-export { queue, Event, rAF, getType };
+export { queue, Event, getType, requestAnimationFrame, cancelAnimationFram };
