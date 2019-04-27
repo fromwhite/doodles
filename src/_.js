@@ -7,8 +7,8 @@ const requestAnimationFrame =
         window.Timer = () => setTimeout(callback, 1000 / 60);
     };
 
-const cancelAnimationFram =
-    window.cancelAnimationFram || clearTimeout(window.Timer);
+const cancelAnimationFrame =
+    window.cancelAnimationFrame || clearTimeout(window.Timer);
 
 const log = function() {
     console.log.apply(console, arguments);
@@ -84,4 +84,4 @@ class Event {
     }
 }
 
-export { queue, Event, getType, requestAnimationFrame, cancelAnimationFram };
+export { queue, Event, getType, requestAnimationFrame, cancelAnimationFrame };

@@ -1,4 +1,4 @@
-import { Event, requestAnimationFrame, cancelAnimationFram } from "_";
+import { Event, requestAnimationFrame, cancelAnimationFrame } from "_";
 import gl2d from "gl2d";
 import { Shape } from "shape";
 
@@ -136,25 +136,25 @@ class _Stage extends Event {
 
     // add shape
     add(shape) {
-        this.shapes.add(shape);
+        this.shapes.add(shape) && this.shapes.size > 0 ? this.loop() : null;
     }
 
     remove(shape) {
-        this.shapes.delete(shape);
+        this.shapes.delete(shape) && this.shapes.size == 0 ? this.end() : null;
     }
 
     _draw(context = this.context, ...args) {
-        this.shapes.forEach(item => {
-            item._draw.apply(context, args);
-        });
+        // this.shapes.forEach(item => {
+        //     item._draw.apply(context, args);
+        // });
         !!this.draw && this.draw.apply(context, args);
     }
 
-    _update() {
+    _update(...args) {
         this.shapes.forEach(item => {
-            item._update();
+            item._update(...args);
         });
-        !!this.update && this.update();
+        !!this.update && this.update(...args);
     }
 
     render(time) {
@@ -170,7 +170,14 @@ class _Stage extends Event {
         requestAnimationFrame(time => this.render(time));
     }
     end() {
-        !!this.tic && cancelAnimationFram(this.tick);
+        cancelAnimationFrame(this.tick);
+        this.then = 0;
+        this.context.clear();
+        this.shapes.clear();
+        this.events.clear();
+    }
+    pause() {
+        !!this.tick && cancelAnimationFrame(this.tick);
     }
 }
 

@@ -1,10 +1,7 @@
-#### 记录点点滴滴
-
- * 构建一个本地服务list，提供快速预览链接
- * src开发目录，计算模块和工具方法，以es6为主运行于新版chrome，暂不考虑生产环境，最快实现创意
-
-#### Future
-* webgl renderer
-
-#### 联系我
-*  <fatliu@foxmail.com>
+## h5的一些玩具
+兴趣使然在视觉呈现方向的一些尝试   
+**快速链接** [h5list](https://afhhh.github.io/h5test/) | **联系我** <fatliu@foxmail.com>
+> 有空才更新
+- [x] webgl2d 封装gl2d loadTex/drawImage context
+- [x] stage_test 提供stage {scene,event,shape} shape {texture,event,behaviors} update/draw
+- [ ] shader 化繁为简 初始化并忽略webgl环境细节，专注于glsl :todo
