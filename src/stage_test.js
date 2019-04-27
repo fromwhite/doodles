@@ -3,21 +3,38 @@ import "master.css";
 
 document.addEventListener("DOMContentLoaded", main, false);
 async function main() {
-    let s = Stage.create(document.getElementById("canvas"));
-    let scene = s.context;
-    let textureInfos = await scene.loadTex([
+    let stage = Stage.create(document.getElementById("canvas"), {
+        draw() {
+            this.shapes.forEach(item => {
+                this.context.drawImage(
+                    item.textureInfo.texture,
+                    item.textureInfo.width,
+                    item.textureInfo.height,
+                    item.srcX,
+                    item.srcY,
+                    item.srcWidth,
+                    item.srcHeight,
+                    item.dstX,
+                    item.dstY,
+                    item.dstWidth,
+                    item.dstHeight,
+                    item.rotation
+                );
+            });
+        }
+    });
+    let scene = stage.context;
+    let textures = await scene.loadTex([
         "../assets/tex.jpg",
         "../assets/hero.jpg",
         "../assets/ji.jpg"
     ]);
 
-    let cat = Shape.create(textureInfos[0]);
-
-    let drawInfos = [];
-    let numToDraw = 3;
+    // let shape_list = Array.from({length:3}, (v,k) => k);
     let speed = 60;
-    for (let ii = 0; ii < numToDraw; ++ii) {
-        let drawInfo = {
+
+    textures.forEach(item => {
+        let shape = Shape.create(item, {
             x: Math.random() * scene.width,
             y: Math.random() * scene.height,
             dx: Math.random() > 0.5 ? -1 : 1,
@@ -33,57 +50,56 @@ async function main() {
                 (0.5 + Math.random() * 0.5) * (Math.random() > 0.5 ? -1 : 1),
             width: 1,
             height: 1,
-            textureInfo: textureInfos[(Math.random() * textureInfos.length) | 0]
-        };
-        drawInfos.push(drawInfo);
-    }
+            textureInfo: textures[(Math.random() * textures.length) | 0],
+            update(deltaTime) {
+                this.x = this.x + this.dx * speed * deltaTime;
+                this.y = this.y + this.dy * speed * deltaTime;
+                if (this.x < 0) {
+                    this.dx = 1;
+                }
+                if (this.x >= scene.width) {
+                    this.dx = -1;
+                }
+                if (this.y < 0) {
+                    this.dy = 1;
+                }
+                if (this.y >= scene.height) {
+                    this.dy = -1;
+                }
+                this.rotation = this.rotation + this.deltaRotation * deltaTime;
 
-    function update(deltaTime) {
-        drawInfos.forEach(function(drawInfo) {
-            drawInfo.x += drawInfo.dx * speed * deltaTime;
-            drawInfo.y += drawInfo.dy * speed * deltaTime;
-            if (drawInfo.x < 0) {
-                drawInfo.dx = 1;
+                this.dstX = this.x;
+                this.dstY = this.y;
+                this.dstWidth = this.textureInfo.width * this.xScale;
+                this.dstHeight = this.textureInfo.height * this.yScale;
+                this.srcX = this.textureInfo.width * this.offX;
+                this.srcY = this.textureInfo.height * this.offY;
+                this.srcWidth = this.textureInfo.width * this.width;
+                this.srcHeight = this.textureInfo.height * this.height;
+
+                let x, y, width, height;
+                x = this.dstX;
+                y = this.dstY;
+                width = this.dstWidth;
+                height = this.dstHeight;
+
+                this.rect = { x, y, width, height };
             }
-            if (drawInfo.x >= scene.width) {
-                drawInfo.dx = -1;
-            }
-            if (drawInfo.y < 0) {
-                drawInfo.dy = 1;
-            }
-            if (drawInfo.y >= scene.height) {
-                drawInfo.dy = -1;
-            }
-            drawInfo.rotation += drawInfo.deltaRotation * deltaTime;
         });
-    }
 
-    function draw() {
-        drawInfos.forEach(function(drawInfo, i) {
-            let dstX = drawInfo.x;
-            let dstY = drawInfo.y;
-            let dstWidth = drawInfo.textureInfo.width * drawInfo.xScale;
-            let dstHeight = drawInfo.textureInfo.height * drawInfo.yScale;
-
-            let srcX = drawInfo.textureInfo.width * drawInfo.offX;
-            let srcY = drawInfo.textureInfo.height * drawInfo.offY;
-            let srcWidth = drawInfo.textureInfo.width * drawInfo.width;
-            let srcHeight = drawInfo.textureInfo.height * drawInfo.height;
-
-            scene.drawImage(
-                drawInfo.textureInfo.texture,
-                drawInfo.textureInfo.width,
-                drawInfo.textureInfo.height,
-                srcX,
-                srcY,
-                srcWidth,
-                srcHeight,
-                dstX,
-                dstY,
-                dstWidth,
-                dstHeight,
-                drawInfo.rotation
-            );
+        shape.on("click", function(e) {
+            console.log("click", e, this);
         });
-    }
+
+        stage.add(shape);
+    });
+
+    stage.on("click", function() {
+        console.log("pause");
+        stage.pause();
+    });
+    stage.on("dblclick", function() {
+        console.log("reloop");
+        stage.loop();
+    });
 }

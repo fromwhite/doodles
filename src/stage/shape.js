@@ -1,21 +1,15 @@
 import { Event } from "_";
 
 class _Shape extends Event {
-    constructor(resources) {
+    constructor(resources, options) {
         super();
-        this.pos = null;
         this.texture = resources.texture || null;
+        this.rect = null;
         this.width = resources.width || null;
         this.height = resources.height || null;
         this.events = new Set();
+        Object.assign(this, options);
     }
-    // set pos([x, y]) {
-    //     this.pos = [x, y];
-    // }
-
-    // get pos() {
-    //     return this.pos;
-    // }
 
     on(type = "any", fn) {
         this.events.add(type);
@@ -31,8 +25,8 @@ class _Shape extends Event {
         !!this.draw && this.draw.apply(painter, args);
     }
 
-    _update() {
-        !!this.update && this.update();
+    _update(...args) {
+        !!this.update && this.update(...args);
     }
 }
 

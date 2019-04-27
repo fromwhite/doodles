@@ -2,24 +2,24 @@ import Transform from "transform";
 import { m4 } from "math";
 
 class Gl2d {
-    constructor(canvas, ...args) {
+    constructor(canvas, [width, height]) {
         this.canvas = canvas;
         this.gl = undefined;
         this.transform = new Transform();
         this._resources = new Map();
-        this.init(...args);
+        this.init([width, height]);
     }
-    init(...args) {
+    init([width, height]) {
         // default
         this.canvas.oncontextmenu = function() {
             return false;
         };
         // dpr
         this.dpr = window.devicePixelRatio || 1;
-        if (args[0] && args[1]) {
+        if (!!width && !!height) {
             // 入参 宽高
-            this._width = args[0];
-            this._height = args[1];
+            this._width = width;
+            this._height = height;
         } else {
             // 没有传入宽高 取父节点宽高初始化
             this._width = this.canvas.parentNode.clientWidth;

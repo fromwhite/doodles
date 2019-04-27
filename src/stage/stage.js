@@ -3,7 +3,7 @@ import gl2d from "gl2d";
 import { Shape } from "shape";
 
 class _Stage extends Event {
-    constructor(element, ...args) {
+    constructor(element, options) {
         super();
 
         this.element = element || null;
@@ -15,11 +15,11 @@ class _Stage extends Event {
 
         this.then = 0;
         this.tick = null;
-
-        this.init(...args);
+        this.statu = null;
+        this.init(options);
     }
 
-    init(...args) {
+    init(options) {
         if (!this.element || this.element.nodeName !== "CANVAS") {
             let c = document.createElement("canvas");
             c.id = "canvas";
@@ -35,7 +35,8 @@ class _Stage extends Event {
             this.element = c;
         }
 
-        this.context = gl2d(this.element, ...args);
+        Object.assign(this, options);
+        this.context = gl2d(this.element, [this.width, this.height]);
 
         this.dpr = this.context.dpr;
 
@@ -89,8 +90,8 @@ class _Stage extends Event {
                     this.shapes.forEach(shape => {
                         for (let item of shape.events.keys()) {
                             item == event
-                                ? this.isInside(shape, [evtArgs.x, evtArgs.y])
-                                    ? this.emit.apply(shape, event, evtArgs)
+                                ? this.isInside(shape, { x, y })
+                                    ? this.emit.apply(shape, [event, evtArgs])
                                     : 0
                                 : 0;
                         }
@@ -105,21 +106,13 @@ class _Stage extends Event {
         return ~~px * this.dpr;
     }
 
-    pixel2shadow(x, y) {
-        return [x / 10, y / 10];
-    }
-
-    shadow2pixel(x, y) {
-        return [x * 10, y * 10];
-    }
-
     //Function to check whether a point is inside a rectangle
     isInside(shape, pos) {
         return (
-            pos.x > shape.pos.x &&
-            pos.x < shape.pos.x + shape.width &&
-            pos.y < shape.pos.y + shape.height &&
-            pos.y > shape.pos.y
+            pos.x > shape.rect.x &&
+            pos.x < shape.rect.x + shape.rect.width &&
+            pos.y < shape.rect.y + shape.rect.height &&
+            pos.y > shape.rect.y
         );
     }
 
@@ -136,18 +129,20 @@ class _Stage extends Event {
 
     // add shape
     add(shape) {
-        this.shapes.add(shape) && this.shapes.size > 0 ? this.loop() : null;
+        this.shapes.add(shape);
+        this.shapes.size > 0 ? (this.statu != "LOOP" ? this.loop() : 0) : 0;
     }
 
     remove(shape) {
-        this.shapes.delete(shape) && this.shapes.size == 0 ? this.end() : null;
+        this.shapes.delete(shape);
+        this.shapes.size == 0 ? (this.statu != "END" ? this.end() : 0) : 0;
     }
 
-    _draw(context = this.context, ...args) {
+    _draw(deltaTime) {
         // this.shapes.forEach(item => {
         //     item._draw.apply(context, args);
         // });
-        !!this.draw && this.draw.apply(context, args);
+        !!this.draw && this.draw(deltaTime);
     }
 
     _update(...args) {
@@ -163,13 +158,15 @@ class _Stage extends Event {
         let deltaTime = Math.min(0.1, now - then);
         this.then = now;
         this._update(deltaTime);
-        this._draw();
+        this._draw(deltaTime);
         this.tick = requestAnimationFrame(time => this.render(time));
     }
     loop() {
+        if (this.statu != "LOOP") this.statu = "LOOP";
         requestAnimationFrame(time => this.render(time));
     }
     end() {
+        if (this.statu != "END") this.statu = "END";
         cancelAnimationFrame(this.tick);
         this.then = 0;
         this.context.clear();
@@ -177,6 +174,7 @@ class _Stage extends Event {
         this.events.clear();
     }
     pause() {
+        if (this.statu != "PAUSE") this.statu = "PAUSE";
         !!this.tick && cancelAnimationFrame(this.tick);
     }
 }
