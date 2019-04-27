@@ -38,8 +38,6 @@ webpack(config, (err, stats) => {
         console.warn(info.warnings);
     }
 
-    console.log("Done processing.");
-
     let compiler = webpack(config);
 
     const base = "./app/";
@@ -110,9 +108,7 @@ webpack(config, (err, stats) => {
         //inline: true, stats: {     colors: true },
         stats: "errors-only"
     });
-    server.listen(8080, "localhost", () => {
-        console.log("dev server listening on port 8080");
-    });
+    server.listen(port, "localhost");
 
     let cli = {
         win32: "start",
@@ -121,7 +117,6 @@ webpack(config, (err, stats) => {
     };
     let cmd = cli[process.platform] || null;
     cmd && c.exec(`${cmd} http://localhost:${port}/`);
-    console.log("release");
 
     //lsof -i:8080 => pkill node
     process.on("SIGINT", function() {

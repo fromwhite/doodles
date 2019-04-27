@@ -3,18 +3,19 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-let DEV = process.env.NODE_ENV === "DEV"; //开发
-let PROD = process.env.NODE_ENV === "PROD"; //生产
+let DEV = process.env.NODE_ENV === "DEV";
+let PROD = process.env.NODE_ENV === "PROD";
 
-// 任务描述 @name @description name与vendor不要重复
+// @name @description name与vendor不要重复
 const works = {
     webgl2d: {
         name: "webgl2d",
-        description: "webgl2d drawImage"
+        description: "webgl2d drawImage",
+        vendor: "gl2d"
     },
     stage_test: {
         name: "stage_test",
-        description: "webgl2d stage 增加事件",
+        description: "stage增加事件",
         vendor: "stage"
     }
 };
