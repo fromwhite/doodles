@@ -14,8 +14,8 @@ const http = require("http"),
 
 const port = parseInt(process.argv[2] || 8080, 10);
 
-let DEV = process.env.NODE_ENV === "DEV"; //开发模式
-let PROD = process.env.NODE_ENV === "PROD"; //生产
+let DEV = process.env.NODE_ENV === "DEV";
+let PROD = process.env.NODE_ENV === "PROD";
 
 Object.assign(config, {
     devServer: {
@@ -25,15 +25,13 @@ Object.assign(config, {
 });
 
 webpack(config, (err, stats) => {
-    //处理webpack本身的error
     if (err) return console.error(err.stack || err);
 
     const info = stats.toJson();
-    //处理代码编译中产生的error
     if (stats.hasErrors()) {
         console.error(info.errors);
     }
-    //处理代码编译中产生的warning
+
     if (stats.hasWarnings()) {
         console.warn(info.warnings);
     }
@@ -101,11 +99,11 @@ webpack(config, (err, stats) => {
     );
     fs.writeFileSync("./index.html", html);
 
-    //server
     let server = new WebpackDevServer(compiler, {
         hot: true,
         publicPath: "/",
-        //inline: true, stats: {     colors: true },
+        inline: true,
+        //stats: { colors: true },
         stats: "errors-only"
     });
     server.listen(port, "localhost");
