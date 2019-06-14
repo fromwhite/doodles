@@ -37,7 +37,7 @@ class Gl2d {
             this.canvas.getContext("experimental-webgl");
         let gl = this.gl;
 
-        if (!gl) throw new Error("connot get gl context!");
+        if (!gl) throw new Error("cannot get gl context!");
 
         let program = this.createProgram(gl);
         this.positionLocation = gl.getAttribLocation(program, "a_position");
