@@ -12,7 +12,7 @@ const http = require("http"),
   zlib = require("zlib"),
   c = require("child_process");
 
-const port = parseInt(process.argv[2] || 8080, 10);
+const port = Number.isFinite(process.argv[2]) ? process.argv[2] : 8080;
 
 const CI = process.argv[2] === "CI";
 
