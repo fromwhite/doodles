@@ -110,7 +110,9 @@ webpack(config, (err, stats) => {
   });
   server.listen(port, "localhost");
 
-  if (!CI) {
+  if (CI) {
+    process.exit(0);
+  } else {
     let cli = {
       win32: "start",
       linux: "xdg-open",
