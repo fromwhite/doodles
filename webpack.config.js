@@ -3,10 +3,23 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const task = {
-  name: process.argv[2] || `stage`,
-  description: `h5test ${process.argv[2] || `stage`}`,
+// const task = {
+//   name: process.argv[2] || `stage`,
+//   description: `h5test ${process.argv[2] || `stage`}`,
+// };
+
+// @name @description name与vendor不要重复
+const works = {
+  webgl2d: {
+    name: "webgl2d",
+    description: "webgl2d drawImage",
+  },
+  stage: {
+    name: "stage",
+    description: "stage增加事件",
+  },
 };
+let task = works["stage"];
 
 let DEV = process.env.NODE_ENV === "DEV";
 let PROD = process.env.NODE_ENV === "PROD";
