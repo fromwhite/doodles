@@ -101,18 +101,18 @@ webpack(config, (err, stats) => {
   );
   fs.writeFileSync("./index.html", html);
 
-  let server = new WebpackDevServer(compiler, {
-    hot: true,
-    publicPath: "/",
-    inline: true,
-    //stats: { colors: true },
-    stats: "errors-only",
-  });
-  server.listen(port, "localhost");
-
   if (CI) {
     process.exit(0);
   } else {
+    let server = new WebpackDevServer(compiler, {
+      hot: true,
+      publicPath: "/",
+      inline: true,
+      //stats: { colors: true },
+      stats: "errors-only",
+    });
+    server.listen(port, "localhost");
+
     let cli = {
       win32: "start",
       linux: "xdg-open",
