@@ -19,7 +19,7 @@ const works = {
     description: "stage增加事件",
   },
 };
-let task = works["stage"];
+let task = works["webgl2d"];
 
 let DEV = process.env.NODE_ENV === "DEV";
 let PROD = process.env.NODE_ENV === "PROD";
