@@ -3,6 +3,9 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+let DEV = process.env.NODE_ENV === "DEV";
+let PROD = process.env.NODE_ENV === "PROD";
+
 // const task = {
 //   name: process.argv[2] || `stage`,
 //   description: `h5test ${process.argv[2] || `stage`}`,
@@ -20,9 +23,6 @@ const works = {
   },
 };
 let task = works["webgl2d"];
-
-let DEV = process.env.NODE_ENV === "DEV";
-let PROD = process.env.NODE_ENV === "PROD";
 
 let entry = PROD
   ? {}
