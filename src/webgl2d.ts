@@ -97,7 +97,7 @@ async function main() {
     let now = time * 0.001;
     let deltaTime = Math.min(0.1, now - then);
     then = now;
-
+// test
     update(deltaTime);
     draw();
     requestAnimationFrame(render);
