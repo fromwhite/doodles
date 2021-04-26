@@ -28,8 +28,6 @@ async function main() {
       yScale: Math.random() * 0.25 + 0.25,
       offX: Math.random() * 0.75,
       offY: Math.random() * 0.75,
-      offX: 0,
-      offY: 0,
       rotation: Math.random() * Math.PI * 2,
       deltaRotation:
         (0.5 + Math.random() * 0.5) * (Math.random() > 0.5 ? -1 : 1),
@@ -106,3 +104,4 @@ async function main() {
   }
   requestAnimationFrame(render);
 }
+
