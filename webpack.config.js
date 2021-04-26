@@ -27,7 +27,7 @@ let task = works["webgl2d"];
 let entry = PROD
   ? {}
   : [
-      `./src/${task.name}.js`,
+      `./src/${task.name}.ts`,
       "webpack-dev-server/client?http://localhost:8080",
       "webpack/hot/only-dev-server",
     ];
@@ -68,7 +68,7 @@ let plugins = PROD
 
 // 补充 CommonsChunk 依赖
 if (PROD) {
-  entry[task.name] = `./src/${task.name}.js`;
+  entry[task.name] = `./src/${task.name}.ts`;
   if (task.vendor) {
     entry[task.vendor] = task.vendor;
     plugins.push(
@@ -93,6 +93,11 @@ module.exports = {
   plugins: plugins,
   module: {
     loaders: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: "ts-loader",
+      },
       {
         test: /(\.js$|\.jsx$)/,
         exclude: "/node_modules/",
@@ -120,7 +125,8 @@ module.exports = {
       path.resolve("./src/stage"),
       path.resolve("./node_modules"),
     ],
-    extensions: [".js", ".json", ".jsx", ".css", ".gif"],
+    // extensions: [".js", ".json", ".jsx", ".css", ".gif"],
+    extensions: [".ts", ".tsx", ".json", ".js"],
   },
   devServer: {
     hot: true,
