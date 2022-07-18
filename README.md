@@ -1,6 +1,6 @@
 ## h5的一些玩具
 兴趣使然在视觉呈现方向的一些尝试   
-**快速链接** [h5list](https://afhhh.github.io/h5test/) | **联系我** <qingxilu@outlook.com>
+**快速链接** [h5list](https://afhhh.github.io/h5test/) | **联系我** <.com>
 > 有空才更新
 - [x] webgl2d 封装gl2d loadTex/drawImage context
 - [x] stage_test 提供stage {scene,event,shape} shape {texture,event,behaviors} update/draw
