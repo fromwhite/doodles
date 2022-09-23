@@ -1,8 +1,4 @@
-node_modules/*
+*/**/node_modules
 
-/reserved
-/npm-debug.log
-/package-lock.json
 .DS_Store
-
 .jsbeautifyrc
