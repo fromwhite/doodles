@@ -1,20 +1,21 @@
 /*
  *   create by vincent 31 Dec 2016
  */
-const requestAnimationFrame =
+
+export const requestAnimationFrame =
   window.requestAnimationFrame ||
   function (callback) {
     window.Timer = () => setTimeout(callback, 1000 / 60);
   };
 
-const cancelAnimationFrame =
+export const cancelAnimationFrame =
   window.cancelAnimationFrame || clearTimeout(window.Timer);
 
-const log = function () {
+export const log = function () {
   console.log.apply(console, arguments);
 };
 
-const queue = function (funcs, scope) {
+export const queue = function (funcs, scope) {
   (function next() {
     if (funcs.length > 0) {
       funcs
@@ -27,7 +28,7 @@ const queue = function (funcs, scope) {
   })();
 };
 
-const adler32 = function (str) {
+export const adler32 = function (str) {
   let MOD = 65521;
   let a = 1;
   let b = 0;
@@ -38,7 +39,7 @@ const adler32 = function (str) {
   return a | (b << 16);
 };
 
-const getType = function (obj) {
+export const getType = function (obj) {
   var type = Object.prototype.toString
     .call(obj)
     .match(/^\[object (.*)\]$/)[1]
@@ -49,7 +50,7 @@ const getType = function (obj) {
   return type;
 };
 
-class Event {
+export class Event {
   constructor() {
     this.subscribers = new Map([["any", []]]);
   }
@@ -83,5 +84,3 @@ class Event {
     this.off(...args);
   }
 }
-
-export { queue, Event, getType, requestAnimationFrame, cancelAnimationFrame };

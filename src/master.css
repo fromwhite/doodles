@@ -1,9 +1,0 @@
-body {
-    background-position: 50% 0, 50% 0;
-    background-size: 30px 30px, 30px 30px;
-    background-color: #f2f2f5;
-    background-image: linear-gradient(#fbfbfc,#fbfbfc 1px,transparent 1px,transparent 10px,#f6f6f8 10px,#f6f6f8 11px,transparent 11px,transparent 20px,#f6f6f8 20px,#f6f6f8 21px,transparent 21px),linear-gradient(90deg,#fbfbfc,#fbfbfc 1px,transparent 1px,transparent 10px,#f6f6f8 10px,#f6f6f8 11px,transparent 11px,transparent 20px,#f6f6f8 20px,#f6f6f8 21px,transparent 21px);
-}
-.main {
-    background: radial-gradient(circle, #484848, #2f3031);
-}
