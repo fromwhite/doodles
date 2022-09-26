@@ -104,7 +104,6 @@
         -webkit-overflow-scrolling: touch;
         text-align: center;
         font-size: 16px;
-        padding: 0 10px;
         word-spacing: 0px;
         word-break: break-word;
         word-wrap: break-word;
@@ -130,6 +129,7 @@
       .main {
         padding: 10px;
         overflow-y: auto;
+        display: none;
       }
       .main p {
         font-size: 14px;
@@ -166,29 +166,109 @@
         text-decoration: none;
         color: #191919 !important;
       }
+
+      body {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        height: 100vh;
+      }
+      .side {
+        width: 260px;
+        overflow-y: auto;
+        /* background-color: #79bbb5; */
+        padding: 20px;
+      }
+
+      .section {
+        padding: 5px 10px;
+        font-weight: bold;
+      }
+
+      .link {
+        padding-left: 20px;
+        /* font-size: 14px; */
+        opacity: 0.75;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .link:hover {
+        color: #2b2929 !important;
+        opacity: 0.9;
+        text-decoration: underline;
+      }
+
+      .link[selected="true"] {
+        font-weight: bold;
+        text-decoration: underline;
+        opacity: 1;
+        cursor: pointer;
+      }
+
+      .iframe {
+        flex-grow: 1;
+        background-color: bisque;
+      }
     </style>
   </head>
 
   <body>
-    <div class="main">
-      <ul class="list">
-        <li>
-          <a
-            href="app/webgl2d.html?1620462291606"
-            style="color: #79bbb5"
-            target="_blank"
-            >webgl2d drawImage</a
-          >
-        </li>
-        <li>
-          <a
-            href="app/stage.html?1620462291606"
-            style="color: #79bbb5"
-            target="_blank"
-            >stage增加事件</a
-          >
-        </li>
-      </ul>
+    <div class="side">
+      <div class="section">glsl</div>
+      <div>
+        <a class="link" style="color: #79bbb5" href="./glsl/glsl2d.html"
+          >glsl2d</a
+        >
+      </div>
+      <div>
+        <a class="link" style="color: #79bbb5" href="./glsl/stage.html"
+          >stage</a
+        >
+      </div>
+      <div class="section">r3f</div>
     </div>
+    <iframe class="iframe" allow="autoplay" src=""></iframe>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", main, false);
+      async function main() {
+        const iframe = document.querySelector(".iframe");
+        const links = document.querySelectorAll(".link");
+
+        let loadQuery = location.search.split("src=");
+        if (loadQuery[1]) {
+          let target = Array.from(links).find(
+            (link) => link.pathname == loadQuery[1]
+          );
+          updateExample({ target });
+        } else {
+          let target = links[Math.floor(Math.random() * links.length)];
+          updateExample({ target });
+        }
+
+        links.forEach((link) => {
+          link.addEventListener("click", updateExample, false);
+        });
+
+        function updateExample(e) {
+          if (!e) return;
+          let src = e.target.pathname;
+          links.forEach((e) => e.setAttribute("selected", "false"));
+          e.target.setAttribute("selected", "true");
+
+          if (e.metaKey) {
+            window.open(e.target.href, "_blank");
+            return;
+          }
+
+          iframe.src = src;
+
+          history.pushState(null, null, `${location.origin}?src=${src}`);
+          e.preventDefault && e.preventDefault();
+        }
+      }
+    </script>
   </body>
 </html>
