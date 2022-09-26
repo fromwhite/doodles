@@ -259,13 +259,20 @@
           e.target.setAttribute("selected", "true");
 
           if (e.metaKey) {
-            window.open(e.target.href, "_blank");
+            window.open(
+              `${location.origin}${location.pathname}${e.target.href}`,
+              "_blank"
+            );
             return;
           }
 
           iframe.src = src;
 
-          history.pushState(null, null, `${location.origin}?src=${src}`);
+          history.pushState(
+            null,
+            null,
+            `${location.origin}${location.pathname}?src=${src}`
+          );
           e.preventDefault && e.preventDefault();
         }
       }
