@@ -259,10 +259,7 @@
           e.target.setAttribute("selected", "true");
 
           if (e.metaKey) {
-            window.open(
-              `${location.origin}${location.pathname}${e.target.href}`,
-              "_blank"
-            );
+            window.open(e.target.href, "_blank");
             return;
           }
 
