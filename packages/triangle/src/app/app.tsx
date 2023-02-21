@@ -1,55 +1,64 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
+import * as OGL from 'ogl'
+import * as React from 'react'
+import { useFrame, Canvas } from 'react-ogl'
 
-import NxWelcome from './nx-welcome';
+const hotpink = new OGL.Color(0xfba2d4)
+const orange = new OGL.Color(0xf5ce54)
 
-import { Route, Routes, Link } from 'react-router-dom';
+const Box = (props: JSX.IntrinsicElements['mesh']) => {
+  const mesh = React.useRef<OGL.Mesh>(null!)
+  const [hovered, setHover] = React.useState(false)
+  const [active, setActive] = React.useState(false)
 
-export function App() {
+  useFrame(() => (mesh.current.rotation.x += 0.01))
+  
   return (
-    <>
-      <NxWelcome title="triangle" />
-
-      <div />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
+    <mesh
+      {...props}
+      ref={mesh}
+      scale={active ? 1.5 : 1}
+      onClick={() => setActive((value) => !value)}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
+    >
+      <box />
+      <program
+        vertex={`
+          attribute vec3 position;
+          attribute vec3 normal;
+          uniform mat4 modelViewMatrix;
+          uniform mat4 projectionMatrix;
+          uniform mat3 normalMatrix;
+          varying vec3 vNormal;
+          void main() {
+            vNormal = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
           }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
+        `}
+        fragment={`
+          precision highp float;
+          uniform vec3 uColor;
+          varying vec3 vNormal;
+          void main() {
+            vec3 normal = normalize(vNormal);
+            float lighting = dot(normal, normalize(vec3(10)));
+            gl_FragColor.rgb = uColor + lighting * 0.1;
+            gl_FragColor.a = 1.0;
           }
-        />
-      </Routes>
-      {/* END: routes */}
-    </>
-  );
+        `}
+        uniforms={{ uColor: hovered ? hotpink : orange }}
+      />
+    </mesh>
+  )
 }
 
-export default App;
+export default function () {
+  return (
+    <Canvas>
+      <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} />
+    </Canvas>
+  )
+}

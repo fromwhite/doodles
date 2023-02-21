@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "target": "es2016",
     "module": "commonjs",
     "skipLibCheck": true
