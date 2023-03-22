@@ -8,6 +8,11 @@ export default function Document() {
           href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap"
           rel="stylesheet"
         />
+        <link
+          rel="icon"
+          type="image/x-icon"
+          href={`${process.env.BASE_PATH || ''}/favicon.ico`}
+        />
       </Head>
       <body>
         <Main />
