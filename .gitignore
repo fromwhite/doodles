@@ -1,12 +1,13 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-dist
+# dist
 tmp
 /out-tsc
 
 # dependencies
 node_modules
+web_modules
 
 # IDEs and editors
 /.idea
@@ -28,7 +29,6 @@ node_modules
 /.sass-cache
 /connect.lock
 /coverage
-/libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
@@ -39,3 +39,18 @@ testem.log
 Thumbs.db
 
 .next
+.build
+build
+
+# local
+/.sh
+docker.sh
+push.sh
+make.sh
+
+# remote docker container
+compose.yml
+scratch.yml
+/stash
+*/pravite
+/vercel

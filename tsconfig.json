@@ -1,25 +1,32 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "baseUrl": "./",
+    "noEmit": false,
+    "sourceMap": true,
+    "strict": false,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
+    "allowJs": true,
+    "ignoreDeprecations": "5.0",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "ignoreDeprecations": "5.0",
+    "target": "es6",
+    "lib": ["es2019", "dom", "dom.iterable"],
+    "jsx": "react",
+    "types": ["react"],
+    "rootDir": "src",
+    "outDir": "dist",
+    "stripInternal": true,
+    "removeComments": true,
+    "declarationMap": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src/*"],
+  "exclude": ["node_modules", "website"]
 }
