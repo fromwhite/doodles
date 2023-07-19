@@ -26,16 +26,15 @@ jobs:
       - name: Install and Build 🔧
         run: |
           export REPOSITORY_NAME=${{ github.repository }}
-          npm ci
-          npm run-script lint
-          npm run-script build
-          npm run-script export
-          touch out/.nojekyll
+          npm install
+          npm run clean
+          npm run build:website
+          touch dist/.nojekyll
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: out
+          FOLDER: dist
           CLEAN: true
