@@ -4,11 +4,13 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF, MeshDistortMaterial, Shadow } from '@react-three/drei';
 import { Text } from './Text';
 import state from './state';
+import { getURL } from './helper';
 
 export default function Model(props) {
   const group = useRef();
   const shadow = useRef();
-  const { nodes } = useGLTF('/images/geo.min.glb', true);
+  const glb = getURL(`/doodles${'/images/geo.min.glb'}`);
+  const { nodes } = useGLTF(glb, true);
   useFrame(({ clock }) => {
     const t = (1 + Math.sin(clock.getElapsedTime() * 1.5)) / 2;
     group.current.position.y = t / 3;

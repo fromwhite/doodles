@@ -19,6 +19,7 @@ import Postpro from './Postpro';
 import Geo from './Geo';
 import state from './state';
 import { Text } from './Text';
+import { getURL } from './helper';
 
 function HeightReporter({ onReflow }: { onReflow: any }) {
   const size = useFlexSize();
@@ -41,7 +42,13 @@ function Page({
   onReflow: any;
   left: boolean;
 }) {
-  const textures = useLoader(THREE.TextureLoader, images);
+  const imagesURL = React.useMemo(() => {
+    return images.map((image) => {
+      return getURL(`/doodles${image}`);
+    });
+  }, [images]);
+
+  const textures = useLoader(THREE.TextureLoader, imagesURL);
   const { viewport } = useThree();
   const boxProps = {
     centerAnchor: true,
@@ -202,7 +209,12 @@ function Content({
   const group = useRef<THREE.Group>(null!);
   const { viewport, size } = useThree();
   const [bW, bH] = useAspect(1920, 1920, 0.5);
-  const texture = useLoader(THREE.TextureLoader, item.depthbox[0].image);
+  const texture = useLoader(
+    THREE.TextureLoader,
+    // item.depthbox[0].image
+    getURL(`/doodles${item.depthbox[0].image}`)
+  );
+
   const vec = new THREE.Vector3();
   const pageLerp = useRef(state.top / size.height);
   useFrame(() => {
@@ -324,7 +336,7 @@ function List({ onChangePages, list }) {
 
   const cellWidth = (vpWidth - 18 * 2 * 0.05) / 18,
     cellHeight = (vpHeight - 6 * 2 * 0.05) / 6;
-  const font = '/DotGothic16-Regular.ttf';
+  const font = getURL(`/doodles${'/DotGothic16-Regular.ttf'}`);
 
   return (
     <group ref={group}>
