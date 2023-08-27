@@ -3,12 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <!-- <meta http-equiv="Pragma" content="no-cache" /> -->
     <meta http-equiv="Widow-target" content="_top" />
     <meta http-equiv="Page-Exit" content="blendTrans(Duration=0.5)" />
     <meta name="google" value="notranslate" />
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'" /> -->
-
     <meta
       name="description"
       content="postprocessing effects for React and @react-three/fiber"
@@ -17,9 +14,7 @@
       name="keywords"
       content="postprocessing,react,three,@react-three/fiber,webgl,3d"
     />
-
     <meta name="robots" content="index,nofollow" />
-
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
@@ -29,7 +24,6 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telphone=no, email=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <meta name="color-scheme" content="light dark" />
     <title>PostProcessingEffects</title>
     <style>
@@ -94,133 +88,6 @@
         margin-top: 0.8em;
         color: #f0f0f0;
         font-size: 0.6em;
-      }
-
-      .warp {
-        position: relative;
-        z-index: 1;
-        box-sizing: border-box;
-        color: #171717;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        overscroll-behavior: none;
-        font-family: 'Inter var', sans-serif;
-        /* cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxMCIgZmlsbD0iYmxhY2siLz48L3N2Zz4='),
-          auto; */
-      }
-
-      .warp h1 {
-        font-size: 20em;
-        font-weight: 400;
-        letter-spacing: -0.05em;
-        line-height: 0.7em;
-        margin: 0;
-        padding: 0;
-      }
-
-      .warp a {
-        pointer-events: all;
-        color: black;
-        text-decoration: none;
-      }
-
-      .warp p {
-        padding: 0;
-        margin: 0;
-      }
-
-      .antialiased {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      @keyframes bounce {
-        0%,
-        to {
-          transform: translateY(-25%);
-          animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-        }
-
-        50% {
-          transform: none;
-          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-        }
-      }
-
-      .animate-bounce {
-        animation: bounce 1s infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(1turn);
-        }
-      }
-
-      .animate-spin {
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes scaleAnim {
-        0% {
-          transform: scale(0.3, 0.7);
-        }
-        50% {
-          transform: scale(1);
-        }
-        100% {
-          transform: scale(0.3, 0.7);
-        }
-      }
-
-      @keyframes translateXAnim {
-        0% {
-          transform: translate3d(-100px, 0, 0);
-        }
-        25% {
-          transform: translate3d(0, 0, 0);
-        }
-        50% {
-          transform: translate3d(100px, 0, 0);
-        }
-        75% {
-          transform: translate3d(0, 0, 0);
-        }
-        100% {
-          transform: translate3d(-100px, 0, 0);
-        }
-      }
-
-      @keyframes translateYAnim {
-        0% {
-          transform: translate3d(0, -100px, 0);
-        }
-        25% {
-          transform: translate3d(0, 0, 0);
-        }
-        50% {
-          transform: translate3d(0, 100px, 0);
-        }
-        75% {
-          transform: translate3d(0, 0, 0);
-        }
-        100% {
-          transform: translate3d(0, -100px, 0);
-        }
-      }
-
-      .scale {
-        animation: scaleAnim 5s ease-in-out 0s infinite;
-      }
-
-      .translateX {
-        animation: translateXAnim 10s ease-in-out 0s infinite;
-      }
-
-      .translateY {
-        animation: translateYAnim 5s ease-in-out 0s infinite;
       }
     </style>
   </head>

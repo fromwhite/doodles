@@ -1,3 +1,4 @@
+import './compontent/global.css';
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Loader } from '@react-three/drei';

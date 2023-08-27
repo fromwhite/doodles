@@ -1,8 +1,5 @@
 import fs from 'fs/promises';
-import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
-import react from '@vitejs/plugin-react';
-import path from 'path';
 const dependencies = require('./package.json').dependencies;
 
 const isWebsiteBuild = process.env.WEBSITE;
@@ -23,17 +20,7 @@ const getAliases = async (frameworkName, frameworkRootDir) => {
 };
 
 export default {
-  plugins: [
-    reactRefresh(),
-    // react({
-    //   babel: {
-    //     presets: ['@babel/preset-react'],
-    //     plugins: [
-    //       ['styled-jsx/babel', { plugins: ['@styled-jsx/babel-plugin'] }],
-    //     ],
-    //   },
-    // }),
-  ],
+  plugins: [reactRefresh()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
