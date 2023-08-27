@@ -1,6 +1,8 @@
 postprocessing effects for React and @react-three/fiber.
 
 ```bash
+# dependencies
+# react  @react-three/fiber @react-three/drei three
 npm install --save git+https://github.com/fromwhite/doodles.git
 ```
 
@@ -31,18 +33,8 @@ To learn more about Next.js, take a look at the following resources:
      <td valign="top">
         <ul>
             <li><a href="#abstractions">Abstractions</a></li>
-        <ul>
-          <li><a>drei effectcomposer</a></li>
-          <li><a>flex TextImpl</a></li>
-          <li><a href="https://codesandbox.io/embed/7psew">@react-three/flex</a></li>
-        </ul>
+       Adapters are not specific, it's implemented by your own ideas
         </ul>
     </td>
 </tr>
 </table>
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

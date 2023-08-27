@@ -65,7 +65,7 @@ export const Text = forwardRef(
   ) => {
     const { invalidate } = useThree();
     const reflow = useReflow();
-    const textRef = useRef<TextMeshImpl>();
+    const textRef = useRef<TextMeshImpl>(null!);
     const [baseMtl, setBaseMtl] = useState();
     const [nodes, text] = useMemo(() => {
       let n: React.ReactNode[] = [];
@@ -78,16 +78,12 @@ export const Text = forwardRef(
           typeof child === 'object' &&
           (child as React.ReactElement).props.attach === 'material'
         ) {
-          // Instantiate the base material and grab a reference to it, but don't assign any
-          // props, and assign it as the `material`, which Troika will replace behind the scenes.
           n.push(
             createElement((child as React.ReactElement).type, {
               ref: setBaseMtl,
               attach: 'material',
             })
           );
-          // Once the base material has been assigned, grab the resulting upgraded material,
-          // and apply the original material props to that.
           if (baseMtl) {
             n.push(
               <primitive

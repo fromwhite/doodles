@@ -92,10 +92,9 @@ const state = {
     '#785ebb',
     '#84A5DD',
   ],
-  list: () =>
+  table: () =>
     Array.from({ length: 3 * 18 + 3 * 6 + 1 + 3 }, (value, index) => {
       return {
-        ...state.empty,
         No: index + 1,
         cell: 1,
         color: state.colors[Math.floor(Math.random() * state.colors.length)],
@@ -103,7 +102,6 @@ const state = {
     })
       .fill(
         {
-          ...state.empty,
           No: 2,
           cell: 16,
           color: state.colors[Math.floor(Math.random() * state.colors.length)],
@@ -113,7 +111,6 @@ const state = {
       )
       .fill(
         {
-          ...state.empty,
           No: 6,
           cell: 10,
           color: state.colors[Math.floor(Math.random() * state.colors.length)],
@@ -123,7 +120,6 @@ const state = {
       )
       .fill(
         {
-          ...state.empty,
           No: 16,
           cell: 9,
           color: state.colors[Math.floor(Math.random() * state.colors.length)],
