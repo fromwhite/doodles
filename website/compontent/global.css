@@ -99,13 +99,3 @@
   --f-L: 2rem;
   --foreground: #000;
 }
-
-del {
-  background: #ffe6e6;
-  text-decoration: line-through;
-}
-
-ins {
-  background: #e6ffe6;
-  text-decoration: underline;
-}
