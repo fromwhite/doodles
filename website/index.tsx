@@ -53,7 +53,7 @@ function App() {
             alpha: false,
             antialias: false,
             stencil: false,
-            depth: false,
+            // depth: false,
           }}
           onCreated={({ gl }) => gl.setClearColor('#f5f5f5')}
         >

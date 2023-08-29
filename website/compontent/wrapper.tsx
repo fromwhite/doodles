@@ -40,19 +40,19 @@ const styles = `
     auto; */
 }
 
-.warp h1 {
-  font-size: 20em;
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 0.7em;
-  margin: 0;
-  padding: 0;
-}
-
 .warp a {
   pointer-events: all;
   color: black;
   text-decoration: none;
+}
+
+.warp h1 {
+  font-size: var(--f-M);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.7em;
+  margin: 5px 0;
+  padding: 0;
 }
 
 .warp p {
