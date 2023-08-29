@@ -21,12 +21,13 @@ import {
 } from '@react-three/postprocessing';
 import { useControls, button } from 'leva';
 import { BlendFunction, GlitchMode } from 'postprocessing';
+import { getURL } from '../compontent/helper';
 
 export default function StarterWithDrei() {
   const [stream, setStream] = useState(new MediaStream());
 
   const videos = {
-    H0XV10: '/H0XV-10.mp4',
+    H0XV10: getURL(`/doodles${'/H0XV-10.mp4'}`),
   };
   const animates = {
     none: '',
@@ -197,13 +198,13 @@ const Logo = ({ scale, ...props }) => {
 };
 
 export function Duck(props) {
-  const { scene } = useGLTF('/duck.glb');
+  const { scene } = useGLTF(getURL(`/doodles${'/duck.glb'}`));
   useFrame((state, delta) => (scene.rotation.y += delta));
   return <primitive object={scene} {...props} />;
 }
 
 export function Flash(props) {
-  const { scene } = useGLTF('/flash.gltf');
+  const { scene } = useGLTF(getURL(`/doodles${'/flash.gltf'}`));
   useFrame((state, delta) => (scene.rotation.y += delta));
   return <primitive object={scene} {...props} />;
 }
@@ -227,7 +228,11 @@ export function ViewVideoMaterial({ url, muted = false }) {
       // onPointerOut={() => hover(false)}
     >
       <planeGeometry />
-      <Suspense fallback={<FallbackMaterial url="/b3RZ-10-Medium.jpeg" />}>
+      <Suspense
+        fallback={
+          <FallbackMaterial url={getURL(`/doodles${'/b3RZ-10-Medium.jpeg'}`)} />
+        }
+      >
         <VideoMaterial url={url} props={{ muted: muted }} />
       </Suspense>
     </mesh>
