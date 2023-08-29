@@ -74,9 +74,6 @@ export default function StarterWithDrei() {
             Both these scenes are tracking elements and scaling their WebGL
             meshes to fit
           </p>
-          <p>
-            <ins>todo:fix view with postprocessing</ins>
-          </p>
         </div>
         <View
           className={'translateY'}
