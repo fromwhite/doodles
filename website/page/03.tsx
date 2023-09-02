@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, Suspense, useEffect } from 'react';
+import React, { useMemo, useRef, useState, Suspense } from 'react';
 import {
   Line,
   useCursor,
@@ -8,7 +8,6 @@ import {
   useTexture,
   CameraShake,
 } from '@react-three/drei';
-import { View, Common } from '../adapter/View';
 import * as THREE from 'three';
 import { extend, useThree, useFrame } from '@react-three/fiber';
 import {
@@ -17,10 +16,12 @@ import {
   Bloom,
   Noise,
   SMAA,
+  DepthOfField,
   ChromaticAberration,
 } from '@react-three/postprocessing';
 import { useControls, button } from 'leva';
 import { BlendFunction, GlitchMode } from 'postprocessing';
+import { View, Common } from '../adapter/View';
 import { getURL } from '../compontent/helper';
 
 export default function StarterWithDrei() {
@@ -262,15 +263,21 @@ function Effects() {
   return (
     <Suspense fallback={null}>
       <EffectComposer multisampling={0}>
-        <Glitch
+        {/* <Glitch
           delay={new THREE.Vector2(1.5, 3.5)}
           duration={new THREE.Vector2(0.1, 0.2)}
           strength={new THREE.Vector2(0.05, 0.1)}
           mode={GlitchMode.SPORADIC}
           active
           ratio={0.5}
-        />
+        /> */}
         <SMAA />
+        <DepthOfField
+          focusDistance={0}
+          focalLength={0.02}
+          bokehScale={2}
+          height={480}
+        />
         <Noise
           opacity={0.1}
           premultiply={false}

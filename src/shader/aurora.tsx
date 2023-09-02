@@ -1,6 +1,6 @@
 /*
-Shader adapted from the code here https://www.shadertoy.com/view/XtGGRt
-*/
+ * Shader adapted from the code here https://www.shadertoy.com/view/XtGGRt
+ */
 import * as THREE from 'three';
 import React, { useRef } from 'react';
 import { extend, useFrame, useThree, Object3DNode } from '@react-three/fiber';

@@ -14,98 +14,85 @@ import Empty from './compontent/empty';
 import Table from './compontent/table';
 
 function App() {
-  const ref = useRef(null!);
   const table = React.useMemo(() => state.table(), []);
   const scrollArea = useRef<any>(null!);
   const [location, navigate] = useLocation();
   const onScroll = (e: any) => (state.top = e.target?.scrollTop || 0);
   useEffect(() => void onScroll({ target: scrollArea.current }), []);
   const [pages, setPages] = useState(0);
-  const [resetEvents, setResetEvents] = useState(false);
-
-  useEffect(() => {
-    /* @ts-ignore */
-    location.match(new RegExp(`/doodles/post`)) && setResetEvents(ref);
-    return () => {
-      location.match(new RegExp(`/doodles/`)) && setResetEvents(false);
-    };
-  }, [location]);
 
   return (
     <React.StrictMode>
-      <div ref={ref} style={{ pointerEvents: 'all' }}>
-        <Scene
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-          }}
-          eventSource={resetEvents}
-          // eventSource={ref}
-          shadows
-          raycaster={{ enabled: false } as any}
-          dpr={[1, 2]}
-          camera={{ position: [0, 0, 10], far: 1000 }}
-          gl={{
-            powerPreference: 'high-performance',
-            alpha: false,
-            antialias: false,
-            stencil: false,
-            // depth: false,
-          }}
-          onCreated={({ gl }) => gl.setClearColor('#f5f5f5')}
-        >
-          <Reset />
-          <ambientLight intensity={0.4} />
-        </Scene>
+      <Scene
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+        }}
+        eventSource={document.getElementById('app')}
+        shadows
+        raycaster={{ enabled: false } as any}
+        dpr={[1, 2]}
+        camera={{ position: [0, 0, 10], far: 1000 }}
+        gl={{
+          powerPreference: 'high-performance',
+          alpha: false,
+          antialias: false,
+          stencil: false,
+          // depth: false,
+        }}
+        onCreated={({ gl }) => gl.setClearColor('#f5f5f5')}
+      >
+        <Reset />
+        <ambientLight intensity={0.4} />
+      </Scene>
 
-        <Suspense fallback={null}>
-          <Switch location={location}>
-            <Route path="/doodles/">
-              <Triangle>
-                <Table data={table} />
-              </Triangle>
-            </Route>
-            <Route path="/doodles/post/:No">
-              {(params) =>
-                Pages[`_${params.No}`] ? (
-                  <Wrap children={Pages[`_${params.No}`]} />
-                ) : (
-                  <>{navigate('/doodles/empty')}</>
-                )
-              }
-            </Route>
-            <Route path="/doodles/empty">
-              <Triangle>
-                <Empty onReflow={setPages} />
-              </Triangle>
-            </Route>
-            <Redirect to="/doodles/" />
-          </Switch>
-        </Suspense>
-
-        {location && location.match(new RegExp(`/empty`)) ? (
-          <div
-            className="payload"
-            ref={scrollArea}
-            onScroll={onScroll}
-            onPointerMove={(e) =>
-              (state.mouse = [
-                (e.clientX / window.innerWidth) * 2 - 1,
-                (e.clientY / window.innerHeight) * 2 - 1,
-              ])
+      <Suspense fallback={null}>
+        <Switch location={location}>
+          <Route path="/doodles/">
+            <Triangle>
+              <Table data={table} />
+            </Triangle>
+          </Route>
+          <Route path="/doodles/post/:No">
+            {(params) =>
+              Pages[`_${params.No}`] ? (
+                <Wrap children={Pages[`_${params.No}`]} />
+              ) : (
+                <>{navigate('/doodles/empty')}</>
+              )
             }
-          >
-            <div style={{ height: `${pages * 100}vh` }} />
-          </div>
-        ) : (
-          void (state.top = 0)
-        )}
+          </Route>
+          <Route path="/doodles/empty">
+            <Triangle>
+              <Empty onReflow={setPages} />
+            </Triangle>
+          </Route>
+          <Redirect to="/doodles/" />
+        </Switch>
+      </Suspense>
 
-        <Loader />
-      </div>
+      {location && location.match(new RegExp(`/empty`)) ? (
+        <div
+          className="payload"
+          ref={scrollArea}
+          onScroll={onScroll}
+          onPointerMove={(e) =>
+            (state.mouse = [
+              (e.clientX / window.innerWidth) * 2 - 1,
+              (e.clientY / window.innerHeight) * 2 - 1,
+            ])
+          }
+        >
+          <div style={{ height: `${pages * 100}vh` }} />
+        </div>
+      ) : (
+        void (state.top = 0)
+      )}
+
+      <Loader />
     </React.StrictMode>
   );
 }

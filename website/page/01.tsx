@@ -8,18 +8,29 @@ import Aurora from '../../src/shader/aurora';
  *
  * The first few parts of the periodic table are all straters, and I will try to write detailed templates as much as possible
  * The following section is what you should consider first
+ *
  * Provide adapter from your existing code to get context or import from r3f or other third-party libraries
- * import { Scene } from 'your/adapter' or 'import { Canvas } from '@react-three/fiber' or other libraries
+ *
+ * import { Scene } from 'your/adapter'
+ * # or
+ * import { Canvas } from '@react-three/fiber'
+ * # or other libraries
+ *
+ * export function App() {
+ *    return (
+ *      <Canvas>
+ *        <Aurora />
+ *      </Canvas>
+ *    )
+ * }
  */
 
 export default function StarterWithShader() {
   return (
-    <>
-      <Triangle>
-        <Aurora />
-      </Triangle>
-    </>
+    <Triangle>
+      <Aurora />
+    </Triangle>
   );
 }
 
-StarterWithShader.description = `r3f starter\n\nShader`;
+StarterWithShader.description = `r3f starter\n\nshader`;
