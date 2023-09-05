@@ -183,8 +183,7 @@ float triNoise2d(in vec2 p, float spd)
    void main() {
        mainImage(gl_FragColor, gl_FragCoord.xy);
      }
-  
-    `
+  `
 );
 extend({ AuroraMaterial });
 

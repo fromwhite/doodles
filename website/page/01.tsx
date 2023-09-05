@@ -1,7 +1,3 @@
-import React from 'react';
-import { Triangle } from '../adapter/tunnel';
-import Aurora from '../../src/shader/aurora';
-
 /**
  * Not specific implementation, You should modify and implement the context according to your own ideas,
  * Provide an r3f context
@@ -25,11 +21,22 @@ import Aurora from '../../src/shader/aurora';
  * }
  */
 
+import React from 'react';
+import { View } from '@react-three/drei';
+import { Triangle } from '../adapter/tunnel';
+import Aurora from '../../src/shader/aurora';
+
 export default function StarterWithShader() {
+  const view = React.useRef<HTMLDivElement>(null!);
   return (
-    <Triangle>
-      <Aurora />
-    </Triangle>
+    <>
+      <div ref={view} style={{ width: '65vw', height: '65vh' }}></div>
+      <Triangle>
+        <View track={view}>
+          <Aurora />
+        </View>
+      </Triangle>
+    </>
   );
 }
 
