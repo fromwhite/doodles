@@ -21,6 +21,7 @@ const getAliases = async (frameworkName, frameworkRootDir) => {
 
 export default {
   plugins: [reactRefresh()],
+  assetsInclude: ['**/*.glb'],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },

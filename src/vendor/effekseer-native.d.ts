@@ -542,6 +542,6 @@ declare namespace effekseer {
   }
 }
 
-declare module 'src/r3f-effekseer/vendor/effekseer-native' {
+declare module 'src/adapter/vendor/effekseer-native' {
   export = effekseer;
 }
