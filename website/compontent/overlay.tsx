@@ -16,7 +16,7 @@ export const Overlay = () => {
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://ashen-notes.vercel.app/"
+        href="https://ashenone.vercel.app/"
         style={{ position: 'absolute', bottom: 16, left: 16, fontSize: '14px' }}
       >
         <svg
