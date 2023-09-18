@@ -1,5 +1,5 @@
 import React from 'react';
-import { Overlay, Logo } from '../compontent/overlay';
+import { Overlay } from '../compontent/overlay';
 import css from 'styled-jsx/css';
 
 export default function Wrap({ children, ...props }) {
@@ -9,7 +9,6 @@ export default function Wrap({ children, ...props }) {
       <style>{styles}</style>
       {Component}
       <Overlay />
-      <Logo />
     </div>
   );
 }
