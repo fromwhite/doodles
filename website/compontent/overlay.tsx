@@ -17,10 +17,10 @@ export const Overlay = () => {
         target="_blank"
         rel="noopener noreferrer"
         href="https://ashenone.vercel.app/"
-        style={{ position: 'absolute', bottom: 16, left: 16, fontSize: '14px' }}
+        style={{ position: 'absolute', bottom: 11, left: 16, fontSize: '14px' }}
       >
         <svg
-          aria-label="Vercel logomark"
+          aria-label="vercel logomark"
           width="14px"
           height="14px"
           role="img"
@@ -34,7 +34,7 @@ export const Overlay = () => {
         </svg>
       </a>
       <div
-        style={{ position: 'absolute', top: 16, left: 16, fontSize: '13px' }}
+        style={{ position: 'absolute', top: 14, left: 16, fontSize: '13px' }}
       >
         <a href="/doodles">home —</a>
       </div>
@@ -45,7 +45,7 @@ export const Overlay = () => {
         href="https://github.com/fromwhite/doodles"
         style={{
           position: 'absolute',
-          bottom: 16,
+          bottom: 11,
           right: 16,
           fontSize: '16px',
         }}
