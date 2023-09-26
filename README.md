@@ -11,9 +11,7 @@ PERIODIC TABLE トランジション周期表`](https://transition-b89.pages.dev
 See it live:
 [doodles](https://fromwhite.github.io/doodles/)
 
-## Effects
-
-To learn more about Next.js, take a look at the following resources:
+### Index
 
 <table>
   <tr>
