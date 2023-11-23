@@ -70,7 +70,7 @@ export default function StarterWithDrei() {
       >
         <div style={{ flex: '.5 1 ', paddingTop: '10px' }}>
           <h1>animate model and video hybrid</h1>
-          <p>renderer through view component(gl.scissor)</p>
+          <p>renderer through view component scissor</p>
           <p>
             Both these scenes are tracking elements and scaling their WebGL
             meshes to fit
