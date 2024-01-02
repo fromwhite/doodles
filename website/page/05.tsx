@@ -14,24 +14,10 @@ import {
   Effekt,
 } from '../../src/adapter';
 
-/**
- * Stupid and clumsy
- * import ?url => blob data:application/octet-stream
- *
- * Ugly deal
- */
-// import blockUrl from '../../Resources/block.efk?url';
-// import laser1Url from '../../Resources/Laser01.efk?url';
-// import laser2Url from '../../Resources/Laser02.efk?url';
-import { getURL } from '../compontent/helper';
-let blockUrl = getURL('../../Resources/block.efk');
-let laser1Url = getURL('../../Resources/Laser01.efk');
-let laser2Url = getURL('../../Resources/Laser02.efk');
-if (import.meta.env.MODE === 'production') {
-  blockUrl = getURL('/doodles/assets/block.efk');
-  laser1Url = getURL('/doodles/assets/Laser01.efk');
-  laser2Url = getURL('/doodles/assets/Laser02.efk');
-}
+import blockUrl from '../../Resources/block.efk?url';
+import laser1Url from '../../Resources/Laser01.efk?url';
+import laser2Url from '../../Resources/Laser02.efk?url';
+
 effekseerManager.preloadEffect('Laser01', laser1Url);
 
 export default function PatternEffekseer() {
