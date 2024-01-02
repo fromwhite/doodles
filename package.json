@@ -34,7 +34,7 @@
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "build:website": "npm run clean && cross-env WEBSITE=true vite build --no-sourcemap && npm run copy",
     "dev": "npm run start",
-    "copy": "copyfiles -u 1 Resources/**/**/* dist/assets"
+    "copy": "copyfiles -u 1 Resources/**/** dist/assets"
   },
   "dependencies": {
     "@react-spring/core": "^9.7.3",
