@@ -32,9 +32,8 @@
     "build": "cross-env LIB=true npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --module es2020 --outDir dist/esm",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "build:website": "npm run clean && cross-env WEBSITE=true vite build --no-sourcemap && npm run copy",
-    "dev": "npm run start",
-    "copy": "copyfiles -u 1 Resources/* dist/assets"
+    "build:website": "npm run clean && cross-env WEBSITE=true vite build --no-sourcemap",
+    "dev": "npm run start"
   },
   "dependencies": {
     "@react-spring/core": "^9.7.3",
@@ -46,7 +45,6 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/three": "^0.152.1",
-    "copyfiles": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-use-refs": "^1.0.1",
