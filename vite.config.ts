@@ -25,7 +25,7 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
-  base: process.env['base'] || '/doodles',
+  base: process.env['base'] || '/doodles/v0',
   json: {
     stringify: true,
   },
